@@ -1,0 +1,6 @@
+{
+  "topology": "client-router-server",
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20,
+  "throughput_mbps": 19.2
+}

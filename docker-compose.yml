@@ -1,0 +1,7 @@
+services:
+  simulator:
+    build: .
+    container_name: simulator_run
+    volumes:
+      - ./data:/app/data
+      - ./runs/current:/app/out

@@ -1,0 +1,25 @@
+{
+  "nodes": [
+    {
+      "id": "client1",
+      "type": "client"
+    },
+    {
+      "id": "server1",
+      "type": "server"
+    }
+  ],
+  "links": [
+    {
+      "source": "server1",
+      "target": "client1",
+      "bandwidth_mbps": 50,
+      "delay_ms": 0
+    }
+  ],
+  "traffic": {
+    "protocol": "tcp",
+    "duration_s": 5,
+    "reverse": true
+  }
+}
