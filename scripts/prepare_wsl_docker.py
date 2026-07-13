@@ -28,7 +28,17 @@ def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
 def load_networks(path: Path) -> list[dict]:
     with path.open("r", encoding="utf-8") as f:
         scenario = json.load(f)
-    return scenario["networks"]
+    if "networks" in scenario:
+        return scenario["networks"]
+    if "subnets" in scenario:
+        return [
+            {
+                "name": subnet["name"],
+                "subnet": subnet["cidr"],
+            }
+            for subnet in scenario["subnets"]
+        ]
+    raise KeyError("Scenario must define either 'networks' or 'subnets'.")
 
 
 def bridge_name_for_network(network_name: str) -> str | None:

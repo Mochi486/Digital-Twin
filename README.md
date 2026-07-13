@@ -21,10 +21,13 @@ This repository contains a Docker-based network digital twin prototype for contr
 - `Dockerfile.iperf`: Docker image used for the current iperf3 and routed topology experiments
 - `scripts/simulator_real.py`: direct client-server bandwidth test
 - `scripts/simulator_routed.py`: routed client-router-server test with static routes
+- `scripts/simulator_topology.py`: generic JSON topology simulator for multi-hop routed scenarios
 - `scripts/run_batch.py`: automated bandwidth sweep for 20, 50, and 100 Mbps
+- `scripts/run_two_router_batch.py`: two-router validation batch with baseline, delay, and loss checks
 - `scripts/analyze_results.py`: analysis and throughput plotting
 - `data/scenario.json`: direct topology scenario
 - `data/scenario_routed.json`: routed topology scenario
+- `data/scenario_two_router_topology.json`: generic two-router acceptance scenario
 - `runs/current/metrics.json`: latest routed metrics example
 - `throughput_plot.png`: throughput summary figure
 - `latency_plot.png`: existing figure kept with the project
@@ -87,6 +90,27 @@ Generate the throughput plot with:
 
 ```bash
 python scripts/analyze_results.py
+```
+
+## Run The Generic Two-Router Topology
+
+```bash
+python scripts/prepare_wsl_docker.py --scenario data/scenario_two_router_topology.json --ignore-existing &
+python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json
+```
+
+This path preserves the existing single-router simulator and adds a JSON-driven multi-hop topology flow with:
+
+- three Docker subnets
+- two router containers
+- explicit static routes from scenario JSON
+- dynamic interface resolution for `tc`
+- per-router route table and qdisc capture
+
+Run the acceptance batch with:
+
+```bash
+python scripts/run_two_router_batch.py
 ```
 
 ## Current Results
