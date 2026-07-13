@@ -1,0 +1,13 @@
+{
+  "source_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/gml/Dfn.gml",
+  "source_url": "https://adelaide.figshare.com/articles/dataset/Internet_Topology_Zoo_Data_Set_/30153949",
+  "source_sha256": "7a807ebcce00bd9a3c645fddc8024471dc7c4b44860cf35e596367e6a35b397c",
+  "node_count": 58,
+  "link_count": 87,
+  "source_metadata": {
+    "source_url": "https://adelaide.figshare.com/articles/dataset/Internet_Topology_Zoo_Data_Set_/30153949",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/gml/Dfn.gml",
+    "geo_location": "Germany",
+    "network_label": "Dfn"
+  }
+}

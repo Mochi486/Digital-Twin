@@ -7,15 +7,13 @@ from pathlib import Path
 from topology_utils import (
     build_bandwidth_qdisc_command,
     build_netem_qdisc_command,
+    build_resource_estimate,
     build_route_command,
     build_topology_svg,
     get_bandwidth_plan,
     get_destination_ip,
-    get_interface,
     get_link_impairment_plan,
-    get_node,
     get_router_nodes,
-    get_subnet,
     load_topology_scenario,
     parse_ping_output,
     parse_throughput,
@@ -45,12 +43,23 @@ def run_command(cmd, check=False):
     return result
 
 
+def count_running_resources():
+    containers = run_command(["docker", "ps", "-q"], check=True).stdout.splitlines()
+    networks = run_command(["docker", "network", "ls", "-q"], check=True).stdout.splitlines()
+    return {
+        "running_container_count": len([item for item in containers if item.strip()]),
+        "running_network_count": len([item for item in networks if item.strip()]),
+    }
+
+
 def cleanup(scenario):
+    start = time.perf_counter()
     print("\n=== Cleaning containers and subnets ===")
     for node in scenario["nodes"]:
         run_command(["docker", "rm", "-f", node["id"]], check=False)
     for subnet in scenario["subnets"]:
         run_command(["docker", "network", "rm", subnet["name"]], check=False)
+    return round(time.perf_counter() - start, 3)
 
 
 def create_subnets(scenario):
@@ -82,6 +91,15 @@ def start_node(node):
     ]
     if node["type"] == "router":
         cmd.extend(["--sysctl", "net.ipv4.ip_forward=1"])
+    if node["type"] == "router" or len(node["interfaces"]) > 1:
+        cmd.extend(
+            [
+                "--sysctl",
+                "net.ipv4.conf.all.rp_filter=0",
+                "--sysctl",
+                "net.ipv4.conf.default.rp_filter=0",
+            ]
+        )
     cmd.extend(
         [
             "--network",
@@ -212,7 +230,7 @@ def apply_bandwidth_limits(scenario):
 def effective_traffic(scenario, smoke_mode):
     traffic = dict(scenario["traffic"])
     if smoke_mode:
-        traffic["duration_s"] = 1
+        traffic["duration_s"] = min(int(traffic.get("duration_s", 5)), 1)
         traffic["ping_count"] = min(int(traffic.get("ping_count", 3)), 2)
         if "ping_interval_s" in traffic:
             traffic["ping_interval_s"] = min(float(traffic["ping_interval_s"]), 0.2)
@@ -234,6 +252,21 @@ def ping_test(scenario, smoke_mode):
 def run_iperf(scenario, smoke_mode):
     traffic = effective_traffic(scenario, smoke_mode)
     destination_ip = get_destination_ip(scenario)
+    destination_node = next(node for node in scenario["nodes"] if node["id"] == traffic["destination"])
+    if destination_node["type"] != "server":
+        run_command(
+            [
+                "docker",
+                "exec",
+                "-d",
+                traffic["destination"],
+                "sh",
+                "-lc",
+                "pkill iperf3 >/dev/null 2>&1 || true; iperf3 -s -1",
+            ],
+            check=True,
+        )
+        time.sleep(1)
     cmd = [
         "docker",
         "exec",
@@ -250,6 +283,48 @@ def run_iperf(scenario, smoke_mode):
     return result.stdout
 
 
+def setup_topology(scenario):
+    timings = {}
+    start = time.perf_counter()
+    create_subnets(scenario)
+    timings["create_subnets_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    start_nodes(scenario)
+    timings["start_nodes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    configure_routes(scenario)
+    timings["configure_routes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    applied_impairments = apply_link_impairments(scenario)
+    timings["apply_impairments_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    bandwidth_controls = apply_bandwidth_limits(scenario)
+    timings["apply_bandwidth_s"] = round(time.perf_counter() - start, 3)
+
+    timings["setup_total_s"] = round(sum(timings.values()), 3)
+    return applied_impairments, bandwidth_controls, timings
+
+
+def exercise_topology(scenario, smoke_mode):
+    timings = {}
+    start = time.perf_counter()
+    ping_success, ping_metrics, _ = ping_test(scenario, smoke_mode)
+    timings["ping_s"] = round(time.perf_counter() - start, 3)
+    if not ping_success:
+        raise RuntimeError("Ping test failed for generic topology.")
+
+    start = time.perf_counter()
+    throughput_mbps = parse_throughput(run_iperf(scenario, smoke_mode))
+    timings["iperf_s"] = round(time.perf_counter() - start, 3)
+    if throughput_mbps is None:
+        raise RuntimeError("Could not parse throughput from iperf output.")
+    return ping_metrics, throughput_mbps, timings
+
+
 def save_metrics(
     scenario,
     output_path,
@@ -259,8 +334,11 @@ def save_metrics(
     throughput_mbps,
     applied_impairments,
     bandwidth_controls,
+    stage_timings,
+    cleanup_time_s,
 ):
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    resource_usage = count_running_resources()
     metrics = {
         "topology": scenario["topology_name"],
         "smoke_mode": smoke_mode,
@@ -296,10 +374,28 @@ def save_metrics(
         "theoretical_round_trip_loss_percent": theoretical_round_trip_loss_percent(
             max((item["packet_loss_percent"] for item in applied_impairments), default=0)
         ),
+        "resource_estimate": build_resource_estimate(scenario),
+        "resource_usage": resource_usage,
+        "stage_timings_s": stage_timings,
+        "cleanup_time_s": cleanup_time_s,
     }
     output_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     print(f"\n=== Metrics saved to {output_path} ===")
     return metrics
+
+
+def write_dry_run(output_path: Path, scenario: dict, plot_path: Path):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    dry_run = {
+        "topology": scenario["topology_name"],
+        "resource_estimate": build_resource_estimate(scenario),
+        "node_count": len(scenario["nodes"]),
+        "link_count": len(scenario["links"]),
+        "route_count": len(scenario["routes"]),
+        "subnet_count": len(scenario["subnets"]),
+        "plot_file": str(plot_path),
+    }
+    output_path.write_text(json.dumps(dry_run, indent=2) + "\n", encoding="utf-8")
 
 
 def parse_args():
@@ -308,6 +404,8 @@ def parse_args():
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--plot", type=Path, default=DEFAULT_PLOT_PATH)
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--cleanup-only", action="store_true")
     return parser.parse_args()
 
 
@@ -315,28 +413,44 @@ def main():
     args = parse_args()
     scenario = load_topology_scenario(args.scenario)
     build_topology_svg(scenario, args.plot)
-    cleanup(scenario)
-    create_subnets(scenario)
-    start_nodes(scenario)
-    configure_routes(scenario)
-    applied_impairments = apply_link_impairments(scenario)
-    bandwidth_controls = apply_bandwidth_limits(scenario)
-    ping_success, ping_metrics, _ = ping_test(scenario, args.smoke)
-    if not ping_success:
-        raise RuntimeError("Ping test failed for generic topology.")
-    throughput_mbps = parse_throughput(run_iperf(scenario, args.smoke))
-    if throughput_mbps is None:
-        raise RuntimeError("Could not parse throughput from iperf output.")
-    save_metrics(
-        scenario,
-        args.output,
-        args.smoke,
-        ping_success,
-        ping_metrics,
-        throughput_mbps,
-        applied_impairments,
-        bandwidth_controls,
-    )
+
+    if args.cleanup_only:
+        cleanup_time_s = cleanup(scenario)
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(json.dumps({"cleanup_time_s": cleanup_time_s}, indent=2) + "\n", encoding="utf-8")
+        return
+
+    if args.dry_run:
+        write_dry_run(args.output, scenario, args.plot)
+        return
+
+    initial_cleanup_time_s = cleanup(scenario)
+    try:
+        applied_impairments, bandwidth_controls, setup_timings = setup_topology(scenario)
+        ping_metrics, throughput_mbps, run_timings = exercise_topology(scenario, args.smoke)
+        stage_timings = {
+            "initial_cleanup_s": initial_cleanup_time_s,
+            **setup_timings,
+            **run_timings,
+        }
+        save_metrics(
+            scenario,
+            args.output,
+            args.smoke,
+            True,
+            ping_metrics,
+            throughput_mbps,
+            applied_impairments,
+            bandwidth_controls,
+            stage_timings,
+            cleanup_time_s=0.0,
+        )
+    finally:
+        final_cleanup_time_s = cleanup(scenario)
+        if args.output.exists():
+            metrics = json.loads(args.output.read_text(encoding="utf-8"))
+            metrics["cleanup_time_s"] = final_cleanup_time_s
+            args.output.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

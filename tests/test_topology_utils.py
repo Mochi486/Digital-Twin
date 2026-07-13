@@ -8,8 +8,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 from topology_utils import (
     build_route_command,
     build_topology_svg,
+    choose_path_length_samples,
     get_bandwidth_plan,
     get_link_impairment_plan,
+    import_topology_zoo_gml,
+    select_connected_subset,
+    shortest_path,
     validate_topology_scenario,
 )
 
@@ -93,6 +97,113 @@ class TopologyUtilsTests(unittest.TestCase):
             build_topology_svg(make_scenario(), output_path)
             self.assertTrue(output_path.exists())
             self.assertIn("client-router1-router2-server", output_path.read_text(encoding="utf-8"))
+
+    def test_compact_scenario_auto_addressing_and_routes(self):
+        scenario = {
+            "topology_name": "compact-three-hop",
+            "nodes": [
+                {"id": "a"},
+                {"id": "b"},
+                {"id": "c"},
+            ],
+            "links": [
+                {"source": "a", "target": "b", "delay_ms": 0, "packet_loss_percent": 0},
+                {"source": "b", "target": "c", "delay_ms": 10, "packet_loss_percent": 0},
+            ],
+            "traffic": {"source": "a", "destination": "c", "protocol": "tcp", "duration_s": 2},
+        }
+        normalized = validate_topology_scenario(scenario)
+        self.assertEqual(len(normalized["subnets"]), 2)
+        self.assertEqual(len(normalized["routes"]), 2)
+        self.assertEqual(normalized["nodes"][1]["type"], "router")
+        self.assertEqual(normalized["resource_estimate"]["network_count"], 2)
+
+    def test_duplicate_link_rejected(self):
+        scenario = {
+            "topology_name": "dup",
+            "nodes": [{"id": "a"}, {"id": "b"}],
+            "links": [
+                {"source": "a", "target": "b"},
+                {"source": "b", "target": "a"},
+            ],
+            "traffic": {"source": "a", "destination": "b", "protocol": "tcp", "duration_s": 1},
+        }
+        with self.assertRaises(ValueError):
+            validate_topology_scenario(scenario)
+
+    def test_disconnected_topology_rejected(self):
+        scenario = {
+            "topology_name": "disc",
+            "nodes": [{"id": "a"}, {"id": "b"}, {"id": "c"}],
+            "links": [{"source": "a", "target": "b"}],
+            "traffic": {"source": "a", "destination": "b", "protocol": "tcp", "duration_s": 1},
+        }
+        with self.assertRaises(ValueError):
+            validate_topology_scenario(scenario)
+
+    def test_shortest_path_and_path_samples(self):
+        scenario = validate_topology_scenario(
+            {
+                "topology_name": "path-samples",
+                "nodes": [{"id": "a"}, {"id": "b"}, {"id": "c"}, {"id": "d"}],
+                "links": [
+                    {"source": "a", "target": "b"},
+                    {"source": "b", "target": "c"},
+                    {"source": "c", "target": "d"},
+                ],
+                "traffic": {"source": "a", "destination": "d", "protocol": "tcp", "duration_s": 1},
+            }
+        )
+        samples = choose_path_length_samples(scenario)
+        self.assertEqual(shortest_path({"a": {"b"}, "b": {"a", "c"}, "c": {"b", "d"}, "d": {"c"}}, "a", "d"), ["a", "b", "c", "d"])
+        self.assertEqual(samples["longest"]["hop_count"], 3)
+
+    def test_select_connected_subset(self):
+        scenario = validate_topology_scenario(
+            {
+                "topology_name": "subset",
+                "nodes": [{"id": "a"}, {"id": "b"}, {"id": "c"}, {"id": "d"}, {"id": "e"}],
+                "links": [
+                    {"source": "a", "target": "b"},
+                    {"source": "b", "target": "c"},
+                    {"source": "c", "target": "d"},
+                    {"source": "d", "target": "e"},
+                ],
+                "traffic": {"source": "a", "destination": "e", "protocol": "tcp", "duration_s": 1},
+            }
+        )
+        subset = select_connected_subset(scenario, 3)
+        self.assertEqual(len(subset["nodes"]), 3)
+        self.assertEqual(len(subset["links"]), 2)
+
+    def test_import_topology_zoo_gml(self):
+        gml_text = """graph [
+  label "Mini"
+  GeoLocation "Germany"
+  node [
+    id 0
+    label "A"
+  ]
+  node [
+    id 1
+    label "B"
+  ]
+  edge [
+    source 0
+    target 1
+  ]
+]"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            gml_path = Path(temp_dir) / "mini.gml"
+            gml_path.write_text(gml_text, encoding="utf-8")
+            scenario = import_topology_zoo_gml(
+                gml_path,
+                topology_name="mini-germany",
+                source_url="https://example.test/mini.gml",
+            )
+            self.assertEqual(len(scenario["nodes"]), 2)
+            self.assertEqual(len(scenario["links"]), 1)
+            self.assertEqual(scenario["source_metadata"]["geo_location"], "Germany")
 
 
 if __name__ == "__main__":

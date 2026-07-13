@@ -1,6 +1,6 @@
 # Docker Network Digital Twin
 
-This repository contains a Docker-based network digital twin prototype for controlled bandwidth experiments. The current implementation includes both a direct client-server prototype and a routed client-router-server topology using Docker networks, static routing, ping validation, and iperf3 TCP traffic generation.
+This repository contains a Docker-based network digital twin prototype for controlled bandwidth experiments. The current implementation includes both direct and routed topologies using Docker networks, static routing, ping validation, iperf3 TCP traffic generation, JSON-driven multi-hop scenarios, and AI-assisted scenario generation with strict validation gates.
 
 ## Implemented Functionality
 
@@ -22,6 +22,7 @@ This repository contains a Docker-based network digital twin prototype for contr
 - `scripts/simulator_real.py`: direct client-server bandwidth test
 - `scripts/simulator_routed.py`: routed client-router-server test with static routes
 - `scripts/simulator_topology.py`: generic JSON topology simulator for multi-hop routed scenarios
+- `scripts/generate_scenario_ai.py`: prompt-driven scenario generator with mock and optional OpenAI providers
 - `scripts/run_batch.py`: automated bandwidth sweep for 20, 50, and 100 Mbps
 - `scripts/run_two_router_batch.py`: two-router validation batch with baseline, delay, and loss checks
 - `scripts/analyze_results.py`: analysis and throughput plotting
@@ -128,14 +129,12 @@ The latest routed example in `runs/current/metrics.json` currently records:
 - `configured_bandwidth_mbps`
 - `throughput_mbps`
 
-## Planned Next Work
+## Current Focus
 
-- delay and latency experiments
-- packet-loss experiments
-- repeated runs with summary statistics
-- larger and multi-hop topologies
-- AI scenario generation
-- optional reinforcement learning for adaptive control
+- AI-generated small routed scenarios with schema and semantic validation
+- deterministic address allocation and static route generation for generated scenarios
+- safe dry-run and small-scale execution only
+- larger DFN-derived full-traffic runs paused pending WSL forwarding scalability work
 
 ## Notes
 
