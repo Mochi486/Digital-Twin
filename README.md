@@ -54,6 +54,23 @@ The routed workflow does the following:
 - runs an iperf3 TCP test
 - writes metrics to `runs/current/metrics.json`
 
+## Run On WSL Docker Engine
+
+If you are running this project on WSL Ubuntu with Docker Engine instead of Docker Desktop:
+
+```bash
+python scripts/prepare_wsl_docker.py --ignore-existing &
+python scripts/simulator_routed.py
+```
+
+The helper script installs narrowly scoped host `iptables` accept rules for this project's routed Docker bridges only. Use:
+
+```bash
+python scripts/prepare_wsl_docker.py --cleanup
+```
+
+to remove only rules tagged for this project.
+
 ## Run Bandwidth Experiments
 
 ```bash

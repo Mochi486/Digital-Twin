@@ -47,7 +47,8 @@
       "target": "server1",
       "network": "net_router_server",
       "bandwidth_mbps": 20,
-      "delay_ms": 0
+      "delay_ms": 0,
+      "packet_loss_percent": 0
     }
   ],
   "traffic": {
@@ -56,6 +57,7 @@
     "destination_ip": "10.0.2.2",
     "protocol": "tcp",
     "duration_s": 5,
+    "ping_count": 3,
     "reverse": true
   }
 }
