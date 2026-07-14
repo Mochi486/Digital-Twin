@@ -82,8 +82,9 @@ class TopologyUtilsTests(unittest.TestCase):
     def test_bandwidth_plan_targets_link_target_interface(self):
         plan = get_bandwidth_plan(make_scenario())
         self.assertEqual(len(plan), 1)
-        self.assertEqual(plan[0]["node"], "server1")
+        self.assertEqual(plan[0]["node"], "router2")
         self.assertEqual(plan[0]["bandwidth_mbps"], 20.0)
+        self.assertEqual(plan[0]["direction"], "egress")
 
     def test_route_command(self):
         self.assertEqual(

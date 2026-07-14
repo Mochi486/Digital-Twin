@@ -9,24 +9,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from ai_scenario_utils import (
-    DEFAULT_COMPATIBLE_MODELS,
+    count_simple_paths,
     OPENAI_SYSTEM_PROMPT,
     build_validation_gate_report,
     default_topology_name,
 )
 from openai_live_utils import (
-    CAPABILITY_ENDPOINTS,
     create_provider_client,
     list_accessible_models,
-    model_exists,
-    parse_compatible_model_candidates,
-    probe_model_capabilities,
     redact_data,
     redact_text,
     request_structured_scenario,
     resolve_openai_model,
+    resolve_provider_model,
     sanitize_provider_host,
 )
+from topology_utils import build_graph_adjacency, shortest_path
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -51,6 +49,14 @@ def parse_args():
     parser.add_argument("--prompt", default=PROMPT)
     parser.add_argument("--max-attempts", type=int, default=MAX_REQUEST_ATTEMPTS)
     parser.add_argument("--api-key-stdin", action="store_true")
+    parser.add_argument("--model", default="")
+    parser.add_argument(
+        "--endpoint-order",
+        nargs="+",
+        choices=["responses_json_schema", "chat_json_schema", "chat_json_object", "chat_plain_json"],
+        default=None,
+    )
+    parser.add_argument("--skip-model-list", action="store_true")
     return parser.parse_args()
 
 
@@ -160,6 +166,14 @@ def _select_client_server_path(metrics: dict) -> list[str]:
     return []
 
 
+def _build_source_destination_path(scenario: dict) -> tuple[list[str], int]:
+    traffic = scenario["traffic"]
+    adjacency = build_graph_adjacency([node["id"] for node in scenario["nodes"]], scenario["links"])
+    path = shortest_path(adjacency, traffic["source"], traffic["destination"])
+    alternative_path_count = count_simple_paths(adjacency, traffic["source"], traffic["destination"], limit=32)
+    return path, alternative_path_count
+
+
 def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir: Path, prefix: str) -> dict:
     tracked_run_dir.mkdir(parents=True, exist_ok=True)
     metrics_path = tracked_run_dir / "metrics.json"
@@ -168,25 +182,6 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
     simulator_log = evidence_dir / f"{prefix}-simulator.log"
 
     if IS_WINDOWS:
-        prepare_proc = subprocess.Popen(
-            [
-                "wsl",
-                "bash",
-                "-lc",
-                build_wsl_python_command(
-                    PREPARE_SCRIPT,
-                    "--scenario",
-                    to_wsl_path(scenario_path),
-                    "--ignore-existing",
-                    "--evidence",
-                    to_wsl_path(prepare_log),
-                ),
-            ],
-            cwd=PROJECT_ROOT,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.STDOUT,
-            text=True,
-        )
         sim_result = run_wsl_bash(
             build_wsl_python_command(
                 SIMULATOR_SCRIPT,
@@ -196,25 +191,13 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
                 to_wsl_path(metrics_path),
                 "--plot",
                 to_wsl_path(plot_path),
+                "--prepare-host-routing-log",
+                to_wsl_path(prepare_log),
             ),
             stdout_path=simulator_log,
         )
+        prepare_rc = 0 if prepare_log.exists() else 1
     else:
-        prepare_proc = subprocess.Popen(
-            [
-                sys.executable,
-                str(PREPARE_SCRIPT),
-                "--scenario",
-                str(scenario_path),
-                "--ignore-existing",
-                "--evidence",
-                str(prepare_log),
-            ],
-            cwd=PROJECT_ROOT,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.STDOUT,
-            text=True,
-        )
         sim_result = run_command(
             [
                 sys.executable,
@@ -225,10 +208,12 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
                 str(metrics_path),
                 "--plot",
                 str(plot_path),
+                "--prepare-host-routing-log",
+                str(prepare_log),
             ],
             stdout_path=simulator_log,
         )
-    prepare_rc = prepare_proc.wait()
+        prepare_rc = 0 if prepare_log.exists() else 1
     record = {
         "status": "ok" if sim_result.returncode == 0 and prepare_rc == 0 and metrics_path.exists() else "error",
         "simulator_exit_code": sim_result.returncode,
@@ -239,16 +224,10 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
         "simulator_log": str(simulator_log),
     }
     if metrics_path.exists():
+        scenario = json.loads(scenario_path.read_text(encoding="utf-8"))
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
-        selected_path = _select_client_server_path(metrics)
+        selected_path, alternative_path_count = _build_source_destination_path(scenario)
         route_verification = metrics.get("route_verification", [])
-        alternative_path_count = 0
-        observed_paths = set()
-        for route in metrics.get("static_routes", []):
-            path = tuple(route.get("path", []))
-            if path and len(path) > 1:
-                observed_paths.add(path)
-        alternative_path_count = len(observed_paths)
         record["metrics"] = metrics
         record["container_count"] = metrics.get("resource_estimate", {}).get("node_count")
         record["network_count"] = metrics.get("resource_estimate", {}).get("network_count")
@@ -348,41 +327,55 @@ def capability_matrix_filename(provider: str) -> str:
     return f"{provider.replace('_', '-')}-capability-matrix.json"
 
 
-def build_probe_matrix(provider: str, client, model_list_record: dict) -> tuple[list[dict], dict | None]:
+def build_probe_matrix(provider: str, client, model_list_record: dict, selected_model: str, endpoint_order: list[str]) -> tuple[list[dict], dict | None]:
     matrix = []
     selected = None
     accessible_models = model_list_record.get("model_ids", []) if model_list_record.get("status") == "ok" else []
-    candidate_models = (
-        parse_compatible_model_candidates(os.environ.get("COMPAT_MODEL_CANDIDATES", ""))
-        if provider == "openai_compatible"
-        else [resolve_openai_model("")]
-    )
-    for model in candidate_models:
-        if not model_exists(model, accessible_models):
-            matrix.append(
-                {
-                    "model": model,
-                    "model_exists": False,
-                    "endpoint_type": None,
-                    "json_schema_support": False,
-                    "json_object_support": False,
-                    "request_status": "model_missing",
-                    "status_code": None,
-                    "error_type": "model_missing",
-                    "error_message": "Model not present in provider model list.",
-                    "latency_seconds": None,
-                    "selected": False,
-                }
-            )
-            continue
-        rows = probe_model_capabilities(client, model, OPENAI_SYSTEM_PROMPT)
-        for row in rows:
-            matrix.append(row)
-            if row["request_status"] == "ok" and selected is None:
-                row["selected"] = True
-                selected = row
-                break
-        if selected is not None:
+    if accessible_models and selected_model not in accessible_models:
+        matrix.append(
+            {
+                "model": selected_model,
+                "model_exists": False,
+                "endpoint_type": None,
+                "json_schema_support": False,
+                "json_object_support": False,
+                "request_status": "model_missing",
+                "status_code": None,
+                "error_type": "model_missing",
+                "error_message": "Model not present in provider model list.",
+                "latency_seconds": None,
+                "selected": False,
+            }
+        )
+        return matrix, None
+    for endpoint_type in endpoint_order:
+        result = request_structured_scenario(
+            client,
+            PROMPT,
+            selected_model,
+            OPENAI_SYSTEM_PROMPT,
+            endpoint_type,
+        )
+        row = {
+            "model": selected_model,
+            "model_exists": True,
+            "endpoint_type": endpoint_type,
+            "json_schema_support": endpoint_type == "chat_json_schema" and result["status"] == "ok",
+            "json_object_support": endpoint_type == "chat_json_object" and result["status"] == "ok",
+            "request_status": result.get("status"),
+            "status_code": result.get("status_code"),
+            "error_type": result.get("error_type"),
+            "error_message": result.get("error_message"),
+            "latency_seconds": result.get("latency_seconds"),
+            "response_id": result.get("response_id"),
+            "usage": result.get("usage"),
+            "selected": False,
+            "probe_result": redact_data(result),
+        }
+        matrix.append(row)
+        if result["status"] == "ok":
+            row["selected"] = True
+            selected = row
             break
     return matrix, selected
 
@@ -451,6 +444,14 @@ def main() -> int:
     base_url_env = "COMPAT_BASE_URL" if args.provider == "openai_compatible" else ""
     env_key_length = len(os.environ.get(api_key_env, ""))
     base_url = os.environ.get(base_url_env, "") if base_url_env else ""
+    selected_model = resolve_provider_model(args.provider, args.model or os.environ.get("COMPAT_MODEL", ""))
+    endpoint_order = args.endpoint_order
+    if endpoint_order is None:
+        endpoint_order = (
+            ["chat_json_schema", "chat_json_object", "chat_plain_json"]
+            if args.provider == "openai_compatible"
+            else ["responses_json_schema"]
+        )
 
     summary = {
         "status": "started",
@@ -464,6 +465,8 @@ def main() -> int:
         "sanitized_provider_host": sanitize_provider_host(base_url),
         "sdk_status": None,
         "docker_status": None,
+        "selected_model": selected_model,
+        "endpoint_order": endpoint_order,
         "model_list": None,
         "capability_matrix_file": None,
         "capability_matrix": [],
@@ -491,19 +494,29 @@ def main() -> int:
         write_json(evidence_dir / summary_filename(args.provider), summary)
         return 1
 
-    model_list_record = list_accessible_models(client)
-    summary["model_list"] = model_list_record
-    if model_list_record["status"] != "ok":
-        summary["status"] = "blocked"
-        summary["error"] = {
-            "type": model_list_record.get("error_type"),
-            "status_code": model_list_record.get("status_code"),
-            "message": model_list_record.get("error_message"),
-        }
-        write_json(evidence_dir / summary_filename(args.provider), summary)
-        return 1
+    model_list_record = None
+    if not args.skip_model_list:
+        model_list_record = list_accessible_models(client)
+        summary["model_list"] = model_list_record
+        if model_list_record["status"] != "ok":
+            summary["status"] = "blocked"
+            summary["error"] = {
+                "type": model_list_record.get("error_type"),
+                "status_code": model_list_record.get("status_code"),
+                "message": model_list_record.get("error_message"),
+            }
+            write_json(evidence_dir / summary_filename(args.provider), summary)
+            return 1
+    else:
+        summary["model_list"] = {"status": "skipped_by_request"}
 
-    capability_matrix, selected_probe = build_probe_matrix(args.provider, client, model_list_record)
+    capability_matrix, selected_probe = build_probe_matrix(
+        args.provider,
+        client,
+        model_list_record or {"status": "skipped_by_request", "model_ids": []},
+        selected_model,
+        endpoint_order,
+    )
     matrix_path = evidence_dir / capability_matrix_filename(args.provider)
     write_json(matrix_path, capability_matrix)
     summary["capability_matrix_file"] = str(matrix_path)
@@ -526,16 +539,20 @@ def main() -> int:
         write_json(evidence_dir / summary_filename(args.provider), summary)
         return 1
 
-    selected_model = selected_probe["model"]
     selected_endpoint = selected_probe["endpoint_type"]
+    selected_probe_result = selected_probe.get("probe_result", {})
+    first_success_consumed = bool(selected_probe_result)
     for attempt_number in range(1, args.max_attempts + 1):
-        provider_result = request_structured_scenario(
-            client,
-            args.prompt,
-            selected_model,
-            OPENAI_SYSTEM_PROMPT,
-            selected_endpoint,
-        )
+        if first_success_consumed and attempt_number == 1:
+            provider_result = selected_probe_result
+        else:
+            provider_result = request_structured_scenario(
+                client,
+                args.prompt,
+                selected_model,
+                OPENAI_SYSTEM_PROMPT,
+                selected_endpoint,
+            )
         validation = None
         if provider_result["status"] == "ok":
             validation = build_validation_gate_report(

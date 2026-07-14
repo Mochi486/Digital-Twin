@@ -6,6 +6,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from routed_delay_utils import (
     build_bandwidth_qdisc_command,
+    build_combined_qdisc_commands,
     build_netem_qdisc_command,
     get_configured_packet_loss_percent,
     parse_ping_output,
@@ -109,6 +110,24 @@ rtt min/avg/max/mdev = 0.044/0.093/0.183/0.029 ms
                 "32kbit",
                 "latency",
                 "400ms",
+            ],
+        )
+        self.assertEqual(
+            build_combined_qdisc_commands("eth0", 20, 10, 0),
+            [
+                [
+                    "tc",
+                    "qdisc",
+                    "replace",
+                    "dev",
+                    "eth0",
+                    "root",
+                    "netem",
+                    "delay",
+                    "10ms",
+                    "rate",
+                    "20mbit",
+                ],
             ],
         )
 

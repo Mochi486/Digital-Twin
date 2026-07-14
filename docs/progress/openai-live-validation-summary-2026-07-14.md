@@ -25,7 +25,7 @@ Date: 2026-07-14
 - Updated `scripts/prepare_wsl_docker.py` so host `iptables` preparation can run either:
   - directly as root
   - or via a temporary privileged Docker helper that `chroot`s into the WSL host root filesystem
-- Expanded unit coverage to `36/36` passing tests.
+- Expanded unit coverage and later closure validation to `43/43` passing tests.
 - Revalidated the generic two-router real smoke path with the non-root prepare fallback.
 
 ## Mock Versus Live
@@ -100,11 +100,11 @@ Because quota failed before a response payload was created:
 - no simulator dry-run was accepted
 - no real Docker run was started for the live scenario
 
-This file records only the official OpenAI API path. Third-party OpenAI-compatible provider work is tracked separately in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
+This file records only the official OpenAI API path. Third-party OpenAI-compatible provider work is tracked separately in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`, where the bounded `qwen3.7-plus` live generation and real WSL Docker execution completed on `2026-07-14`.
 
 ## Lightweight Regressions Completed During Live Closure
 
-- `36/36` unit tests passed
+- `43/43` unit tests passed
 - single-router dry-run passed
 - two-router dry-run passed
 - one delay smoke real run passed

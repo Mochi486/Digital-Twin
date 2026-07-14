@@ -124,9 +124,18 @@ Evidence:
 - The official OpenAI request reached OpenAI with SDK `2.45.0` and failed with HTTP `429` / `insufficient_quota`.
 - No official OpenAI structured scenario, dry-run, or real Docker run was accepted.
 - Third-party OpenAI-compatible validation now has its own bounded runner in `scripts/run_openai_live_validation.py --provider openai_compatible`.
-- The current compatible-provider attempt is blocked before model probing because `COMPAT_BASE_URL` in the active PowerShell session is not a valid absolute `http(s)` URL.
-- No third-party live generation, dry-run, or real Docker run was accepted in this blocked state.
-- Detailed compatible-provider blocker evidence is captured in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
+- The bounded compatible-provider closure completed on `2026-07-14` against an Alibaba Cloud Bailian OpenAI-compatible endpoint.
+- Actual compatible-provider live run details:
+  - provider: `openai_compatible`
+  - model: `qwen3.7-plus`
+  - endpoint: `chat.completions`
+  - native structured-output mode used: `response_format=json_schema`
+  - local schema validation: applied
+  - local semantic validation: applied
+  - live generation: passed
+  - dry-run: passed
+  - real WSL Docker execution: passed
+- Detailed live evidence is captured in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
 
 ## Explicit Non-Goals
 

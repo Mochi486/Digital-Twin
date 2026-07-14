@@ -17,7 +17,7 @@ Date: 2026-07-13
 - Prompt-driven AI scenario generation available
 - Mock provider available
 - Official OpenAI provider with Responses API Structured Outputs integration available
-- Third-party OpenAI-compatible provider framework available with model-list probing and endpoint fallback
+- Third-party OpenAI-compatible provider available with live bounded validation, endpoint fallback, and synchronized WSL host-routing preparation
 - Safety gates for schema, semantic, and forbidden-content rejection available
 
 ## Completed Real Experiments
@@ -30,6 +30,7 @@ Date: 2026-07-13
 - AI `lossy-8` real run `01`
 - Current-phase delay smoke regression
 - Current-phase packet-loss smoke regression
+- Third-party compatible-provider six-node live run on `2026-07-14`
 
 ## Completed But Dry-Run Only
 
@@ -64,9 +65,8 @@ Date: 2026-07-13
 
 ## Remaining Gap To Full Core Completion
 
-Two external blockers remain relative to the current bounded scope:
+One external blocker remains relative to the current bounded scope:
 
 - restore official OpenAI API quota or billing so the official live provider path can complete schema validation, dry-run, and real Docker evidence
-- provide a valid absolute `COMPAT_BASE_URL` for the third-party OpenAI-compatible provider so model probing and live generation can start
 
 Everything else requested in the non-DFN, non-RL bounded scope is implemented and validated or explicitly paused by scope.

@@ -512,18 +512,30 @@ def get_link_impairment_plan(scenario: dict) -> list[dict]:
 
 def get_bandwidth_plan(scenario: dict) -> list[dict]:
     plan = []
-    for link in scenario["links"]:
+    traffic = scenario.get("traffic", {})
+    if not traffic:
+        return plan
+    source_node = traffic["destination"] if traffic.get("reverse", False) else traffic["source"]
+    destination_node = traffic["source"] if traffic.get("reverse", False) else traffic["destination"]
+    adjacency = build_graph_adjacency([node["id"] for node in scenario["nodes"]], scenario["links"])
+    path = shortest_path(adjacency, source_node, destination_node)
+    for node_a, node_b in zip(path, path[1:]):
+        link = find_link_between(scenario["links"], node_a, node_b)
         if "bandwidth_mbps" not in link:
             continue
-        target_node = get_node(scenario, link["target"])
-        iface = get_interface(target_node, link["subnet"])
+        source = get_node(scenario, node_a)
+        if source["type"] != "router":
+            continue
+        iface = get_interface(source, link["subnet"])
         plan.append(
             {
-                "link": f"{link['source']}->{link['target']}",
+                "link": f"{node_a}->{node_b}",
                 "subnet": link["subnet"],
-                "node": target_node["id"],
+                "node": source["id"],
                 "interface_ip": iface["ip"],
                 "bandwidth_mbps": float(link["bandwidth_mbps"]),
+                "direction": "egress",
+                "path": path,
             }
         )
     return plan

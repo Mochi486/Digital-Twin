@@ -1,6 +1,7 @@
 import argparse
 import json
 import subprocess
+import sys
 from pathlib import Path
 
 from routed_delay_utils import (
@@ -18,6 +19,7 @@ from routed_delay_utils import (
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCENARIO_PATH = PROJECT_ROOT / "data" / "scenario_routed.json"
 DEFAULT_OUTPUT_PATH = PROJECT_ROOT / "runs" / "current" / "metrics.json"
+PREPARE_WSL_DOCKER_SCRIPT = PROJECT_ROOT / "scripts" / "prepare_wsl_docker.py"
 
 IMAGE_NAME = "my-iperf-tc"
 
@@ -43,6 +45,18 @@ def run_command(cmd, check=False):
         )
 
     return result
+
+
+def prepare_host_routing(scenario_path: Path, evidence_path: Path | None = None):
+    cmd = [
+        sys.executable,
+        str(PREPARE_WSL_DOCKER_SCRIPT),
+        "--scenario",
+        str(scenario_path),
+    ]
+    if evidence_path is not None:
+        cmd.extend(["--evidence", str(evidence_path)])
+    run_command(cmd, check=True)
 
 
 def load_scenario(path: Path):
@@ -406,6 +420,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--scenario", type=Path, default=DEFAULT_SCENARIO_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
+    parser.add_argument("--prepare-host-routing-log", type=Path, default=None)
     return parser.parse_args()
 
 
@@ -414,47 +429,52 @@ def main():
     scenario = load_scenario(args.scenario)
 
     cleanup(args.scenario)
-    create_networks(scenario)
-    start_router(scenario)
-    start_server(scenario)
-    start_client(scenario)
-    configure_routes(scenario)
+    try:
+        create_networks(scenario)
+        if args.prepare_host_routing_log is not None:
+            prepare_host_routing(args.scenario, args.prepare_host_routing_log)
+        start_router(scenario)
+        start_server(scenario)
+        start_client(scenario)
+        configure_routes(scenario)
 
-    delay_interfaces, delay_qdisc_state = apply_router_impairments(scenario)
-    server_bandwidth_interface = apply_bandwidth_limit(scenario)
-    server_qdisc_state = {
-        "interface": server_bandwidth_interface,
-        "qdisc": get_qdisc_state(SERVER, server_bandwidth_interface) if server_bandwidth_interface else "",
-    }
+        delay_interfaces, delay_qdisc_state = apply_router_impairments(scenario)
+        server_bandwidth_interface = apply_bandwidth_limit(scenario)
+        server_qdisc_state = {
+            "interface": server_bandwidth_interface,
+            "qdisc": get_qdisc_state(SERVER, server_bandwidth_interface) if server_bandwidth_interface else "",
+        }
 
-    destination_ip = scenario["traffic"]["destination_ip"]
-    ping_success, _, ping_metrics = ping_test(scenario, destination_ip)
+        destination_ip = scenario["traffic"]["destination_ip"]
+        ping_success, _, ping_metrics = ping_test(scenario, destination_ip)
 
-    if not ping_success:
-        raise RuntimeError("Ping test failed. Routed topology is not connected.")
+        if not ping_success:
+            raise RuntimeError("Ping test failed. Routed topology is not connected.")
 
-    iperf_output = run_iperf(scenario)
-    throughput_mbps = parse_throughput(iperf_output)
-    if throughput_mbps is None:
-        raise RuntimeError("Could not parse throughput from iperf output.")
+        iperf_output = run_iperf(scenario)
+        throughput_mbps = parse_throughput(iperf_output)
+        if throughput_mbps is None:
+            raise RuntimeError("Could not parse throughput from iperf output.")
 
-    qdisc_state = {
-        "router_delay": delay_qdisc_state,
-        "server_bandwidth": server_qdisc_state,
-    }
-    save_metrics(
-        scenario,
-        args.output,
-        ping_success,
-        ping_metrics,
-        throughput_mbps,
-        delay_interfaces,
-        qdisc_state,
-        server_qdisc_state,
-    )
+        qdisc_state = {
+            "router_delay": delay_qdisc_state,
+            "server_bandwidth": server_qdisc_state,
+        }
+        save_metrics(
+            scenario,
+            args.output,
+            ping_success,
+            ping_metrics,
+            throughput_mbps,
+            delay_interfaces,
+            qdisc_state,
+            server_qdisc_state,
+        )
 
-    print("\n=== Routed simulation finished ===")
-    print("Throughput:", throughput_mbps, "Mbps")
+        print("\n=== Routed simulation finished ===")
+        print("Throughput:", throughput_mbps, "Mbps")
+    finally:
+        cleanup(args.scenario)
 
 
 if __name__ == "__main__":

@@ -175,22 +175,6 @@ def run_prepare_and_simulator(name: str, scenario_path: Path, evidence_dir: Path
     simulator_log = evidence_dir / f"{name}-simulator.log"
     prepare_log = evidence_dir / f"{name}-prepare.log"
 
-    prepare_proc = subprocess.Popen(
-        [
-            sys.executable,
-            str(PREPARE_SCRIPT),
-            "--scenario",
-            str(scenario_path),
-            "--ignore-existing",
-            "--evidence",
-            str(prepare_log),
-        ],
-        cwd=PROJECT_ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-
     cmd = [
         sys.executable,
         str(SIMULATOR_SCRIPT),
@@ -200,11 +184,13 @@ def run_prepare_and_simulator(name: str, scenario_path: Path, evidence_dir: Path
         str(metrics_path),
         "--plot",
         str(plot_path),
+        "--prepare-host-routing-log",
+        str(prepare_log),
     ]
     if smoke:
         cmd.append("--smoke")
     sim_result = run_command(cmd, stdout_path=simulator_log)
-    prepare_rc = prepare_proc.wait()
+    prepare_rc = 0 if prepare_log.exists() else 1
 
     record = {
         "success": sim_result.returncode == 0 and prepare_rc == 0 and metrics_path.exists(),
@@ -326,18 +312,20 @@ def run_routed_regression(name: str, evidence_dir: Path, delay_ms: int, packet_l
     prepare_log = evidence_dir / f"{name}-prepare.log"
     simulator_log = evidence_dir / f"{name}-simulator.log"
 
-    prepare_proc = subprocess.Popen(
-        [sys.executable, str(PREPARE_SCRIPT), "--scenario", str(scenario_path), "--ignore-existing", "--evidence", str(prepare_log)],
-        cwd=PROJECT_ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
     sim_result = run_command(
-        [sys.executable, str(ROUTED_SIMULATOR_SCRIPT), "--scenario", str(scenario_path), "--output", str(metrics_path)],
+        [
+            sys.executable,
+            str(ROUTED_SIMULATOR_SCRIPT),
+            "--scenario",
+            str(scenario_path),
+            "--output",
+            str(metrics_path),
+            "--prepare-host-routing-log",
+            str(prepare_log),
+        ],
         stdout_path=simulator_log,
     )
-    prepare_rc = prepare_proc.wait()
+    prepare_rc = 0 if prepare_log.exists() else 1
     record = {
         "success": sim_result.returncode == 0 and prepare_rc == 0 and metrics_path.exists(),
         "simulator_exit_code": sim_result.returncode,

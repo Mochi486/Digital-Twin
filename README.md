@@ -146,6 +146,14 @@ If you want to enable a third-party OpenAI-compatible live provider from the cur
 
 The project only saves sanitized provider host, selected model, request id, usage, latency, and redacted non-sensitive responses.
 
+For the bounded compatible-provider validation completed on `2026-07-14`, the actual live configuration was:
+
+- provider type: `openai_compatible`
+- provider host: `ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com`
+- model: `qwen3.7-plus`
+- endpoint: `chat.completions`
+- structured-output mode: `response_format=json_schema`
+
 ## OpenAI Live Status
 
 - Mock AI generation is complete and validated.
@@ -153,7 +161,9 @@ The project only saves sanitized provider host, selected model, request id, usag
 - The latest official OpenAI live attempt on `2026-07-14` reached OpenAI and failed with HTTP `429` / `insufficient_quota`.
 - Therefore no official OpenAI-generated scenario, dry-run, or real Docker run is counted as complete.
 - Third-party OpenAI-compatible provider support is implemented with model-list probing and endpoint fallback across Responses API, Chat Completions JSON schema, JSON object, and plain JSON parsing.
-- The current `2026-07-14` compatible-provider run is blocked before model probing because `COMPAT_BASE_URL` is not a valid absolute `http(s)` URL in the current PowerShell session.
+- The bounded `2026-07-14` compatible-provider validation completed successfully against an Alibaba Cloud Bailian OpenAI-compatible endpoint using `qwen3.7-plus` and Chat Completions JSON schema mode.
+- The latest compatible-provider live evidence is:
+  - `D:\home\fanys23\project_70\.local-evidence\openai-compatible-live-validation-20260714-064525`
 - See `docs/progress/openai-live-validation-summary-2026-07-14.md` and `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
 
 ## Current Results
@@ -181,7 +191,8 @@ The latest routed example in `runs/current/metrics.json` currently records:
 - routed delay regression passed with `70.414 ms` average RTT at configured `30 ms` one-way delay
 - routed packet-loss regression passed with measured `12.0%` ping loss at configured one-way `3%` loss
 - official OpenAI live provider path is implemented but blocked by HTTP `429 insufficient_quota` as of `2026-07-14`
-- third-party OpenAI-compatible provider path is implemented but blocked by invalid `COMPAT_BASE_URL` configuration as of `2026-07-14`
+- third-party OpenAI-compatible provider live generation, dry-run, and real WSL Docker run completed on `2026-07-14`
+- latest compatible-provider live metrics: `0.0%` ping loss, `82.194 ms` average RTT, `18.3 Mbps` throughput, selected path `client-1 -> router-a -> router-b -> router-d -> server-1`
 - Germany50 / DFN full topology remains paused beyond dry-run and small-subset smoke validation
 
 ## Current Focus

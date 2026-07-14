@@ -1,10 +1,12 @@
 import argparse
 import json
 import subprocess
+import sys
 import time
 from pathlib import Path
 
 from topology_utils import (
+    build_graph_adjacency,
     build_bandwidth_qdisc_command,
     build_netem_qdisc_command,
     build_resource_estimate,
@@ -19,12 +21,14 @@ from topology_utils import (
     parse_throughput,
     theoretical_round_trip_loss_percent,
 )
+from routed_delay_utils import build_combined_qdisc_commands
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCENARIO_PATH = PROJECT_ROOT / "data" / "scenario_two_router_topology.json"
 DEFAULT_OUTPUT_PATH = PROJECT_ROOT / "runs" / "current" / "topology_metrics.json"
 DEFAULT_PLOT_PATH = PROJECT_ROOT / "runs" / "current" / "topology_two_router.svg"
 IMAGE_NAME = "my-iperf-tc"
+PREPARE_WSL_DOCKER_SCRIPT = PROJECT_ROOT / "scripts" / "prepare_wsl_docker.py"
 
 
 def run_command(cmd, check=False):
@@ -41,6 +45,18 @@ def run_command(cmd, check=False):
             f"stderr:\n{result.stderr}"
         )
     return result
+
+
+def prepare_host_routing(scenario_path: Path, evidence_path: Path | None = None):
+    cmd = [
+        sys.executable,
+        str(PREPARE_WSL_DOCKER_SCRIPT),
+        "--scenario",
+        str(scenario_path),
+    ]
+    if evidence_path is not None:
+        cmd.extend(["--evidence", str(evidence_path)])
+    run_command(cmd, check=True)
 
 
 def count_running_resources():
@@ -258,6 +274,86 @@ def apply_bandwidth_limits(scenario):
     return applied
 
 
+def apply_interface_qdisc_policies(scenario):
+    print("\n=== Applying combined qdisc policies ===")
+    impairment_plan = get_link_impairment_plan(scenario)
+    bandwidth_plan = get_bandwidth_plan(scenario)
+    policy_by_interface = {}
+
+    for record in impairment_plan:
+        interface_name = resolve_interface_name(record["node"], record["interface_ip"])
+        key = (record["node"], record["interface_ip"])
+        policy = policy_by_interface.setdefault(
+            key,
+            {
+                "node": record["node"],
+                "interface_ip": record["interface_ip"],
+                "interface": interface_name,
+                "delay_ms": 0.0,
+                "packet_loss_percent": 0.0,
+                "bandwidth_mbps": None,
+            },
+        )
+        policy["delay_ms"] = max(policy["delay_ms"], float(record["delay_ms"]))
+        policy["packet_loss_percent"] = max(policy["packet_loss_percent"], float(record["packet_loss_percent"]))
+
+    for record in bandwidth_plan:
+        interface_name = resolve_interface_name(record["node"], record["interface_ip"])
+        key = (record["node"], record["interface_ip"])
+        policy = policy_by_interface.setdefault(
+            key,
+            {
+                "node": record["node"],
+                "interface_ip": record["interface_ip"],
+                "interface": interface_name,
+                "delay_ms": 0.0,
+                "packet_loss_percent": 0.0,
+                "bandwidth_mbps": None,
+            },
+        )
+        policy["bandwidth_mbps"] = float(record["bandwidth_mbps"])
+
+    for policy in policy_by_interface.values():
+        clear_root_qdisc(policy["node"], policy["interface"])
+        for command in build_combined_qdisc_commands(
+            policy["interface"],
+            policy["bandwidth_mbps"],
+            policy["delay_ms"],
+            policy["packet_loss_percent"],
+        ):
+            run_command(["docker", "exec", policy["node"]] + command, check=True)
+        policy["qdisc"] = get_qdisc_state(policy["node"], policy["interface"])
+
+    impairment_qdisc_by_key = {
+        (policy["node"], policy["interface_ip"]): policy["qdisc"] for policy in policy_by_interface.values()
+    }
+    bandwidth_qdisc_by_key = impairment_qdisc_by_key
+
+    applied_impairments = []
+    for record in impairment_plan:
+        interface_name = resolve_interface_name(record["node"], record["interface_ip"])
+        applied_impairments.append(
+            {
+                **record,
+                "interface": interface_name,
+                "qdisc": impairment_qdisc_by_key[(record["node"], record["interface_ip"])],
+            }
+        )
+
+    applied_bandwidth = []
+    for record in bandwidth_plan:
+        interface_name = resolve_interface_name(record["node"], record["interface_ip"])
+        applied_bandwidth.append(
+            {
+                **record,
+                "interface": interface_name,
+                "qdisc": bandwidth_qdisc_by_key[(record["node"], record["interface_ip"])],
+            }
+        )
+
+    return applied_impairments, applied_bandwidth
+
+
 def effective_traffic(scenario, smoke_mode):
     traffic = dict(scenario["traffic"])
     if smoke_mode:
@@ -333,12 +429,43 @@ def setup_topology(scenario):
     timings["verify_routes_s"] = round(time.perf_counter() - start, 3)
 
     start = time.perf_counter()
-    applied_impairments = apply_link_impairments(scenario)
-    timings["apply_impairments_s"] = round(time.perf_counter() - start, 3)
+    applied_impairments, bandwidth_controls = apply_interface_qdisc_policies(scenario)
+    combined_qdisc_time = round(time.perf_counter() - start, 3)
+    timings["apply_impairments_s"] = combined_qdisc_time
+    timings["apply_bandwidth_s"] = 0.0
+
+    timings["setup_total_s"] = round(sum(timings.values()), 3)
+    return applied_impairments, bandwidth_controls, route_verification, timings
+
+
+def setup_topology_with_host_routing(scenario, scenario_path: Path, evidence_path: Path):
+    timings = {}
 
     start = time.perf_counter()
-    bandwidth_controls = apply_bandwidth_limits(scenario)
-    timings["apply_bandwidth_s"] = round(time.perf_counter() - start, 3)
+    create_subnets(scenario)
+    timings["create_subnets_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    prepare_host_routing(scenario_path, evidence_path)
+    timings["prepare_host_routing_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    start_nodes(scenario)
+    timings["start_nodes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    configure_routes(scenario)
+    timings["configure_routes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    route_verification = verify_routes(scenario)
+    timings["verify_routes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
+    applied_impairments, bandwidth_controls = apply_interface_qdisc_policies(scenario)
+    combined_qdisc_time = round(time.perf_counter() - start, 3)
+    timings["apply_impairments_s"] = combined_qdisc_time
+    timings["apply_bandwidth_s"] = 0.0
 
     timings["setup_total_s"] = round(sum(timings.values()), 3)
     return applied_impairments, bandwidth_controls, route_verification, timings
@@ -441,6 +568,7 @@ def parse_args():
     parser.add_argument("--scenario", type=Path, default=DEFAULT_SCENARIO_PATH)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
     parser.add_argument("--plot", type=Path, default=DEFAULT_PLOT_PATH)
+    parser.add_argument("--prepare-host-routing-log", type=Path, default=None)
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--cleanup-only", action="store_true")
@@ -464,7 +592,16 @@ def main():
 
     initial_cleanup_time_s = cleanup(scenario)
     try:
-        applied_impairments, bandwidth_controls, route_verification, setup_timings = setup_topology(scenario)
+        if args.prepare_host_routing_log is not None:
+            applied_impairments, bandwidth_controls, route_verification, setup_timings = (
+                setup_topology_with_host_routing(
+                    scenario,
+                    args.scenario,
+                    args.prepare_host_routing_log,
+                )
+            )
+        else:
+            applied_impairments, bandwidth_controls, route_verification, setup_timings = setup_topology(scenario)
         ping_metrics, throughput_mbps, run_timings = exercise_topology(scenario, args.smoke)
         stage_timings = {
             "initial_cleanup_s": initial_cleanup_time_s,

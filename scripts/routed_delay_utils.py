@@ -139,6 +139,43 @@ def build_bandwidth_qdisc_command(
     ]
 
 
+def build_combined_qdisc_commands(
+    interface_name: str,
+    bandwidth_mbps: int | float | None,
+    delay_ms: int | float,
+    packet_loss_percent: int | float,
+) -> list[list[str]]:
+    commands = []
+    has_netem = delay_ms > 0 or packet_loss_percent > 0
+    has_bandwidth = bandwidth_mbps is not None
+
+    if has_bandwidth and has_netem:
+        command = [
+            "tc",
+            "qdisc",
+            "replace",
+            "dev",
+            interface_name,
+            "root",
+            "netem",
+        ]
+        if delay_ms > 0:
+            command.extend(["delay", f"{delay_ms}ms"])
+        if packet_loss_percent > 0:
+            command.extend(["loss", f"{packet_loss_percent}%"])
+        command.extend(["rate", f"{bandwidth_mbps}mbit"])
+        commands.append(command)
+        return commands
+
+    if has_bandwidth:
+        commands.append(build_bandwidth_qdisc_command(interface_name, bandwidth_mbps))
+        return commands
+
+    if has_netem:
+        commands.append(build_netem_qdisc_command(interface_name, delay_ms, packet_loss_percent))
+    return commands
+
+
 def summarize_numeric(values: list[float]) -> dict:
     if not values:
         raise ValueError("At least one numeric value is required.")
