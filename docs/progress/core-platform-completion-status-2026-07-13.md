@@ -16,7 +16,8 @@ Date: 2026-07-13
 - Metrics persistence with timings, qdisc state, route tables, and resource estimates available
 - Prompt-driven AI scenario generation available
 - Mock provider available
-- Optional OpenAI provider with Responses API Structured Outputs integration available
+- Official OpenAI provider with Responses API Structured Outputs integration available
+- Third-party OpenAI-compatible provider framework available with model-list probing and endpoint fallback
 - Safety gates for schema, semantic, and forbidden-content rejection available
 
 ## Completed Real Experiments
@@ -63,8 +64,9 @@ Date: 2026-07-13
 
 ## Remaining Gap To Full Core Completion
 
-Only one external blocker remains relative to the current bounded scope:
+Two external blockers remain relative to the current bounded scope:
 
-- restore OpenAI API quota or billing so the already-implemented live provider path can complete schema validation, dry-run, and real Docker evidence
+- restore official OpenAI API quota or billing so the official live provider path can complete schema validation, dry-run, and real Docker evidence
+- provide a valid absolute `COMPAT_BASE_URL` for the third-party OpenAI-compatible provider so model probing and live generation can start
 
 Everything else requested in the non-DFN, non-RL bounded scope is implemented and validated or explicitly paused by scope.

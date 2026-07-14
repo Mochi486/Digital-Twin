@@ -100,6 +100,8 @@ Because quota failed before a response payload was created:
 - no simulator dry-run was accepted
 - no real Docker run was started for the live scenario
 
+This file records only the official OpenAI API path. Third-party OpenAI-compatible provider work is tracked separately in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
+
 ## Lightweight Regressions Completed During Live Closure
 
 - `36/36` unit tests passed

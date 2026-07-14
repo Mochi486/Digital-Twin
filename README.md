@@ -22,7 +22,7 @@ This repository contains a Docker-based network digital twin prototype for contr
 - `scripts/simulator_real.py`: direct client-server bandwidth test
 - `scripts/simulator_routed.py`: routed client-router-server test with static routes
 - `scripts/simulator_topology.py`: generic JSON topology simulator for multi-hop routed scenarios
-- `scripts/generate_scenario_ai.py`: prompt-driven scenario generator with mock and optional OpenAI providers
+- `scripts/generate_scenario_ai.py`: prompt-driven scenario generator with `mock`, `openai`, and `openai_compatible` providers
 - `scripts/run_batch.py`: automated bandwidth sweep for 20, 50, and 100 Mbps
 - `scripts/run_two_router_batch.py`: two-router validation batch with baseline, delay, and loss checks
 - `scripts/analyze_results.py`: analysis and throughput plotting
@@ -136,16 +136,25 @@ cd /mnt/d/home/fanys23/project_70
 python scripts/run_ai_scenario_phase.py
 ```
 
-If you want to enable OpenAI live scenario generation, export `OPENAI_API_KEY` inside the WSL environment before running the phase script. The project never prints or stores the key itself.
+If you want to enable official OpenAI live scenario generation, export `OPENAI_API_KEY` inside the WSL environment before running the phase script. The project never prints or stores the key itself.
+
+If you want to enable a third-party OpenAI-compatible live provider from the current PowerShell session, set:
+
+- `COMPAT_API_KEY`
+- `COMPAT_BASE_URL`
+- `COMPAT_MODEL_CANDIDATES`
+
+The project only saves sanitized provider host, selected model, request id, usage, latency, and redacted non-sensitive responses.
 
 ## OpenAI Live Status
 
 - Mock AI generation is complete and validated.
-- OpenAI live request wiring now uses the official Python SDK plus Responses API Structured Outputs.
-- Real WSL Docker execution with `prepare_wsl_docker.py` is ready for live-generated scenarios.
-- The July 14, 2026 live attempt reached OpenAI with SDK `2.45.0` but failed with `AuthenticationError` / HTTP `401 invalid_api_key`.
-- The current PowerShell `OPENAI_API_KEY` value appears to be a URL-like string ending in `/v1`, not an API key, so no live scenario, dry-run, or real Docker run was accepted as complete.
-- See `docs/progress/openai-live-validation-summary-2026-07-14.md` for the blocker record.
+- Official OpenAI live request wiring uses the official Python SDK plus Responses API Structured Outputs.
+- The latest official OpenAI live attempt on `2026-07-14` reached OpenAI and failed with HTTP `429` / `insufficient_quota`.
+- Therefore no official OpenAI-generated scenario, dry-run, or real Docker run is counted as complete.
+- Third-party OpenAI-compatible provider support is implemented with model-list probing and endpoint fallback across Responses API, Chat Completions JSON schema, JSON object, and plain JSON parsing.
+- The current `2026-07-14` compatible-provider run is blocked before model probing because `COMPAT_BASE_URL` is not a valid absolute `http(s)` URL in the current PowerShell session.
+- See `docs/progress/openai-live-validation-summary-2026-07-14.md` and `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
 
 ## Current Results
 
@@ -169,9 +178,10 @@ The latest routed example in `runs/current/metrics.json` currently records:
 - `lossy-8` real runs: `1/1` successful, measured `25.0%` ping loss, `19.4 Mbps`
 - single-router dry-run regression passed
 - two-router dry-run regression passed
-- routed delay regression passed with `72.26 ms` average RTT at configured `30 ms` one-way delay
-- routed packet-loss regression passed with measured `8.0%` ping loss at configured one-way `3%` loss
-- OpenAI live provider path is implemented but still blocked by an invalid API key as of `2026-07-14`
+- routed delay regression passed with `70.414 ms` average RTT at configured `30 ms` one-way delay
+- routed packet-loss regression passed with measured `12.0%` ping loss at configured one-way `3%` loss
+- official OpenAI live provider path is implemented but blocked by HTTP `429 insufficient_quota` as of `2026-07-14`
+- third-party OpenAI-compatible provider path is implemented but blocked by invalid `COMPAT_BASE_URL` configuration as of `2026-07-14`
 - Germany50 / DFN full topology remains paused beyond dry-run and small-subset smoke validation
 
 ## Current Focus

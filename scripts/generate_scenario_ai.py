@@ -13,7 +13,7 @@ from ai_scenario_utils import (
     default_topology_name,
     mock_generate_abstract_scenario,
 )
-from openai_live_utils import create_openai_client, request_structured_scenario, resolve_openai_model
+from openai_live_utils import create_provider_client, request_structured_scenario, resolve_provider_model
 from topology_utils import build_topology_svg
 
 
@@ -24,8 +24,13 @@ RUNS_ROOT = PROJECT_ROOT / "runs" / "current"
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", required=True)
-    parser.add_argument("--provider", choices=["mock", "openai"], default=DEFAULT_PROVIDER)
+    parser.add_argument("--provider", choices=["mock", "openai", "openai_compatible"], default=DEFAULT_PROVIDER)
     parser.add_argument("--model", default="")
+    parser.add_argument(
+        "--endpoint-type",
+        choices=["responses_json_schema", "chat_json_schema", "chat_json_object", "chat_plain_json"],
+        default="responses_json_schema",
+    )
     parser.add_argument("--topology-name", default="")
     parser.add_argument("--output-scenario", type=Path, default=RUNS_ROOT / "ai_scenario.json")
     parser.add_argument("--report", type=Path, default=RUNS_ROOT / "ai_scenario_report.json")
@@ -35,8 +40,14 @@ def parse_args():
     return parser.parse_args()
 
 
-def openai_generate_abstract_scenario(prompt: str, model: str, api_key_override: str | None = None) -> tuple[dict | None, dict]:
-    client, sdk_status = create_openai_client(api_key_override=api_key_override)
+def openai_generate_abstract_scenario(
+    provider: str,
+    prompt: str,
+    model: str,
+    endpoint_type: str,
+    api_key_override: str | None = None,
+) -> tuple[dict | None, dict]:
+    client, sdk_status = create_provider_client(provider, api_key_override=api_key_override)
     if client is None:
         return None, {
             "status": "client_unavailable",
@@ -45,7 +56,7 @@ def openai_generate_abstract_scenario(prompt: str, model: str, api_key_override:
             "error": sdk_status.get("error_message"),
         }
 
-    response = request_structured_scenario(client, prompt, model, OPENAI_SYSTEM_PROMPT)
+    response = request_structured_scenario(client, prompt, model, OPENAI_SYSTEM_PROMPT, endpoint_type)
     response["sdk_status"] = sdk_status
     if response["status"] != "ok":
         return None, response
@@ -71,7 +82,7 @@ def main() -> int:
     args = parse_args()
     topology_name = args.topology_name or default_topology_name(args.prompt)
     timestamp = datetime.now().isoformat()
-    model = resolve_openai_model(args.model or DEFAULT_OPENAI_MODEL)
+    model = resolve_provider_model(args.provider, args.model or DEFAULT_OPENAI_MODEL)
 
     if args.provider == "mock":
         candidate, raw_response = mock_generate_abstract_scenario(args.prompt)
@@ -80,13 +91,19 @@ def main() -> int:
             "raw_response": raw_response,
         }
     else:
-        candidate, provider_result = openai_generate_abstract_scenario(args.prompt, model)
+        candidate, provider_result = openai_generate_abstract_scenario(
+            args.provider,
+            args.prompt,
+            model,
+            args.endpoint_type,
+        )
 
     report = {
         "timestamp": timestamp,
         "prompt": args.prompt,
         "provider": args.provider,
         "model": model,
+        "endpoint_type": args.endpoint_type if args.provider != "mock" else None,
         "topology_name": topology_name,
         "provider_result": provider_result,
         "validation_result": None,

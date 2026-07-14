@@ -8,16 +8,24 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-from ai_scenario_utils import OPENAI_SYSTEM_PROMPT, build_validation_gate_report, default_topology_name
+from ai_scenario_utils import (
+    DEFAULT_COMPATIBLE_MODELS,
+    OPENAI_SYSTEM_PROMPT,
+    build_validation_gate_report,
+    default_topology_name,
+)
 from openai_live_utils import (
-    choose_fallback_model,
-    create_openai_client,
-    is_model_access_error,
+    CAPABILITY_ENDPOINTS,
+    create_provider_client,
     list_accessible_models,
+    model_exists,
+    parse_compatible_model_candidates,
+    probe_model_capabilities,
     redact_data,
     redact_text,
     request_structured_scenario,
     resolve_openai_model,
+    sanitize_provider_host,
 )
 
 
@@ -39,6 +47,7 @@ MAX_REQUEST_ATTEMPTS = 3
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--provider", choices=["openai", "openai_compatible"], default="openai_compatible")
     parser.add_argument("--prompt", default=PROMPT)
     parser.add_argument("--max-attempts", type=int, default=MAX_REQUEST_ATTEMPTS)
     parser.add_argument("--api-key-stdin", action="store_true")
@@ -47,7 +56,7 @@ def parse_args():
 
 def write_json(path: Path, payload) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    path.write_text(json.dumps(redact_data(payload), indent=2) + "\n", encoding="utf-8")
 
 
 def to_wsl_path(path: Path) -> str:
@@ -92,9 +101,9 @@ def verify_docker_available(evidence_dir: Path) -> dict:
     }
 
 
-def run_simulator_dry_run(scenario_path: Path, evidence_dir: Path) -> dict:
-    output_path = evidence_dir / "openai-live-dry-run.json"
-    plot_path = evidence_dir / "openai-live-dry-run.svg"
+def run_simulator_dry_run(scenario_path: Path, evidence_dir: Path, prefix: str) -> dict:
+    output_path = evidence_dir / f"{prefix}-dry-run.json"
+    plot_path = evidence_dir / f"{prefix}-dry-run.svg"
     if IS_WINDOWS:
         result = run_wsl_bash(
             build_wsl_python_command(
@@ -135,12 +144,28 @@ def run_simulator_dry_run(scenario_path: Path, evidence_dir: Path) -> dict:
     return record
 
 
-def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir: Path) -> dict:
+def _select_client_server_path(metrics: dict) -> list[str]:
+    for route in metrics.get("static_routes", []):
+        path = route.get("path", [])
+        if path and path[0] == "node-1" and path[-1] == "node-5":
+            return path
+    for route in metrics.get("static_routes", []):
+        path = route.get("path", [])
+        if path and path[0] == "node-1" and path[-1] == "node-6":
+            return path
+    for route in metrics.get("static_routes", []):
+        path = route.get("path", [])
+        if path and path[0] == "node-1":
+            return path
+    return []
+
+
+def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir: Path, prefix: str) -> dict:
     tracked_run_dir.mkdir(parents=True, exist_ok=True)
     metrics_path = tracked_run_dir / "metrics.json"
     plot_path = tracked_run_dir / "topology.svg"
-    prepare_log = evidence_dir / "openai-live-prepare.log"
-    simulator_log = evidence_dir / "openai-live-simulator.log"
+    prepare_log = evidence_dir / f"{prefix}-prepare.log"
+    simulator_log = evidence_dir / f"{prefix}-simulator.log"
 
     if IS_WINDOWS:
         prepare_proc = subprocess.Popen(
@@ -215,17 +240,28 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
     }
     if metrics_path.exists():
         metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
-        selected_path = []
-        if metrics.get("static_routes"):
-            selected_path = metrics["static_routes"][0].get("path", [])
+        selected_path = _select_client_server_path(metrics)
+        route_verification = metrics.get("route_verification", [])
+        alternative_path_count = 0
+        observed_paths = set()
+        for route in metrics.get("static_routes", []):
+            path = tuple(route.get("path", []))
+            if path and len(path) > 1:
+                observed_paths.add(path)
+        alternative_path_count = len(observed_paths)
         record["metrics"] = metrics
+        record["container_count"] = metrics.get("resource_estimate", {}).get("node_count")
+        record["network_count"] = metrics.get("resource_estimate", {}).get("network_count")
         record["selected_path"] = selected_path
         record["hop_count"] = len(selected_path) - 1 if selected_path else None
+        record["route_verification_status"] = "passed" if route_verification and all(item.get("matched") for item in route_verification) else "failed"
+        record["alternative_path_count"] = alternative_path_count
+        record["qdisc_verification_status"] = "passed" if metrics.get("router_qdisc_state") else "failed"
     return record
 
 
-def cleanup_and_check_residuals(scenario_path: Path, evidence_dir: Path) -> dict:
-    cleanup_metrics = evidence_dir / "cleanup-metrics.json"
+def cleanup_and_check_residuals(scenario_path: Path, evidence_dir: Path, prefix: str) -> dict:
+    cleanup_metrics = evidence_dir / f"{prefix}-cleanup-metrics.json"
     if IS_WINDOWS:
         result = run_wsl_bash(
             build_wsl_python_command(
@@ -279,7 +315,7 @@ def run_secret_scan(project_root: Path) -> dict:
         "scripts/run_openai_live_validation.py",
         "tests/test_openai_live_utils.py",
     }
-    for pattern in ("sk-", "OPENAI_API_KEY="):
+    for pattern in ("sk-", "OPENAI_API_KEY=", "COMPAT_API_KEY="):
         result = run_command(
             [
                 "git",
@@ -308,16 +344,62 @@ def run_secret_scan(project_root: Path) -> dict:
     return {"status": "clean" if not hits else "findings", "hits": hits}
 
 
-def build_attempt_record(attempt_number: int, model: str, provider_result: dict, validation: dict | None) -> dict:
+def capability_matrix_filename(provider: str) -> str:
+    return f"{provider.replace('_', '-')}-capability-matrix.json"
+
+
+def build_probe_matrix(provider: str, client, model_list_record: dict) -> tuple[list[dict], dict | None]:
+    matrix = []
+    selected = None
+    accessible_models = model_list_record.get("model_ids", []) if model_list_record.get("status") == "ok" else []
+    candidate_models = (
+        parse_compatible_model_candidates(os.environ.get("COMPAT_MODEL_CANDIDATES", ""))
+        if provider == "openai_compatible"
+        else [resolve_openai_model("")]
+    )
+    for model in candidate_models:
+        if not model_exists(model, accessible_models):
+            matrix.append(
+                {
+                    "model": model,
+                    "model_exists": False,
+                    "endpoint_type": None,
+                    "json_schema_support": False,
+                    "json_object_support": False,
+                    "request_status": "model_missing",
+                    "status_code": None,
+                    "error_type": "model_missing",
+                    "error_message": "Model not present in provider model list.",
+                    "latency_seconds": None,
+                    "selected": False,
+                }
+            )
+            continue
+        rows = probe_model_capabilities(client, model, OPENAI_SYSTEM_PROMPT)
+        for row in rows:
+            matrix.append(row)
+            if row["request_status"] == "ok" and selected is None:
+                row["selected"] = True
+                selected = row
+                break
+        if selected is not None:
+            break
+    return matrix, selected
+
+
+def build_attempt_record(attempt_number: int, provider: str, model: str, endpoint_type: str, provider_result: dict, validation: dict | None) -> dict:
     record = {
         "attempt": attempt_number,
-        "provider": "openai",
+        "provider": provider,
         "model": model,
+        "endpoint_type": endpoint_type,
         "request_timestamp": provider_result.get("request_timestamp"),
         "response_id": provider_result.get("response_id"),
         "usage": provider_result.get("usage"),
+        "latency_seconds": provider_result.get("latency_seconds"),
         "status": provider_result.get("status"),
         "raw_structured_json_response": provider_result.get("structured_output"),
+        "raw_response": provider_result.get("raw_response"),
         "validation": None,
     }
     if validation is not None:
@@ -326,7 +408,17 @@ def build_attempt_record(attempt_number: int, model: str, provider_result: dict,
             "gates": validation["gates"],
             "schema_validation": validation["schema_validation"],
             "semantic_validation": validation["semantic_validation"],
+            "prompt_constraint_validation": validation["prompt_constraint_validation"],
             "projection_validation": validation["projection_validation"],
+        }
+        record["normalization"] = {
+            "before": provider_result.get("structured_output"),
+            "after": validation.get("projected_scenario"),
+            "reasons": [
+                "deterministic subnet allocation from base_cidr 10.64.0.0/16",
+                "deterministic endpoint IP assignment per point-to-point subnet",
+                "deterministic shortest-path static route generation",
+            ],
         }
     if provider_result.get("status") != "ok":
         record["error_type"] = provider_result.get("error_type")
@@ -336,12 +428,17 @@ def build_attempt_record(attempt_number: int, model: str, provider_result: dict,
     return redact_data(record)
 
 
+def summary_filename(provider: str) -> str:
+    return f"{provider.replace('_', '-')}-live-summary.json"
+
+
 def main() -> int:
     args = parse_args()
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d-%H%M%S")
-    evidence_dir = EVIDENCE_ROOT / f"openai-live-validation-{timestamp}"
-    tracked_run_dir = RUNS_ROOT / f"openai-live-validation-{timestamp}"
+    provider_slug = args.provider.replace("_", "-")
+    evidence_dir = EVIDENCE_ROOT / f"{provider_slug}-live-validation-{timestamp}"
+    tracked_run_dir = RUNS_ROOT / f"{provider_slug}-live-validation-{timestamp}"
     evidence_dir.mkdir(parents=True, exist_ok=True)
 
     api_key_override = None
@@ -349,20 +446,28 @@ def main() -> int:
     if args.api_key_stdin:
         api_key_override = sys.stdin.read().strip()
         stdin_key_length = len(api_key_override)
-    env_key_length = len(os.environ.get("OPENAI_API_KEY", ""))
+
+    api_key_env = "OPENAI_API_KEY" if args.provider == "openai" else "COMPAT_API_KEY"
+    base_url_env = "COMPAT_BASE_URL" if args.provider == "openai_compatible" else ""
+    env_key_length = len(os.environ.get(api_key_env, ""))
+    base_url = os.environ.get(base_url_env, "") if base_url_env else ""
 
     summary = {
         "status": "started",
         "prompt": args.prompt,
-        "provider": "openai",
-        "api_key_present": bool(api_key_override or os.environ.get("OPENAI_API_KEY")),
+        "provider": args.provider,
+        "api_key_present": bool(api_key_override or os.environ.get(api_key_env)),
         "api_key_debug": {
             "stdin_key_length": stdin_key_length,
             "env_key_length": env_key_length,
         },
+        "sanitized_provider_host": sanitize_provider_host(base_url),
         "sdk_status": None,
         "docker_status": None,
-        "model_resolution": None,
+        "model_list": None,
+        "capability_matrix_file": None,
+        "capability_matrix": [],
+        "selected_probe": None,
         "attempts": [],
         "selected_attempt": None,
         "final_scenario_file": None,
@@ -375,7 +480,7 @@ def main() -> int:
         "error": None,
     }
 
-    client, sdk_status = create_openai_client(api_key_override=api_key_override)
+    client, sdk_status = create_provider_client(args.provider, api_key_override=api_key_override)
     summary["sdk_status"] = sdk_status
     if client is None:
         summary["status"] = "blocked"
@@ -383,7 +488,34 @@ def main() -> int:
             "type": sdk_status.get("error_type"),
             "message": sdk_status.get("error_message"),
         }
-        write_json(evidence_dir / "openai-live-summary.json", summary)
+        write_json(evidence_dir / summary_filename(args.provider), summary)
+        return 1
+
+    model_list_record = list_accessible_models(client)
+    summary["model_list"] = model_list_record
+    if model_list_record["status"] != "ok":
+        summary["status"] = "blocked"
+        summary["error"] = {
+            "type": model_list_record.get("error_type"),
+            "status_code": model_list_record.get("status_code"),
+            "message": model_list_record.get("error_message"),
+        }
+        write_json(evidence_dir / summary_filename(args.provider), summary)
+        return 1
+
+    capability_matrix, selected_probe = build_probe_matrix(args.provider, client, model_list_record)
+    matrix_path = evidence_dir / capability_matrix_filename(args.provider)
+    write_json(matrix_path, capability_matrix)
+    summary["capability_matrix_file"] = str(matrix_path)
+    summary["capability_matrix"] = capability_matrix
+    summary["selected_probe"] = selected_probe
+    if selected_probe is None:
+        summary["status"] = "blocked"
+        summary["error"] = {
+            "type": "no_supported_model",
+            "message": "All candidate models failed capability probing or were unavailable.",
+        }
+        write_json(evidence_dir / summary_filename(args.provider), summary)
         return 1
 
     docker_status = verify_docker_available(evidence_dir)
@@ -391,15 +523,19 @@ def main() -> int:
     if docker_status["status"] != "ok":
         summary["status"] = "blocked"
         summary["error"] = {"type": "docker_unavailable", "message": "WSL Docker Engine is unavailable."}
-        write_json(evidence_dir / "openai-live-summary.json", summary)
+        write_json(evidence_dir / summary_filename(args.provider), summary)
         return 1
 
-    requested_model = resolve_openai_model("")
-    final_model = requested_model
-    model_resolution = {"requested_model": requested_model, "final_model": None, "accessible_models": None}
-
+    selected_model = selected_probe["model"]
+    selected_endpoint = selected_probe["endpoint_type"]
     for attempt_number in range(1, args.max_attempts + 1):
-        provider_result = request_structured_scenario(client, args.prompt, final_model, OPENAI_SYSTEM_PROMPT)
+        provider_result = request_structured_scenario(
+            client,
+            args.prompt,
+            selected_model,
+            OPENAI_SYSTEM_PROMPT,
+            selected_endpoint,
+        )
         validation = None
         if provider_result["status"] == "ok":
             validation = build_validation_gate_report(
@@ -407,46 +543,46 @@ def main() -> int:
                 args.prompt,
                 topology_name=default_topology_name(args.prompt),
             )
-        attempt_record = build_attempt_record(attempt_number, final_model, provider_result, validation)
-        attempt_path = evidence_dir / f"openai-attempt-{attempt_number:02d}.json"
+        attempt_record = build_attempt_record(
+            attempt_number,
+            args.provider,
+            selected_model,
+            selected_endpoint,
+            provider_result,
+            validation,
+        )
+        attempt_path = evidence_dir / f"{provider_slug}-attempt-{attempt_number:02d}.json"
         write_json(attempt_path, attempt_record)
         summary["attempts"].append({**attempt_record, "attempt_file": str(attempt_path)})
 
         if provider_result["status"] != "ok":
-            if is_model_access_error(
-                provider_result.get("error_type"),
-                provider_result.get("status_code"),
-                provider_result.get("error_message"),
-            ):
-                accessible_record = list_accessible_models(client)
-                model_resolution["accessible_models"] = accessible_record
-                fallback_model = choose_fallback_model(accessible_record.get("model_ids", []))
-                if fallback_model and fallback_model != final_model:
-                    final_model = fallback_model
-                    continue
-            summary["status"] = "blocked"
-            summary["error"] = {
-                "type": provider_result.get("error_type"),
-                "status_code": provider_result.get("status_code"),
-                "message": provider_result.get("error_message"),
-            }
-            break
+            if attempt_number == args.max_attempts:
+                summary["status"] = "blocked"
+                summary["error"] = {
+                    "type": provider_result.get("error_type"),
+                    "status_code": provider_result.get("status_code"),
+                    "message": provider_result.get("error_message"),
+                }
+            continue
 
         if validation and validation["valid"]:
             summary["selected_attempt"] = attempt_number
-            model_resolution["final_model"] = final_model
             scenario_path = tracked_run_dir / "scenario.json"
             write_json(scenario_path, validation["projected_scenario"])
             summary["final_scenario_file"] = str(scenario_path)
-            dry_run = run_simulator_dry_run(scenario_path, evidence_dir)
+            raw_json_path = evidence_dir / f"{provider_slug}-raw-response.json"
+            validation_path = evidence_dir / f"{provider_slug}-validation-report.json"
+            write_json(raw_json_path, provider_result["structured_output"])
+            write_json(validation_path, validation)
+            dry_run = run_simulator_dry_run(scenario_path, evidence_dir, provider_slug)
             summary["dry_run"] = dry_run
             if dry_run["status"] != "ok":
                 summary["status"] = "blocked"
                 summary["error"] = {"type": "dry_run_failed", "message": "Simulator dry-run failed."}
                 break
-            real_run = run_real_validation(scenario_path, evidence_dir, tracked_run_dir)
+            real_run = run_real_validation(scenario_path, evidence_dir, tracked_run_dir, provider_slug)
             summary["real_run"] = real_run
-            cleanup = cleanup_and_check_residuals(scenario_path, evidence_dir)
+            cleanup = cleanup_and_check_residuals(scenario_path, evidence_dir, provider_slug)
             summary["cleanup"] = cleanup
             summary["status"] = "completed" if real_run["status"] == "ok" and cleanup["status"] == "ok" else "blocked"
             if summary["status"] != "completed":
@@ -460,10 +596,11 @@ def main() -> int:
                 "message": "Structured output validation failed after the maximum allowed attempts.",
             }
 
-    model_resolution["final_model"] = model_resolution["final_model"] or final_model
-    summary["model_resolution"] = model_resolution
+    if summary["status"] == "started":
+        summary["status"] = "blocked"
+        summary["error"] = {"type": "validation_failed", "message": "No valid live scenario was produced."}
     summary["secret_scan"] = run_secret_scan(PROJECT_ROOT)
-    write_json(evidence_dir / "openai-live-summary.json", redact_data(summary))
+    write_json(evidence_dir / summary_filename(args.provider), summary)
     return 0 if summary["status"] == "completed" else 1
 
 

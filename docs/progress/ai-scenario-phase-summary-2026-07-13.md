@@ -19,10 +19,16 @@ Date: 2026-07-13
   - routed delay and packet-loss regressions
   - invalid-scenario validation evidence
 - Tightened `scripts/ai_scenario_utils.py` to reject command-like content such as `docker`, `iptables`, and route-command strings before Docker execution.
-- Extended `scripts/generate_scenario_ai.py` to capture OpenAI response metadata including response id when live generation is used.
+- Extended `scripts/generate_scenario_ai.py` to support `mock`, `openai`, and `openai_compatible` providers and capture response metadata including response id when live generation is used.
+- Added `scripts/openai_live_utils.py` capability support for:
+  - official OpenAI
+  - third-party OpenAI-compatible providers
+  - model-list probing
+  - endpoint fallback across Responses API, Chat Completions JSON schema, JSON object, and plain JSON
+  - provider-host sanitization and secret redaction
 - Extended `scripts/simulator_topology.py` to verify installed static routes and persist all-node route tables.
 - Parameterized `scripts/simulator_routed.py` with explicit `--scenario` and `--output` arguments for clean regression execution.
-- Expanded unit coverage in `tests/test_ai_scenario_utils.py`.
+- Expanded unit coverage in `tests/test_ai_scenario_utils.py` and `tests/test_openai_live_utils.py`.
 
 ## WSL Docker Verification
 
@@ -111,25 +117,16 @@ Evidence:
   - measured ping loss: `8.0%`
   - throughput: `14.4 Mbps`
 
-## OpenAI Live Validation
+## Live Provider Status
 
 - WSL Docker runtime and bounded live-execution code paths are ready.
-- A Windows-side project virtual environment `.venv-win311` was added only to execute the official OpenAI Python SDK from the same PowerShell session that already held `OPENAI_API_KEY`.
-- The real live request reached OpenAI on `2026-07-14` with SDK `2.45.0` and model `gpt-5.6`.
-- The request failed before scenario validation with `AuthenticationError` / HTTP `401` / `invalid_api_key`.
-- The current PowerShell `OPENAI_API_KEY` appears to contain a URL-like value ending in `/v1`, not a usable API key.
-- Therefore:
-  - no live OpenAI structured scenario was accepted
-  - no live scenario dry-run was accepted
-  - no live scenario real Docker run was accepted
-- Detailed blocker evidence is captured in `docs/progress/openai-live-validation-summary-2026-07-14.md`.
-
-Minimal rerun after the key is corrected:
-
-```powershell
-Set-Location D:\home\fanys23\project_70
-D:\home\fanys23\project_70\.venv-win311\Scripts\python.exe scripts\generate_scenario_ai.py --provider openai --prompt "Create a connected six-node routed network topology with one client, one server, four routers, two alternative paths, 20 Mbps bandwidth, 10 ms one-way delay, 0 percent packet loss, and one TCP traffic flow from the client to the server."
-```
+- Official OpenAI live validation now reflects the latest `2026-07-14` state in `docs/progress/openai-live-validation-summary-2026-07-14.md`.
+- The official OpenAI request reached OpenAI with SDK `2.45.0` and failed with HTTP `429` / `insufficient_quota`.
+- No official OpenAI structured scenario, dry-run, or real Docker run was accepted.
+- Third-party OpenAI-compatible validation now has its own bounded runner in `scripts/run_openai_live_validation.py --provider openai_compatible`.
+- The current compatible-provider attempt is blocked before model probing because `COMPAT_BASE_URL` in the active PowerShell session is not a valid absolute `http(s)` URL.
+- No third-party live generation, dry-run, or real Docker run was accepted in this blocked state.
+- Detailed compatible-provider blocker evidence is captured in `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
 
 ## Explicit Non-Goals
 

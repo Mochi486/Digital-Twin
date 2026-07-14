@@ -9,9 +9,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 from ai_scenario_utils import (
     build_validation_gate_report,
     build_openai_text_format,
+    count_simple_paths,
     find_forbidden_content,
     infer_prompt_constraints,
     mock_generate_abstract_scenario,
+    validate_prompt_constraints,
     validate_and_project_generated_scenario,
 )
 
@@ -157,6 +159,44 @@ class AiScenarioUtilsTests(unittest.TestCase):
         report = build_validation_gate_report(invalid, "invalid")
         self.assertEqual(report["gates"]["duplicate_link_validation"], "failed")
         self.assertEqual(report["gates"]["deterministic_addressing"], "failed")
+
+    def test_prompt_constraint_validation_enforces_alternative_paths(self):
+        candidate = {
+            "nodes": [
+                {"id": "node-1", "role": "client"},
+                {"id": "node-2", "role": "router"},
+                {"id": "node-3", "role": "router"},
+                {"id": "node-4", "role": "router"},
+                {"id": "node-5", "role": "router"},
+                {"id": "node-6", "role": "server"},
+            ],
+            "links": [
+                {"source": "node-1", "target": "node-2", "bandwidth_mbps": 20, "delay_ms": 10, "packet_loss_percent": 0},
+                {"source": "node-2", "target": "node-3", "bandwidth_mbps": 20, "delay_ms": 10, "packet_loss_percent": 0},
+                {"source": "node-3", "target": "node-4", "bandwidth_mbps": 20, "delay_ms": 10, "packet_loss_percent": 0},
+                {"source": "node-4", "target": "node-5", "bandwidth_mbps": 20, "delay_ms": 10, "packet_loss_percent": 0},
+                {"source": "node-5", "target": "node-6", "bandwidth_mbps": 20, "delay_ms": 10, "packet_loss_percent": 0},
+            ],
+            "traffic": {"source": "node-1", "destination": "node-6", "protocol": "tcp", "duration_s": 2, "ping_count": 4, "reverse": True},
+        }
+        prompt = (
+            "Create a connected six-node routed network topology with one client, "
+            "one server, four routers, two alternative paths, 20 Mbps bandwidth, "
+            "10 ms one-way delay, 0 percent packet loss, and one TCP traffic flow "
+            "from the client to the server."
+        )
+        validation = validate_prompt_constraints(candidate, prompt)
+        self.assertFalse(validation["valid"])
+        self.assertIn("alternative client-to-server paths", validation["errors"][0])
+
+    def test_count_simple_paths_finds_two_paths(self):
+        adjacency = {
+            "node-1": {"node-2", "node-3"},
+            "node-2": {"node-1", "node-4"},
+            "node-3": {"node-1", "node-4"},
+            "node-4": {"node-2", "node-3"},
+        }
+        self.assertEqual(count_simple_paths(adjacency, "node-1", "node-4", limit=2), 2)
 
 
 if __name__ == "__main__":
