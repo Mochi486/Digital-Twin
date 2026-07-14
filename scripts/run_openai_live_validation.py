@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import shlex
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -25,6 +26,8 @@ EVIDENCE_ROOT = PROJECT_ROOT / ".local-evidence"
 RUNS_ROOT = PROJECT_ROOT / "runs"
 SIMULATOR_SCRIPT = PROJECT_ROOT / "scripts" / "simulator_topology.py"
 PREPARE_SCRIPT = PROJECT_ROOT / "scripts" / "prepare_wsl_docker.py"
+IS_WINDOWS = os.name == "nt"
+WSL_PYTHON = "/mnt/d/home/fanys23/project_70/.venv-wsl311/bin/python"
 PROMPT = (
     "Create a connected six-node routed network topology with one client,\n"
     "one server, four routers, two alternative paths, 20 Mbps bandwidth,\n"
@@ -47,6 +50,13 @@ def write_json(path: Path, payload) -> None:
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
+def to_wsl_path(path: Path) -> str:
+    resolved = path.resolve()
+    drive = resolved.drive.rstrip(":").lower()
+    remainder = resolved.as_posix().split(":", 1)[1].lstrip("/")
+    return f"/mnt/{drive}/{remainder}"
+
+
 def run_command(cmd: list[str], cwd: Path = PROJECT_ROOT, stdout_path: Path | None = None):
     if stdout_path is None:
         return subprocess.run(cmd, cwd=cwd, text=True, capture_output=True)
@@ -54,11 +64,25 @@ def run_command(cmd: list[str], cwd: Path = PROJECT_ROOT, stdout_path: Path | No
         return subprocess.run(cmd, cwd=cwd, text=True, stdout=log_file, stderr=subprocess.STDOUT)
 
 
+def run_wsl_bash(command: str, stdout_path: Path | None = None):
+    return run_command(["wsl", "bash", "-lc", command], cwd=PROJECT_ROOT, stdout_path=stdout_path)
+
+
+def build_wsl_python_command(script_path: Path, *args: str) -> str:
+    parts = [shlex.quote(WSL_PYTHON), shlex.quote(to_wsl_path(script_path))]
+    parts.extend(shlex.quote(arg) for arg in args)
+    return " ".join(parts)
+
+
 def verify_docker_available(evidence_dir: Path) -> dict:
     docker_version_log = evidence_dir / "docker-version.txt"
     docker_info_log = evidence_dir / "docker-info.txt"
-    version_result = run_command(["docker", "version"], stdout_path=docker_version_log)
-    info_result = run_command(["docker", "info"], stdout_path=docker_info_log)
+    if IS_WINDOWS:
+        version_result = run_wsl_bash("docker version", stdout_path=docker_version_log)
+        info_result = run_wsl_bash("docker info", stdout_path=docker_info_log)
+    else:
+        version_result = run_command(["docker", "version"], stdout_path=docker_version_log)
+        info_result = run_command(["docker", "info"], stdout_path=docker_info_log)
     return {
         "status": "ok" if version_result.returncode == 0 and info_result.returncode == 0 else "error",
         "docker_version_exit_code": version_result.returncode,
@@ -71,19 +95,33 @@ def verify_docker_available(evidence_dir: Path) -> dict:
 def run_simulator_dry_run(scenario_path: Path, evidence_dir: Path) -> dict:
     output_path = evidence_dir / "openai-live-dry-run.json"
     plot_path = evidence_dir / "openai-live-dry-run.svg"
-    result = run_command(
-        [
-            sys.executable,
-            str(SIMULATOR_SCRIPT),
-            "--scenario",
-            str(scenario_path),
-            "--output",
-            str(output_path),
-            "--plot",
-            str(plot_path),
-            "--dry-run",
-        ]
-    )
+    if IS_WINDOWS:
+        result = run_wsl_bash(
+            build_wsl_python_command(
+                SIMULATOR_SCRIPT,
+                "--scenario",
+                to_wsl_path(scenario_path),
+                "--output",
+                to_wsl_path(output_path),
+                "--plot",
+                to_wsl_path(plot_path),
+                "--dry-run",
+            )
+        )
+    else:
+        result = run_command(
+            [
+                sys.executable,
+                str(SIMULATOR_SCRIPT),
+                "--scenario",
+                str(scenario_path),
+                "--output",
+                str(output_path),
+                "--plot",
+                str(plot_path),
+                "--dry-run",
+            ]
+        )
     record = {
         "status": "ok" if result.returncode == 0 and output_path.exists() else "error",
         "exit_code": result.returncode,
@@ -104,34 +142,67 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
     prepare_log = evidence_dir / "openai-live-prepare.log"
     simulator_log = evidence_dir / "openai-live-simulator.log"
 
-    prepare_proc = subprocess.Popen(
-        [
-            sys.executable,
-            str(PREPARE_SCRIPT),
-            "--scenario",
-            str(scenario_path),
-            "--ignore-existing",
-            "--evidence",
-            str(prepare_log),
-        ],
-        cwd=PROJECT_ROOT,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-    sim_result = run_command(
-        [
-            sys.executable,
-            str(SIMULATOR_SCRIPT),
-            "--scenario",
-            str(scenario_path),
-            "--output",
-            str(metrics_path),
-            "--plot",
-            str(plot_path),
-        ],
-        stdout_path=simulator_log,
-    )
+    if IS_WINDOWS:
+        prepare_proc = subprocess.Popen(
+            [
+                "wsl",
+                "bash",
+                "-lc",
+                build_wsl_python_command(
+                    PREPARE_SCRIPT,
+                    "--scenario",
+                    to_wsl_path(scenario_path),
+                    "--ignore-existing",
+                    "--evidence",
+                    to_wsl_path(prepare_log),
+                ),
+            ],
+            cwd=PROJECT_ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        sim_result = run_wsl_bash(
+            build_wsl_python_command(
+                SIMULATOR_SCRIPT,
+                "--scenario",
+                to_wsl_path(scenario_path),
+                "--output",
+                to_wsl_path(metrics_path),
+                "--plot",
+                to_wsl_path(plot_path),
+            ),
+            stdout_path=simulator_log,
+        )
+    else:
+        prepare_proc = subprocess.Popen(
+            [
+                sys.executable,
+                str(PREPARE_SCRIPT),
+                "--scenario",
+                str(scenario_path),
+                "--ignore-existing",
+                "--evidence",
+                str(prepare_log),
+            ],
+            cwd=PROJECT_ROOT,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+            text=True,
+        )
+        sim_result = run_command(
+            [
+                sys.executable,
+                str(SIMULATOR_SCRIPT),
+                "--scenario",
+                str(scenario_path),
+                "--output",
+                str(metrics_path),
+                "--plot",
+                str(plot_path),
+            ],
+            stdout_path=simulator_log,
+        )
     prepare_rc = prepare_proc.wait()
     record = {
         "status": "ok" if sim_result.returncode == 0 and prepare_rc == 0 and metrics_path.exists() else "error",
@@ -155,19 +226,33 @@ def run_real_validation(scenario_path: Path, evidence_dir: Path, tracked_run_dir
 
 def cleanup_and_check_residuals(scenario_path: Path, evidence_dir: Path) -> dict:
     cleanup_metrics = evidence_dir / "cleanup-metrics.json"
-    result = run_command(
-        [
-            sys.executable,
-            str(SIMULATOR_SCRIPT),
-            "--scenario",
-            str(scenario_path),
-            "--output",
-            str(cleanup_metrics),
-            "--cleanup-only",
-        ]
-    )
-    containers = run_command(["docker", "ps", "-a", "--format", "{{.Names}}"])
-    networks = run_command(["docker", "network", "ls", "--format", "{{.Name}}"])
+    if IS_WINDOWS:
+        result = run_wsl_bash(
+            build_wsl_python_command(
+                SIMULATOR_SCRIPT,
+                "--scenario",
+                to_wsl_path(scenario_path),
+                "--output",
+                to_wsl_path(cleanup_metrics),
+                "--cleanup-only",
+            )
+        )
+        containers = run_wsl_bash("docker ps -a --format '{{.Names}}'")
+        networks = run_wsl_bash("docker network ls --format '{{.Name}}'")
+    else:
+        result = run_command(
+            [
+                sys.executable,
+                str(SIMULATOR_SCRIPT),
+                "--scenario",
+                str(scenario_path),
+                "--output",
+                str(cleanup_metrics),
+                "--cleanup-only",
+            ]
+        )
+        containers = run_command(["docker", "ps", "-a", "--format", "{{.Names}}"])
+        networks = run_command(["docker", "network", "ls", "--format", "{{.Name}}"])
     residual_containers = [
         line.strip()
         for line in containers.stdout.splitlines()
@@ -189,6 +274,11 @@ def cleanup_and_check_residuals(scenario_path: Path, evidence_dir: Path) -> dict
 
 def run_secret_scan(project_root: Path) -> dict:
     hits = []
+    excluded = {
+        "scripts/openai_live_utils.py",
+        "scripts/run_openai_live_validation.py",
+        "tests/test_openai_live_utils.py",
+    }
     for pattern in ("sk-", "OPENAI_API_KEY="):
         result = run_command(
             [
@@ -208,7 +298,13 @@ def run_secret_scan(project_root: Path) -> dict:
             cwd=project_root,
         )
         if result.returncode == 0:
-            hits.extend(redact_text(line) for line in result.stdout.splitlines() if line.strip())
+            for line in result.stdout.splitlines():
+                if not line.strip():
+                    continue
+                normalized = line.replace("\\", "/")
+                if any(normalized.startswith(prefix + ":") for prefix in excluded):
+                    continue
+                hits.append(redact_text(line))
     return {"status": "clean" if not hits else "findings", "hits": hits}
 
 

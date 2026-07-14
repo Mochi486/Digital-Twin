@@ -56,7 +56,7 @@ def build_generation_schema() -> dict:
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
-                    "required": ["id"],
+                    "required": ["id", "role"],
                     "properties": {
                         "id": {"type": "string"},
                         "role": {"type": "string", "enum": sorted(ROLE_VALUES)},
@@ -69,7 +69,7 @@ def build_generation_schema() -> dict:
                 "items": {
                     "type": "object",
                     "additionalProperties": False,
-                    "required": ["source", "target"],
+                    "required": ["source", "target", "bandwidth_mbps", "delay_ms", "packet_loss_percent"],
                     "properties": {
                         "source": {"type": "string"},
                         "target": {"type": "string"},

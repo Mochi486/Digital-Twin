@@ -37,15 +37,34 @@ Date: 2026-07-14
   - real WSL Docker validated
 - OpenAI live scenario remains blocked:
   - request reached OpenAI
-  - authentication failed before any scenario was accepted
+  - authentication and schema issues were resolved far enough to expose the current quota blocker
   - no live dry-run or live Docker run was counted as complete
 
-## Real OpenAI Attempt
+## Real OpenAI Attempts
 
-- Request date: 2026-07-14
-- Provider: `openai`
-- SDK: `openai 2.45.0`
-- Requested model: `gpt-5.6`
+- Attempt 1:
+  - Request date: `2026-07-14`
+  - Provider: `openai`
+  - SDK: `openai 2.45.0`
+  - Requested model: `gpt-5.6`
+  - Result: `AuthenticationError` / HTTP `401` / `invalid_api_key`
+  - Cause: the previous PowerShell `OPENAI_API_KEY` value was a URL-like string ending in `/v1`
+- Attempt 2:
+  - Request date: `2026-07-14`
+  - Provider: `openai`
+  - SDK: `openai 2.45.0`
+  - Requested model: `gpt-5.6`
+  - Result: `BadRequestError` / HTTP `400` / `invalid_json_schema`
+  - Cause: OpenAI Structured Outputs rejected the earlier schema because object `required` lists were incomplete
+- Attempt 3:
+  - Request date: `2026-07-14`
+  - Provider: `openai`
+  - SDK: `openai 2.45.0`
+  - Requested model: `gpt-5.6`
+  - Result: `RateLimitError` / HTTP `429` / `insufficient_quota`
+  - Cause: the account currently has insufficient quota or billing capacity
+
+- Latest blocker attempt: `3`
 - Prompt:
 
 ```text
@@ -55,21 +74,22 @@ one server, four routers, two alternative paths, 20 Mbps bandwidth,
 from the client to the server.
 ```
 
-- Evidence directory:
-  - `D:\home\fanys23\project_70\.local-evidence\openai-live-validation-win-20260714-104540`
-- Report file:
-  - `D:\home\fanys23\project_70\.local-evidence\openai-live-validation-win-20260714-104540\openai-live-report.json`
+- Latest evidence directory:
+  - `D:\home\fanys23\project_70\.local-evidence\openai-live-validation-20260714-030746`
+- Latest report file:
+  - `D:\home\fanys23\project_70\.local-evidence\openai-live-validation-20260714-030746\openai-live-summary.json`
 
 ## Result
 
-- Error type: `AuthenticationError`
-- HTTP status: `401`
-- OpenAI error code: `invalid_api_key`
-- Observed failure mode:
-  - the current PowerShell `OPENAI_API_KEY` appears to contain a URL-like string ending in `/v1`
-  - that is not a usable OpenAI API key
+- Latest error type: `RateLimitError`
+- Latest HTTP status: `429`
+- Latest OpenAI error code: `insufficient_quota`
+- Observed latest failure mode:
+  - the corrected PowerShell `OPENAI_API_KEY` is non-empty and non-URL
+  - the request now clears authentication and schema checks far enough to fail on account quota
+  - no model-access fallback was needed because the request did not fail on model authorization
 
-Because authentication failed:
+Because quota failed before a response payload was created:
 
 - no response id was produced
 - no token usage was produced
@@ -79,6 +99,19 @@ Because authentication failed:
 - no deterministic scenario projection was accepted
 - no simulator dry-run was accepted
 - no real Docker run was started for the live scenario
+
+## Lightweight Regressions Completed During Live Closure
+
+- `36/36` unit tests passed
+- single-router dry-run passed
+- two-router dry-run passed
+- one delay smoke real run passed
+- one packet-loss smoke real run passed
+- invalid-scenario rejection evidence regenerated
+
+Regression evidence:
+
+- `D:\home\fanys23\project_70\.local-evidence\openai-live-regressions-20260714-110941`
 
 ## Security Notes
 
@@ -93,13 +126,13 @@ Because authentication failed:
 - Structured Outputs request path: implemented
 - Validation-gate reporting: implemented
 - Non-root WSL host-rule preparation fallback: implemented
-- Real live scenario evidence: blocked by invalid key
+- Real live scenario evidence: blocked by account quota
 - Germany50 / DFN full topology: still deferred by scope
 - Optional RL: not started
 - Paper analysis and writing: still pending
 
 ## Minimal Manual Action
 
-1. Replace the current PowerShell `OPENAI_API_KEY` with a real OpenAI API key.
-2. Rerun the live request.
-3. If authentication succeeds, continue immediately with live dry-run and real Docker validation.
+1. Restore available OpenAI API quota or billing for the current account.
+2. Rerun `scripts/run_openai_live_validation.py`.
+3. If quota clears, the same script will continue into validation, dry-run, and real Docker execution.

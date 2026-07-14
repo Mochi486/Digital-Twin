@@ -1,0 +1,62 @@
+{
+  "topology": "client-router-server",
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20,
+  "configured_delay_ms": 30,
+  "configured_packet_loss_percent": 0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress for both routed subnets; ping RTT is measured end-to-end and reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress for both routed subnets; measured ping packet loss is end-to-end round-trip loss and is reported separately.",
+  "delay_interfaces": [
+    {
+      "container": "router1",
+      "network": "net_client_router",
+      "ip": "10.0.1.254",
+      "interface": "eth0",
+      "direction": "egress"
+    },
+    {
+      "container": "router1",
+      "network": "net_router_server",
+      "ip": "10.0.2.254",
+      "interface": "eth1",
+      "direction": "egress"
+    }
+  ],
+  "loss_interfaces": [
+    {
+      "container": "router1",
+      "network": "net_client_router",
+      "ip": "10.0.1.254",
+      "interface": "eth0",
+      "direction": "egress"
+    },
+    {
+      "container": "router1",
+      "network": "net_router_server",
+      "ip": "10.0.2.254",
+      "interface": "eth1",
+      "direction": "egress"
+    }
+  ],
+  "qdisc_state": {
+    "router_delay": {
+      "eth0": "qdisc netem 8036: root refcnt 9 limit 1000 delay 30ms",
+      "eth1": "qdisc netem 8037: root refcnt 9 limit 1000 delay 30ms"
+    },
+    "server_bandwidth": {
+      "interface": "eth0",
+      "qdisc": "qdisc tbf 8038: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+    }
+  },
+  "ping_packets_transmitted": 5,
+  "ping_packets_received": 4,
+  "ping_packet_loss_percent": 20.0,
+  "ping_rtt_min_ms": 60.184,
+  "ping_rtt_avg_ms": 67.931,
+  "ping_rtt_max_ms": 91.081,
+  "ping_rtt_mdev_ms": 13.365,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "throughput_mbps": 18.6,
+  "bandwidth_qdisc_interface": "eth0",
+  "bandwidth_qdisc_state": "qdisc tbf 8038: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+}

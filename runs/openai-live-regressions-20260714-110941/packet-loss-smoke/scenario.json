@@ -1,0 +1,64 @@
+{
+  "topology_name": "client-router-server",
+  "nodes": [
+    {
+      "id": "client1",
+      "type": "client",
+      "ip": "10.0.1.2"
+    },
+    {
+      "id": "router1",
+      "type": "router",
+      "interfaces": [
+        {
+          "network": "net_client_router",
+          "ip": "10.0.1.254"
+        },
+        {
+          "network": "net_router_server",
+          "ip": "10.0.2.254"
+        }
+      ]
+    },
+    {
+      "id": "server1",
+      "type": "server",
+      "ip": "10.0.2.2"
+    }
+  ],
+  "networks": [
+    {
+      "name": "net_client_router",
+      "subnet": "10.0.1.0/24"
+    },
+    {
+      "name": "net_router_server",
+      "subnet": "10.0.2.0/24"
+    }
+  ],
+  "links": [
+    {
+      "source": "client1",
+      "target": "router1",
+      "network": "net_client_router"
+    },
+    {
+      "source": "router1",
+      "target": "server1",
+      "network": "net_router_server",
+      "bandwidth_mbps": 20,
+      "delay_ms": 0,
+      "packet_loss_percent": 3
+    }
+  ],
+  "traffic": {
+    "source": "client1",
+    "destination": "server1",
+    "destination_ip": "10.0.2.2",
+    "protocol": "tcp",
+    "duration_s": 5,
+    "ping_count": 50,
+    "reverse": true,
+    "ping_interval_s": 0.05
+  }
+}

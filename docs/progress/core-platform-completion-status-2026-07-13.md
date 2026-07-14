@@ -65,6 +65,6 @@ Date: 2026-07-13
 
 Only one external blocker remains relative to the current bounded scope:
 
-- correct the current `OPENAI_API_KEY` value and rerun live validation so the already-implemented OpenAI provider path can complete schema validation, dry-run, and real Docker evidence
+- restore OpenAI API quota or billing so the already-implemented live provider path can complete schema validation, dry-run, and real Docker evidence
 
 Everything else requested in the non-DFN, non-RL bounded scope is implemented and validated or explicitly paused by scope.
