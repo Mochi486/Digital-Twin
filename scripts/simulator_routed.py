@@ -1,3 +1,4 @@
+import argparse
 import json
 import subprocess
 from pathlib import Path
@@ -15,8 +16,8 @@ from routed_delay_utils import (
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-SCENARIO_PATH = PROJECT_ROOT / "data" / "scenario_routed.json"
-OUTPUT_PATH = PROJECT_ROOT / "runs" / "current" / "metrics.json"
+DEFAULT_SCENARIO_PATH = PROJECT_ROOT / "data" / "scenario_routed.json"
+DEFAULT_OUTPUT_PATH = PROJECT_ROOT / "runs" / "current" / "metrics.json"
 
 IMAGE_NAME = "my-iperf-tc"
 
@@ -44,19 +45,19 @@ def run_command(cmd, check=False):
     return result
 
 
-def load_scenario():
-    with open(SCENARIO_PATH, "r", encoding="utf-8") as f:
+def load_scenario(path: Path):
+    with open(path, "r", encoding="utf-8") as f:
         scenario = json.load(f)
     validate_scenario_impairments(scenario)
     return scenario
 
 
-def cleanup():
+def cleanup(scenario_path: Path):
     print("\n=== Cleaning old containers and networks ===")
 
     run_command(["docker", "rm", "-f", CLIENT, ROUTER, SERVER])
 
-    scenario = load_scenario()
+    scenario = load_scenario(scenario_path)
     for net in scenario["networks"]:
         run_command(["docker", "network", "rm", net["name"]])
 
@@ -352,6 +353,7 @@ def run_iperf(scenario):
 
 def save_metrics(
     scenario,
+    output_path,
     ping_success,
     ping_metrics,
     throughput_mbps,
@@ -359,7 +361,7 @@ def save_metrics(
     qdisc_state,
     server_qdisc_state,
 ):
-    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
 
     metrics = {
         "topology": scenario.get("topology_name"),
@@ -393,17 +395,25 @@ def save_metrics(
         "bandwidth_qdisc_state": server_qdisc_state["qdisc"],
     }
 
-    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
 
     print("\n=== Metrics saved ===")
     print(metrics)
 
 
-def main():
-    scenario = load_scenario()
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--scenario", type=Path, default=DEFAULT_SCENARIO_PATH)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH)
+    return parser.parse_args()
 
-    cleanup()
+
+def main():
+    args = parse_args()
+    scenario = load_scenario(args.scenario)
+
+    cleanup(args.scenario)
     create_networks(scenario)
     start_router(scenario)
     start_server(scenario)
@@ -434,6 +444,7 @@ def main():
     }
     save_metrics(
         scenario,
+        args.output,
         ping_success,
         ping_metrics,
         throughput_mbps,

@@ -16,6 +16,23 @@ MAX_BANDWIDTH_MBPS = 1000
 ID_PATTERN = re.compile(r"^[a-z][a-z0-9-]{0,31}$")
 ROLE_VALUES = {"client", "router", "server"}
 PROTOCOL_VALUES = {"tcp"}
+FORBIDDEN_STRING_PATTERNS = [
+    re.compile(pattern, re.IGNORECASE)
+    for pattern in (
+        r"\bdocker\b",
+        r"\biptables\b",
+        r"\bip\s+route\b",
+        r"\broute\s+add\b",
+        r"\broute\s+del\b",
+        r"\bsh\b",
+        r"\bbash\b",
+        r"\bsudo\b",
+        r"\btc\b",
+        r";",
+        r"\|\|",
+        r"&&",
+    )
+]
 
 OPENAI_SYSTEM_PROMPT = """You generate abstract routed network scenarios as JSON only.
 Return only nodes, links, and traffic plus per-link network conditions.
@@ -170,6 +187,22 @@ def validate_generated_schema(candidate) -> dict:
     return {"valid": not errors, "errors": errors}
 
 
+def find_forbidden_content(candidate, path: str = "$") -> list[str]:
+    findings = []
+    if isinstance(candidate, dict):
+        for key, value in candidate.items():
+            findings.extend(find_forbidden_content(value, f"{path}.{key}"))
+    elif isinstance(candidate, list):
+        for index, value in enumerate(candidate):
+            findings.extend(find_forbidden_content(value, f"{path}[{index}]"))
+    elif isinstance(candidate, str):
+        for pattern in FORBIDDEN_STRING_PATTERNS:
+            if pattern.search(candidate):
+                findings.append(f"{path} contains forbidden command-like content matching '{pattern.pattern}'.")
+                break
+    return findings
+
+
 def _normalized_role_map(nodes: list[dict], traffic: dict) -> dict[str, str]:
     roles = {}
     source = traffic["source"]
@@ -262,6 +295,8 @@ def validate_generated_semantics(candidate: dict, max_nodes: int = MAX_GENERATED
             )
         if "bandwidth_mbps" in link and not 1 <= float(link["bandwidth_mbps"]) <= MAX_BANDWIDTH_MBPS:
             _append_error(errors, f"links[{index}].bandwidth_mbps must be between 1 and {MAX_BANDWIDTH_MBPS}.")
+
+    errors.extend(find_forbidden_content(candidate))
 
     return {"valid": not errors, "errors": errors}
 

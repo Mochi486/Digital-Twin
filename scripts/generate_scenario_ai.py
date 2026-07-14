@@ -108,6 +108,7 @@ def openai_generate_abstract_scenario(prompt: str, model: str) -> tuple[dict | N
         }
     return candidate, {
         "status": "ok",
+        "response_id": raw_payload.get("id"),
         "raw_response": raw_payload,
     }
 

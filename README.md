@@ -60,7 +60,9 @@ The routed workflow does the following:
 
 ## Run On WSL Docker Engine
 
-If you are running this project on WSL Ubuntu with Docker Engine instead of Docker Desktop:
+Current validated execution path is WSL Docker Engine. Run Docker commands inside WSL, not with a Windows Docker CLI.
+
+If you are running this project on WSL Ubuntu with Docker Engine:
 
 ```bash
 python scripts/prepare_wsl_docker.py --ignore-existing &
@@ -74,6 +76,14 @@ python scripts/prepare_wsl_docker.py --cleanup
 ```
 
 to remove only rules tagged for this project.
+
+Verify the environment with:
+
+```bash
+docker version
+docker info
+docker run --rm hello-world
+```
 
 ## Run Bandwidth Experiments
 
@@ -114,6 +124,20 @@ Run the acceptance batch with:
 python scripts/run_two_router_batch.py
 ```
 
+## Run The AI Scenario Phase
+
+The AI scenario phase generates abstract routed scenarios, validates them, deterministically assigns addresses and routes, performs dry-runs, and executes bounded real experiments for scenarios up to 10 nodes.
+
+From WSL root:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/run_ai_scenario_phase.py
+```
+
+If you want to enable OpenAI live scenario generation, export `OPENAI_API_KEY` inside the WSL environment before running the phase script. The project never prints or stores the key itself.
+
 ## Current Results
 
 Archived batch results in `runs/run_*` show:
@@ -129,12 +153,23 @@ The latest routed example in `runs/current/metrics.json` currently records:
 - `configured_bandwidth_mbps`
 - `throughput_mbps`
 
+## Current Results
+
+- `linear-5` real runs: `2/2` successful, `18.8 Mbps` and `18.7 Mbps`
+- `redundant-6` real runs: `1/1` successful, `19.4 Mbps`
+- `lossy-8` real runs: `1/1` successful, measured `25.0%` ping loss, `19.4 Mbps`
+- single-router dry-run regression passed
+- two-router dry-run regression passed
+- routed delay regression passed with `72.26 ms` average RTT at configured `30 ms` one-way delay
+- routed packet-loss regression passed with measured `8.0%` ping loss at configured one-way `3%` loss
+- Germany50 / DFN full topology remains paused beyond dry-run and small-subset smoke validation
+
 ## Current Focus
 
 - AI-generated small routed scenarios with schema and semantic validation
 - deterministic address allocation and static route generation for generated scenarios
-- safe dry-run and small-scale execution only
-- larger DFN-derived full-traffic runs paused pending WSL forwarding scalability work
+- WSL-backed real execution for scenarios up to 10 nodes
+- larger DFN-derived full-traffic runs remain paused
 
 ## Notes
 

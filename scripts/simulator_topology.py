@@ -187,6 +187,37 @@ def collect_router_routes(scenario):
     return route_state
 
 
+def collect_all_node_routes(scenario):
+    route_state = {}
+    for node in scenario["nodes"]:
+        result = run_command(["docker", "exec", node["id"], "ip", "route", "show"], check=True)
+        route_state[node["id"]] = result.stdout.strip()
+    return route_state
+
+
+def verify_routes(scenario):
+    verification = []
+    for route in scenario["routes"]:
+        result = run_command(["docker", "exec", route["node"], "ip", "route", "show", route["destination"]], check=True)
+        route_output = result.stdout.strip()
+        expected_fragment = f"{route['destination']} via {route['via']}"
+        matched = expected_fragment in route_output
+        verification.append(
+            {
+                "node": route["node"],
+                "destination": route["destination"],
+                "via": route["via"],
+                "matched": matched,
+                "route_output": route_output,
+            }
+        )
+        if not matched:
+            raise RuntimeError(
+                f"Route verification failed for {route['node']} destination {route['destination']}: {route_output}"
+            )
+    return verification
+
+
 def apply_link_impairments(scenario):
     print("\n=== Applying router netem impairments ===")
     applied = []
@@ -298,6 +329,10 @@ def setup_topology(scenario):
     timings["configure_routes_s"] = round(time.perf_counter() - start, 3)
 
     start = time.perf_counter()
+    route_verification = verify_routes(scenario)
+    timings["verify_routes_s"] = round(time.perf_counter() - start, 3)
+
+    start = time.perf_counter()
     applied_impairments = apply_link_impairments(scenario)
     timings["apply_impairments_s"] = round(time.perf_counter() - start, 3)
 
@@ -306,7 +341,7 @@ def setup_topology(scenario):
     timings["apply_bandwidth_s"] = round(time.perf_counter() - start, 3)
 
     timings["setup_total_s"] = round(sum(timings.values()), 3)
-    return applied_impairments, bandwidth_controls, timings
+    return applied_impairments, bandwidth_controls, route_verification, timings
 
 
 def exercise_topology(scenario, smoke_mode):
@@ -334,6 +369,7 @@ def save_metrics(
     throughput_mbps,
     applied_impairments,
     bandwidth_controls,
+    route_verification,
     stage_timings,
     cleanup_time_s,
 ):
@@ -359,8 +395,10 @@ def save_metrics(
         ),
         "subnets": scenario["subnets"],
         "static_routes": scenario["routes"],
+        "route_verification": route_verification,
         "delay_loss_applications": applied_impairments,
         "bandwidth_controls": bandwidth_controls,
+        "all_node_route_tables": collect_all_node_routes(scenario),
         "router_route_tables": collect_router_routes(scenario),
         "router_qdisc_state": collect_router_qdisc_state(scenario),
         "ping_packets_transmitted": ping_metrics["packets_transmitted"],
@@ -426,7 +464,7 @@ def main():
 
     initial_cleanup_time_s = cleanup(scenario)
     try:
-        applied_impairments, bandwidth_controls, setup_timings = setup_topology(scenario)
+        applied_impairments, bandwidth_controls, route_verification, setup_timings = setup_topology(scenario)
         ping_metrics, throughput_mbps, run_timings = exercise_topology(scenario, args.smoke)
         stage_timings = {
             "initial_cleanup_s": initial_cleanup_time_s,
@@ -442,6 +480,7 @@ def main():
             throughput_mbps,
             applied_impairments,
             bandwidth_controls,
+            route_verification,
             stage_timings,
             cleanup_time_s=0.0,
         )
