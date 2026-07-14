@@ -1,83 +1,73 @@
-# Docker Network Digital Twin
+# Digital Twin
 
-This repository contains a Docker-based network digital twin prototype for controlled bandwidth experiments. The current implementation includes both direct and routed topologies using Docker networks, static routing, ping validation, iperf3 TCP traffic generation, JSON-driven multi-hop scenarios, and AI-assisted scenario generation with strict validation gates.
+Docker-based network digital twin with configurable bandwidth, latency, packet loss, multi-router topologies, automated metrics, and AI-generated network scenarios.
 
-## Implemented Functionality
+## Project Overview
 
-- Docker client-server prototype in `scripts/simulator_real.py`
-- Client-router-server routed topology in `scripts/simulator_routed.py`
-- Static route configuration between the client and server subnets
-- Ping connectivity verification before throughput testing
-- iperf3 TCP traffic generation with reverse mode enabled by default
-- Bandwidth control using Linux `tc` inside Docker containers
-- Batch automation for repeated configured-bandwidth runs in `scripts/run_batch.py`
-- Result analysis and throughput plotting in `scripts/analyze_results.py`
-- Scenario files in `data/scenario.json` and `data/scenario_routed.json`
-- Metrics output written to `runs/current/metrics.json` and archived under `runs/run_*`
+This repository implements a bounded MSc project artifact for repeatable network emulation on Docker and WSL. It covers direct and routed topologies, deterministic JSON-driven multi-hop scenarios, automated metrics capture, and guarded AI-assisted scenario generation.
 
-## Important Files
+The validated scope is intentionally bounded:
 
-- `dockerfile`: older simulator container stub from an earlier prototype
-- `Dockerfile.iperf`: Docker image used for the current iperf3 and routed topology experiments
-- `scripts/simulator_real.py`: direct client-server bandwidth test
-- `scripts/simulator_routed.py`: routed client-router-server test with static routes
-- `scripts/simulator_topology.py`: generic JSON topology simulator for multi-hop routed scenarios
-- `scripts/generate_scenario_ai.py`: prompt-driven scenario generator with `mock`, `openai`, and `openai_compatible` providers
-- `scripts/run_batch.py`: automated bandwidth sweep for 20, 50, and 100 Mbps
-- `scripts/run_two_router_batch.py`: two-router validation batch with baseline, delay, and loss checks
-- `scripts/analyze_results.py`: analysis and throughput plotting
-- `data/scenario.json`: direct topology scenario
-- `data/scenario_routed.json`: routed topology scenario
-- `data/scenario_two_router_topology.json`: generic two-router acceptance scenario
-- `runs/current/metrics.json`: latest routed metrics example
-- `throughput_plot.png`: throughput summary figure
-- `latency_plot.png`: existing figure kept with the project
+- no Germany50 full experiment execution
+- no DFN full-topology execution
+- no topologies above 10 nodes
+- no RL workflow
 
-## Build The Experiment Image
+## Architecture
 
-Build the Docker image used by the current experiments:
+The platform is split into five layers:
 
-```bash
-docker build -f Dockerfile.iperf -t my-iperf-tc .
-```
+1. Container runtime:
+   Docker networks and Linux traffic control on WSL Docker Engine.
+2. Scenario description:
+   JSON scenarios for direct, routed, and generic multi-hop topologies.
+3. Topology execution:
+   `simulator_real.py`, `simulator_routed.py`, and `simulator_topology.py`.
+4. Experiment orchestration:
+   batch runners, dry-run helpers, and bounded live validation scripts.
+5. AI generation and validation:
+   `generate_scenario_ai.py`, `openai_live_utils.py`, schema gates, semantic gates, forbidden-content rejection, deterministic subnet/IP allocation, and static-route generation.
 
-## Run The Routed Simulation
+## Implemented Capabilities
 
-```bash
-python scripts/simulator_routed.py
-```
+- direct client-server bandwidth experiments
+- single-router routed experiments
+- generic multi-router topology simulation
+- per-link bandwidth, delay, and packet-loss control
+- deterministic subnet allocation for compact AI scenarios
+- deterministic static-route generation
+- route verification and qdisc capture
+- dry-run topology validation
+- delay batch runner
+- packet-loss batch runner
+- two-router acceptance runner
+- AI scenario generation with `mock`, `openai`, and `openai_compatible` providers
+- OpenAI-compatible live validation with endpoint fallback
+- WSL Docker compatibility helper for host bridge routing rules
 
-The routed workflow does the following:
+## Repository Structure
 
-- creates Docker networks for the two routed subnets
-- starts the client, router, and server containers
-- enables IPv4 forwarding on the router container
-- configures static routes on the client and server
-- verifies connectivity with `ping`
-- applies the configured bandwidth limit using `tc`
-- runs an iperf3 TCP test
-- writes metrics to `runs/current/metrics.json`
+- `Dockerfile.iperf`: experiment container image
+- `dockerfile`: older legacy prototype file kept for reference
+- `data/`: base scenarios and imported topology sources
+- `scripts/`: simulators, batch runners, AI generator, live validator, and helpers
+- `tests/`: unit tests for validation, topology utilities, and secret handling
+- `docs/progress/`: dated progress and validation reports
+- `runs/`: representative tracked metrics, scenarios, and SVG outputs
+- `.local-evidence/`: local-only evidence and large logs, excluded from Git
 
-## Run On WSL Docker Engine
+## WSL Docker Prerequisites
 
-Current validated execution path is WSL Docker Engine. Run Docker commands inside WSL, not with a Windows Docker CLI.
+Validated execution was performed on WSL with Docker Engine available inside WSL.
 
-If you are running this project on WSL Ubuntu with Docker Engine:
+Required tools:
 
-```bash
-python scripts/prepare_wsl_docker.py --ignore-existing &
-python scripts/simulator_routed.py
-```
+- WSL Ubuntu or equivalent Linux environment
+- Docker CLI and Docker Engine access from WSL
+- Python 3.11
+- `sudo` access for full phase orchestration if you use `run_ai_scenario_phase.py`
 
-The helper script installs narrowly scoped host `iptables` accept rules for this project's routed Docker bridges only. It can run either as root or through the repository's temporary privileged Docker helper fallback. Use:
-
-```bash
-python scripts/prepare_wsl_docker.py --cleanup
-```
-
-to remove only rules tagged for this project.
-
-Verify the environment with:
+Validated environment checks:
 
 ```bash
 docker version
@@ -85,68 +75,163 @@ docker info
 docker run --rm hello-world
 ```
 
-## Run Bandwidth Experiments
+## Installation
 
-```bash
-python scripts/run_batch.py
+Windows PowerShell:
+
+```powershell
+Set-Location D:\home\fanys23\project_70
+python -m venv .venv-win311
+.\.venv-win311\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-This batch script writes each scenario to `data/scenario.json`, runs the direct prototype, and stores outputs under:
-
-- `runs/run_001`
-- `runs/run_002`
-- `runs/run_003`
-
-Generate the throughput plot with:
+WSL:
 
 ```bash
-python scripts/analyze_results.py
+cd /mnt/d/home/fanys23/project_70
+python3 -m venv .venv-wsl311
+. .venv-wsl311/bin/activate
+python -m pip install -r requirements.txt
+docker build -f Dockerfile.iperf -t my-iperf-tc .
 ```
 
-## Run The Generic Two-Router Topology
+## Exact Quick-Start Commands
 
-```bash
-python scripts/prepare_wsl_docker.py --scenario data/scenario_two_router_topology.json --ignore-existing &
-python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json
-```
+These commands are the current verified entry points:
 
-This path preserves the existing single-router simulator and adds a JSON-driven multi-hop topology flow with:
-
-- three Docker subnets
-- two router containers
-- explicit static routes from scenario JSON
-- dynamic interface resolution for `tc`
-- per-router route table and qdisc capture
-
-Run the acceptance batch with:
-
-```bash
-python scripts/run_two_router_batch.py
-```
-
-## Run The AI Scenario Phase
-
-The AI scenario phase generates abstract routed scenarios, validates them, deterministically assigns addresses and routes, performs dry-runs, and executes bounded real experiments for scenarios up to 10 nodes.
-
-From WSL root:
+WSL:
 
 ```bash
 cd /mnt/d/home/fanys23/project_70
 . .venv-wsl311/bin/activate
-python scripts/run_ai_scenario_phase.py
+python scripts/run_demo.py baseline
+python scripts/run_demo.py two-router
+python scripts/run_demo.py delay-smoke
+python scripts/run_demo.py loss-smoke
+python scripts/run_demo.py ai-mock
 ```
 
-If you want to enable official OpenAI live scenario generation, export `OPENAI_API_KEY` inside the WSL environment before running the phase script. The project never prints or stores the key itself.
+Windows PowerShell for compatible live validation:
 
-If you want to enable a third-party OpenAI-compatible live provider from the current PowerShell session, set:
+```powershell
+Set-Location D:\home\fanys23\project_70
+$env:COMPAT_API_KEY="<set-in-session>"
+$env:COMPAT_BASE_URL="https://ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+$env:COMPAT_MODEL="qwen3.7-plus"
+.\.venv-win311\Scripts\python.exe scripts\run_demo.py ai-live
+```
+
+## Single-Router Example
+
+Direct routed baseline:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/simulator_routed.py --scenario data/scenario_routed.json --output runs/current/metrics.json --prepare-host-routing-log .local-evidence/readme-baseline-prepare.log
+```
+
+Demo wrapper:
+
+```bash
+python scripts/run_demo.py baseline
+```
+
+## Two-Router Example
+
+Validated dry-run:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --dry-run
+```
+
+Demo wrapper:
+
+```bash
+python scripts/run_demo.py two-router
+```
+
+## Delay Experiment
+
+Full batch runner:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/run_delay_batch.py
+```
+
+Bounded smoke:
+
+```bash
+python scripts/run_demo.py delay-smoke
+```
+
+## Packet-Loss Experiment
+
+Full batch runner:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/run_packet_loss_batch.py
+```
+
+Bounded smoke:
+
+```bash
+python scripts/run_demo.py loss-smoke
+```
+
+## JSON Topology Run
+
+Generic topology dry-run:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --dry-run
+```
+
+Generic topology real run:
+
+```bash
+python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --prepare-host-routing-log .local-evidence/readme-two-router-prepare.log
+```
+
+## AI Scenario Generation
+
+Mock provider generation with dry-run:
+
+```bash
+cd /mnt/d/home/fanys23/project_70
+. .venv-wsl311/bin/activate
+python scripts/generate_scenario_ai.py --provider mock --prompt "Create a six-node redundant routed topology with two candidate paths and 20 Mbps bandwidth" --output-scenario runs/current/ai_scenario.json --report runs/current/ai_scenario_report.json --dry-run-output runs/current/ai_scenario_dry_run.json --plot runs/current/ai_scenario.svg
+```
+
+Demo wrapper:
+
+```bash
+python scripts/run_demo.py ai-mock
+```
+
+## OpenAI-Compatible Provider Configuration
+
+The repository supports:
+
+- `mock`
+- `openai`
+- `openai_compatible`
+
+Compatible-provider environment variables:
 
 - `COMPAT_API_KEY`
 - `COMPAT_BASE_URL`
 - `COMPAT_MODEL_CANDIDATES`
 
-The project only saves sanitized provider host, selected model, request id, usage, latency, and redacted non-sensitive responses.
-
-For the bounded compatible-provider validation completed on `2026-07-14`, the actual live configuration was:
+Validated bounded compatible-provider live run on `2026-07-14`:
 
 - provider type: `openai_compatible`
 - provider host: `ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com`
@@ -154,55 +239,77 @@ For the bounded compatible-provider validation completed on `2026-07-14`, the ac
 - endpoint: `chat.completions`
 - structured-output mode: `response_format=json_schema`
 
-## OpenAI Live Status
+Bounded live command:
 
-- Mock AI generation is complete and validated.
-- Official OpenAI live request wiring uses the official Python SDK plus Responses API Structured Outputs.
-- The latest official OpenAI live attempt on `2026-07-14` reached OpenAI and failed with HTTP `429` / `insufficient_quota`.
-- Therefore no official OpenAI-generated scenario, dry-run, or real Docker run is counted as complete.
-- Third-party OpenAI-compatible provider support is implemented with model-list probing and endpoint fallback across Responses API, Chat Completions JSON schema, JSON object, and plain JSON parsing.
-- The bounded `2026-07-14` compatible-provider validation completed successfully against an Alibaba Cloud Bailian OpenAI-compatible endpoint using `qwen3.7-plus` and Chat Completions JSON schema mode.
-- The latest compatible-provider live evidence is:
-  - `D:\home\fanys23\project_70\.local-evidence\openai-compatible-live-validation-20260714-064525`
-- See `docs/progress/openai-live-validation-summary-2026-07-14.md` and `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`.
+```powershell
+Set-Location D:\home\fanys23\project_70
+$env:COMPAT_API_KEY="<set-in-session>"
+$env:COMPAT_BASE_URL="https://ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
+$env:COMPAT_MODEL="qwen3.7-plus"
+.\.venv-win311\Scripts\python.exe scripts\run_openai_live_validation.py --provider openai_compatible --skip-model-list --model qwen3.7-plus --endpoint-order chat_json_schema chat_json_object chat_plain_json
+```
 
-## Current Results
+The repository never prints or stores API key values. Only sanitized provider host, selected model, request id, token usage, latency, and redacted non-sensitive payloads are persisted.
 
-Archived batch results in `runs/run_*` show:
+## Metrics And Output Locations
 
-- 20 Mbps configured -> about 19.2 Mbps measured
-- 50 Mbps configured -> about 47.9 Mbps measured
-- 100 Mbps configured -> about 95.7 Mbps measured
+Tracked representative outputs:
 
-The latest routed example in `runs/current/metrics.json` currently records:
+- `runs/run_001/`
+- `runs/run_002/`
+- `runs/run_003/`
+- `runs/ai-scenario-phase-20260714-093638/`
+- `runs/openai-live-regressions-20260714-110941/`
 
-- `topology`
-- `ping_success`
-- `configured_bandwidth_mbps`
-- `throughput_mbps`
+Tracked reports:
 
-## Current Results
+- `docs/progress/ai-scenario-phase-summary-2026-07-13.md`
+- `docs/progress/delay-phase-summary-2026-07-13.md`
+- `docs/progress/packet-loss-phase-summary-2026-07-13.md`
+- `docs/progress/two-router-phase-summary-2026-07-13.md`
+- `docs/progress/openai-live-validation-summary-2026-07-14.md`
+- `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`
 
-- `linear-5` real runs: `2/2` successful, `18.8 Mbps` and `18.7 Mbps`
-- `redundant-6` real runs: `1/1` successful, `19.4 Mbps`
-- `lossy-8` real runs: `1/1` successful, measured `25.0%` ping loss, `19.4 Mbps`
-- single-router dry-run regression passed
-- two-router dry-run regression passed
-- routed delay regression passed with `70.414 ms` average RTT at configured `30 ms` one-way delay
-- routed packet-loss regression passed with measured `12.0%` ping loss at configured one-way `3%` loss
-- official OpenAI live provider path is implemented but blocked by HTTP `429 insufficient_quota` as of `2026-07-14`
-- third-party OpenAI-compatible provider live generation, dry-run, and real WSL Docker run completed on `2026-07-14`
-- latest compatible-provider live metrics: `0.0%` ping loss, `82.194 ms` average RTT, `18.3 Mbps` throughput, selected path `client-1 -> router-a -> router-b -> router-d -> server-1`
-- Germany50 / DFN full topology remains paused beyond dry-run and small-subset smoke validation
+Local-only evidence:
 
-## Current Focus
+- `.local-evidence/`
+- ad hoc live-validation run directories under `runs/openai-compatible-live-validation-*`
+- ad hoc regression reruns under `runs/openai-live-regressions-*`
 
-- AI-generated small routed scenarios with schema and semantic validation
-- deterministic address allocation and static route generation for generated scenarios
-- WSL-backed real execution for scenarios up to 10 nodes
-- larger DFN-derived full-traffic runs remain paused
+## Representative Results
 
-## Notes
+Tracked representative results include:
 
-- No remote has been configured automatically for this repository.
-- The unrelated `iot-agent-system` remote must not be reused for this project.
+- direct bandwidth runs:
+  - `20 Mbps` configured -> about `19.2 Mbps`
+  - `50 Mbps` configured -> about `47.9 Mbps`
+  - `100 Mbps` configured -> about `95.7 Mbps`
+- routed delay smoke:
+  - configured one-way delay `30 ms`
+  - measured RTT average about `72.615 ms`
+  - throughput `18.6 Mbps`
+- routed packet-loss smoke:
+  - configured one-way loss `3%`
+  - measured ping loss `10.0%`
+  - throughput `13.8 Mbps`
+- compatible-provider live six-node run:
+  - ping loss `0.0%`
+  - RTT average `82.194 ms`
+  - throughput `18.3 Mbps`
+  - selected path `client-1 -> router-a -> router-b -> router-d -> server-1`
+
+## Current Limitations
+
+- validated large-topology execution is intentionally capped below 10 nodes
+- official OpenAI live path is implemented but still blocked by HTTP `429 insufficient_quota` as of `2026-07-14`
+- some orchestration paths assume WSL Docker Engine rather than native Windows Docker CLI
+- repository-root dependency locking is minimal and currently captured in `requirements.txt`
+- local evidence and repeated live reruns are intentionally excluded from Git
+
+## Germany50, DFN, And RL Deferred Status
+
+- Germany50 import and bounded dry-run support exist, but full experiment execution is deferred
+- DFN import and bounded dry-run support exist, but full experiment execution is deferred
+- RL is not implemented and remains outside the MSc project scope
+
+See the dated reports in `docs/progress/` for the exact boundary between completed work and deferred work.

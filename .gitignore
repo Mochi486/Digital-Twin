@@ -7,6 +7,7 @@
 venv/
 .venv/
 .venv-win311/
+.venv-wsl311/
 env/
 ENV/
 __pycache__/
@@ -38,3 +39,15 @@ desktop.ini
 *.pid
 *.seed
 .local-evidence/
+*.bundle
+
+# Local publication and live-validation leftovers
+runs/current/topology_two_router.svg
+runs/current/topology_metrics.json
+runs/current/ai_scenario.json
+runs/current/ai_scenario_report.json
+runs/current/ai_scenario_dry_run.json
+runs/current/ai_scenario.svg
+runs/demo-*/
+runs/openai-compatible-live-validation-*/
+runs/openai-live-regressions-*/
