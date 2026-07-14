@@ -363,6 +363,76 @@ def validate_and_project_generated_scenario(
     }
 
 
+def build_validation_gate_report(
+    candidate: dict,
+    prompt: str,
+    topology_name: str | None = None,
+    max_nodes: int = MAX_GENERATED_NODE_COUNT,
+) -> dict:
+    validation = validate_and_project_generated_scenario(
+        candidate,
+        prompt,
+        topology_name=topology_name,
+        max_nodes=max_nodes,
+    )
+    schema_errors = validation["schema_validation"]["errors"]
+    semantic_errors = validation["semantic_validation"]["errors"]
+    projection_errors = validation["projection_validation"]["errors"]
+
+    def _status(errors: list[str], predicate) -> str:
+        return "passed" if not any(predicate(error) for error in errors) else "failed"
+
+    gates = {
+        "json_schema_validation": "passed" if validation["schema_validation"]["valid"] else "failed",
+        "semantic_validation": "passed" if validation["semantic_validation"]["valid"] else "failed",
+        "connected_topology_validation": _status(
+            projection_errors,
+            lambda error: "Topology is disconnected" in error or "No path between" in error,
+        ),
+        "duplicate_link_validation": _status(
+            semantic_errors + projection_errors,
+            lambda error: "Duplicate link detected" in error,
+        ),
+        "node_role_validation": _status(
+            schema_errors + semantic_errors,
+            lambda error: "role must be one of" in error
+            or "exactly one client" in error
+            or "exactly one server" in error
+            or "traffic.source must be the client node" in error
+            or "traffic.destination must be the server node" in error,
+        ),
+        "node_count_limit": _status(
+            semantic_errors,
+            lambda error: "nodes count must be between" in error,
+        ),
+        "impairment_range_validation": _status(
+            schema_errors + semantic_errors + projection_errors,
+            lambda error: "bandwidth_mbps" in error
+            or "delay_ms" in error
+            or "packet_loss_percent" in error,
+        ),
+        "forbidden_command_content_rejection": _status(
+            semantic_errors,
+            lambda error: "forbidden command-like content" in error,
+        ),
+        "deterministic_addressing": "passed" if validation["projected_scenario"] else "failed",
+        "deterministic_static_route_generation": (
+            "passed"
+            if validation["projected_scenario"] and validation["projected_scenario"].get("generated_routes")
+            else "failed"
+        ),
+    }
+
+    return {
+        "valid": validation["valid"],
+        "gates": gates,
+        "schema_validation": validation["schema_validation"],
+        "semantic_validation": validation["semantic_validation"],
+        "projection_validation": validation["projection_validation"],
+        "projected_scenario": validation["projected_scenario"],
+    }
+
+
 def default_topology_name(prompt: str) -> str:
     digest = hashlib.sha256(prompt.encode("utf-8")).hexdigest()[:10]
     return f"ai-scenario-{digest}"

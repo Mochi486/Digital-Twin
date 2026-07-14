@@ -63,8 +63,8 @@ Date: 2026-07-13
 
 ## Remaining Gap To Full Core Completion
 
-Only one implementation-level gap remains relative to the current bounded scope:
+Only one external blocker remains relative to the current bounded scope:
 
-- export `OPENAI_API_KEY` inside WSL and rerun `scripts/run_ai_scenario_phase.py` to complete OpenAI live scenario generation and real execution evidence
+- correct the current `OPENAI_API_KEY` value and rerun live validation so the already-implemented OpenAI provider path can complete schema validation, dry-run, and real Docker evidence
 
-Everything else requested in the non-DFN, non-RL bounded scope is implemented and validated.
+Everything else requested in the non-DFN, non-RL bounded scope is implemented and validated or explicitly paused by scope.

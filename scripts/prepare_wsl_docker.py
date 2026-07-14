@@ -12,6 +12,8 @@ from routed_delay_utils import is_tagged_project70_rule
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_SCENARIO = PROJECT_ROOT / "data" / "scenario_routed.json"
 RULE_COMMENT = "project70-wsl-routing"
+HOST_ROOT_MOUNT = "/host"
+PRIVILEGED_HELPER_IMAGE = "my-iperf-tc"
 
 
 def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -23,6 +25,27 @@ def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
             f"stderr:\n{result.stderr}"
         )
     return result
+
+
+def run_host_iptables(args: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
+    if run(["id", "-u"]).stdout.strip() == "0":
+        return run(["iptables"] + args, check=check)
+
+    helper_cmd = [
+        "docker",
+        "run",
+        "--rm",
+        "--privileged",
+        "--network",
+        "host",
+        "-v",
+        f"/:{HOST_ROOT_MOUNT}",
+        PRIVILEGED_HELPER_IMAGE,
+        "chroot",
+        HOST_ROOT_MOUNT,
+        "/usr/sbin/iptables",
+    ] + args
+    return run(helper_cmd, check=check)
 
 
 def load_networks(path: Path) -> list[dict]:
@@ -64,7 +87,7 @@ def network_id_for_name(network_name: str) -> str | None:
 
 
 def current_raw_rules() -> list[str]:
-    result = run(["iptables", "-t", "raw", "-S", "PREROUTING"])
+    result = run_host_iptables(["-t", "raw", "-S", "PREROUTING"])
     return [line.strip() for line in result.stdout.splitlines() if line.strip()]
 
 
@@ -73,31 +96,31 @@ def delete_tagged_rules(log) -> None:
         if not is_tagged_project70_rule(rule, RULE_COMMENT):
             continue
         rule_args = rule.split()[2:]
-        delete_args = ["iptables", "-t", "raw", "-D", "PREROUTING"] + rule_args
-        run(delete_args)
-        print(f"Deleted tagged rule: {' '.join(delete_args)}", file=log, flush=True)
+        delete_args = ["-t", "raw", "-D", "PREROUTING"] + rule_args
+        run_host_iptables(delete_args)
+        print(f"Deleted tagged rule: iptables {' '.join(delete_args)}", file=log, flush=True)
 
 
 def ensure_accept_rule(bridge_name: str, subnet: str, log) -> None:
     check_cmd = [
-        "iptables", "-t", "raw", "-C", "PREROUTING",
+        "-t", "raw", "-C", "PREROUTING",
         "-i", bridge_name, "-d", subnet,
         "-m", "comment", "--comment", RULE_COMMENT,
         "-j", "ACCEPT",
     ]
-    exists = run(check_cmd, check=False)
+    exists = run_host_iptables(check_cmd, check=False)
     if exists.returncode == 0:
         print(f"Rule already present for {bridge_name} -> {subnet}", file=log, flush=True)
         return
 
     add_cmd = [
-        "iptables", "-t", "raw", "-I", "PREROUTING", "1",
+        "-t", "raw", "-I", "PREROUTING", "1",
         "-i", bridge_name, "-d", subnet,
         "-m", "comment", "--comment", RULE_COMMENT,
         "-j", "ACCEPT",
     ]
-    run(add_cmd)
-    print(f"Added rule: {' '.join(add_cmd)}", file=log, flush=True)
+    run_host_iptables(add_cmd)
+    print(f"Added rule: iptables {' '.join(add_cmd)}", file=log, flush=True)
 
 
 def wait_and_prepare(
@@ -155,10 +178,6 @@ def main() -> int:
     parser.add_argument("--ignore-existing", action="store_true")
     parser.add_argument("--cleanup", action="store_true")
     args = parser.parse_args()
-
-    if run(["id", "-u"]).stdout.strip() != "0":
-        print("prepare_wsl_docker.py must run as root to manage iptables.", file=sys.stderr)
-        return 1
 
     scenario_path = Path(args.scenario)
     networks = load_networks(scenario_path)

@@ -6,6 +6,7 @@
 # Python environments and caches
 venv/
 .venv/
+.venv-win311/
 env/
 ENV/
 __pycache__/
@@ -36,3 +37,4 @@ desktop.ini
 # Docker and local runtime leftovers
 *.pid
 *.seed
+.local-evidence/

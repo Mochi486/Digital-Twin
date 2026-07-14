@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
-import os
 import sys
-import urllib.error
-import urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -12,12 +9,11 @@ from ai_scenario_utils import (
     DEFAULT_OPENAI_MODEL,
     DEFAULT_PROVIDER,
     OPENAI_SYSTEM_PROMPT,
-    build_openai_text_format,
+    build_validation_gate_report,
     default_topology_name,
-    extract_json_object,
     mock_generate_abstract_scenario,
-    validate_and_project_generated_scenario,
 )
+from openai_live_utils import create_openai_client, request_structured_scenario, resolve_openai_model
 from topology_utils import build_topology_svg
 
 
@@ -29,7 +25,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", required=True)
     parser.add_argument("--provider", choices=["mock", "openai"], default=DEFAULT_PROVIDER)
-    parser.add_argument("--model", default=DEFAULT_OPENAI_MODEL)
+    parser.add_argument("--model", default="")
     parser.add_argument("--topology-name", default="")
     parser.add_argument("--output-scenario", type=Path, default=RUNS_ROOT / "ai_scenario.json")
     parser.add_argument("--report", type=Path, default=RUNS_ROOT / "ai_scenario_report.json")
@@ -39,78 +35,21 @@ def parse_args():
     return parser.parse_args()
 
 
-def openai_generate_abstract_scenario(prompt: str, model: str) -> tuple[dict | None, dict]:
-    api_key = os.environ.get("OPENAI_API_KEY", "")
-    if not api_key:
+def openai_generate_abstract_scenario(prompt: str, model: str, api_key_override: str | None = None) -> tuple[dict | None, dict]:
+    client, sdk_status = create_openai_client(api_key_override=api_key_override)
+    if client is None:
         return None, {
-            "status": "skipped_missing_api_key",
-            "error": "OPENAI_API_KEY is not set.",
+            "status": "client_unavailable",
+            "sdk_status": sdk_status,
+            "error_type": sdk_status.get("error_type"),
+            "error": sdk_status.get("error_message"),
         }
 
-    payload = {
-        "model": model,
-        "input": [
-            {
-                "role": "system",
-                "content": [{"type": "input_text", "text": OPENAI_SYSTEM_PROMPT}],
-            },
-            {
-                "role": "user",
-                "content": [{"type": "input_text", "text": prompt}],
-            },
-        ],
-        "text": {
-            "format": build_openai_text_format(),
-        },
-    }
-    request = urllib.request.Request(
-        "https://api.openai.com/v1/responses",
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            raw_text = response.read().decode("utf-8")
-    except urllib.error.HTTPError as exc:
-        error_text = exc.read().decode("utf-8", errors="replace")
-        return None, {
-            "status": "http_error",
-            "error": f"HTTP {exc.code}",
-            "raw_response": error_text,
-        }
-    except OSError as exc:
-        return None, {
-            "status": "request_failed",
-            "error": str(exc),
-        }
-
-    raw_payload = json.loads(raw_text)
-    candidate = None
-    if isinstance(raw_payload.get("output_text"), str) and raw_payload["output_text"].strip():
-        candidate = extract_json_object(raw_payload["output_text"])
-    else:
-        for item in raw_payload.get("output", []):
-            for content in item.get("content", []):
-                if content.get("type") == "output_text" and content.get("text"):
-                    candidate = extract_json_object(content["text"])
-                    break
-            if candidate is not None:
-                break
-    if candidate is None:
-        return None, {
-            "status": "parse_error",
-            "error": "Could not extract structured JSON from OpenAI response.",
-            "raw_response": raw_payload,
-        }
-    return candidate, {
-        "status": "ok",
-        "response_id": raw_payload.get("id"),
-        "raw_response": raw_payload,
-    }
+    response = request_structured_scenario(client, prompt, model, OPENAI_SYSTEM_PROMPT)
+    response["sdk_status"] = sdk_status
+    if response["status"] != "ok":
+        return None, response
+    return response["structured_output"], response
 
 
 def run_dry_run(output_path: Path, scenario: dict, plot_path: Path):
@@ -132,6 +71,7 @@ def main() -> int:
     args = parse_args()
     topology_name = args.topology_name or default_topology_name(args.prompt)
     timestamp = datetime.now().isoformat()
+    model = resolve_openai_model(args.model or DEFAULT_OPENAI_MODEL)
 
     if args.provider == "mock":
         candidate, raw_response = mock_generate_abstract_scenario(args.prompt)
@@ -140,13 +80,13 @@ def main() -> int:
             "raw_response": raw_response,
         }
     else:
-        candidate, provider_result = openai_generate_abstract_scenario(args.prompt, args.model)
+        candidate, provider_result = openai_generate_abstract_scenario(args.prompt, model)
 
     report = {
         "timestamp": timestamp,
         "prompt": args.prompt,
         "provider": args.provider,
-        "model": args.model,
+        "model": model,
         "topology_name": topology_name,
         "provider_result": provider_result,
         "validation_result": None,
@@ -155,7 +95,7 @@ def main() -> int:
     }
 
     if candidate is not None:
-        validation_result = validate_and_project_generated_scenario(
+        validation_result = build_validation_gate_report(
             candidate,
             args.prompt,
             topology_name=topology_name,
@@ -180,8 +120,8 @@ def main() -> int:
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
 
-    if report["provider_result"]["status"] == "skipped_missing_api_key":
-        print(json.dumps({"status": "skipped_missing_api_key", "report": str(args.report)}, indent=2))
+    if report["provider_result"]["status"] == "client_unavailable":
+        print(json.dumps({"status": "client_unavailable", "report": str(args.report)}, indent=2))
         return 0
 
     if report["validation_result"] and report["validation_result"]["valid"]:

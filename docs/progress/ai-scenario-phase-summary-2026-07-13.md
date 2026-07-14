@@ -113,18 +113,22 @@ Evidence:
 
 ## OpenAI Live Validation
 
-- `OPENAI_API_KEY` was not present inside the WSL runtime used for the phase run.
-- No live OpenAI scenario was generated.
-- No live OpenAI Docker run was attempted.
-- This remains the only item in this phase that requires manual credential injection before rerun.
+- WSL Docker runtime and bounded live-execution code paths are ready.
+- A Windows-side project virtual environment `.venv-win311` was added only to execute the official OpenAI Python SDK from the same PowerShell session that already held `OPENAI_API_KEY`.
+- The real live request reached OpenAI on `2026-07-14` with SDK `2.45.0` and model `gpt-5.6`.
+- The request failed before scenario validation with `AuthenticationError` / HTTP `401` / `invalid_api_key`.
+- The current PowerShell `OPENAI_API_KEY` appears to contain a URL-like value ending in `/v1`, not a usable API key.
+- Therefore:
+  - no live OpenAI structured scenario was accepted
+  - no live scenario dry-run was accepted
+  - no live scenario real Docker run was accepted
+- Detailed blocker evidence is captured in `docs/progress/openai-live-validation-summary-2026-07-14.md`.
 
-Rerun command after exporting the key inside WSL:
+Minimal rerun after the key is corrected:
 
-```bash
-cd /mnt/d/home/fanys23/project_70
-export OPENAI_API_KEY=...
-. .venv-wsl311/bin/activate
-python scripts/run_ai_scenario_phase.py
+```powershell
+Set-Location D:\home\fanys23\project_70
+D:\home\fanys23\project_70\.venv-win311\Scripts\python.exe scripts\generate_scenario_ai.py --provider openai --prompt "Create a connected six-node routed network topology with one client, one server, four routers, two alternative paths, 20 Mbps bandwidth, 10 ms one-way delay, 0 percent packet loss, and one TCP traffic flow from the client to the server."
 ```
 
 ## Explicit Non-Goals

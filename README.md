@@ -69,7 +69,7 @@ python scripts/prepare_wsl_docker.py --ignore-existing &
 python scripts/simulator_routed.py
 ```
 
-The helper script installs narrowly scoped host `iptables` accept rules for this project's routed Docker bridges only. Use:
+The helper script installs narrowly scoped host `iptables` accept rules for this project's routed Docker bridges only. It can run either as root or through the repository's temporary privileged Docker helper fallback. Use:
 
 ```bash
 python scripts/prepare_wsl_docker.py --cleanup
@@ -138,6 +138,15 @@ python scripts/run_ai_scenario_phase.py
 
 If you want to enable OpenAI live scenario generation, export `OPENAI_API_KEY` inside the WSL environment before running the phase script. The project never prints or stores the key itself.
 
+## OpenAI Live Status
+
+- Mock AI generation is complete and validated.
+- OpenAI live request wiring now uses the official Python SDK plus Responses API Structured Outputs.
+- Real WSL Docker execution with `prepare_wsl_docker.py` is ready for live-generated scenarios.
+- The July 14, 2026 live attempt reached OpenAI with SDK `2.45.0` but failed with `AuthenticationError` / HTTP `401 invalid_api_key`.
+- The current PowerShell `OPENAI_API_KEY` value appears to be a URL-like string ending in `/v1`, not an API key, so no live scenario, dry-run, or real Docker run was accepted as complete.
+- See `docs/progress/openai-live-validation-summary-2026-07-14.md` for the blocker record.
+
 ## Current Results
 
 Archived batch results in `runs/run_*` show:
@@ -162,6 +171,7 @@ The latest routed example in `runs/current/metrics.json` currently records:
 - two-router dry-run regression passed
 - routed delay regression passed with `72.26 ms` average RTT at configured `30 ms` one-way delay
 - routed packet-loss regression passed with measured `8.0%` ping loss at configured one-way `3%` loss
+- OpenAI live provider path is implemented but still blocked by an invalid API key as of `2026-07-14`
 - Germany50 / DFN full topology remains paused beyond dry-run and small-subset smoke validation
 
 ## Current Focus

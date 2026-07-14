@@ -7,6 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from ai_scenario_utils import (
+    build_validation_gate_report,
     build_openai_text_format,
     find_forbidden_content,
     infer_prompt_constraints,
@@ -136,6 +137,26 @@ class AiScenarioUtilsTests(unittest.TestCase):
         validation = validate_and_project_generated_scenario(invalid, "invalid")
         self.assertFalse(validation["valid"])
         self.assertEqual(validation["schema_validation"]["errors"][0], "Scenario must be a JSON object.")
+
+    def test_validation_gate_report_marks_duplicate_link_failure(self):
+        invalid = {
+            "nodes": [{"id": "node-1", "role": "client"}, {"id": "node-2", "role": "server"}],
+            "links": [
+                {"source": "node-1", "target": "node-2"},
+                {"source": "node-2", "target": "node-1"},
+            ],
+            "traffic": {
+                "source": "node-1",
+                "destination": "node-2",
+                "protocol": "tcp",
+                "duration_s": 2,
+                "ping_count": 4,
+                "reverse": True,
+            },
+        }
+        report = build_validation_gate_report(invalid, "invalid")
+        self.assertEqual(report["gates"]["duplicate_link_validation"], "failed")
+        self.assertEqual(report["gates"]["deterministic_addressing"], "failed")
 
 
 if __name__ == "__main__":
