@@ -14,6 +14,7 @@ DEFAULT_SCENARIO = PROJECT_ROOT / "data" / "scenario_routed.json"
 RULE_COMMENT = "project70-wsl-routing"
 HOST_ROOT_MOUNT = "/host"
 PRIVILEGED_HELPER_IMAGE = "my-iperf-tc"
+DEFAULT_RULE_LIMIT = 512
 
 
 def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -62,6 +63,30 @@ def load_networks(path: Path) -> list[dict]:
             for subnet in scenario["subnets"]
         ]
     raise KeyError("Scenario must define either 'networks' or 'subnets'.")
+
+
+def build_rule_plan(path: Path, networks: list[dict]) -> list[tuple[str, str]]:
+    """Return only forwarding pairs joined by a router, never an N×N network mesh."""
+    scenario = json.loads(path.read_text(encoding="utf-8"))
+    if "nodes" not in scenario or "links" not in scenario:
+        return [(source["name"], target["subnet"]) for source in networks for target in networks if source != target]
+    by_node = {node["id"]: [] for node in scenario["nodes"]}
+    for link in scenario["links"]:
+        subnet = link.get("subnet")
+        if subnet:
+            by_node.setdefault(link["source"], []).append(subnet)
+            by_node.setdefault(link["target"], []).append(subnet)
+    subnet_by_name = {item["name"]: item["subnet"] for item in networks}
+    plan = set()
+    for node in scenario["nodes"]:
+        if node.get("type") != "router":
+            continue
+        attached = sorted(set(by_node[node["id"]]))
+        for source in attached:
+            for target in attached:
+                if source != target:
+                    plan.add((source, subnet_by_name[target]))
+    return sorted(plan)
 
 
 def bridge_name_for_network(network_name: str) -> str | None:
@@ -129,6 +154,8 @@ def wait_and_prepare(
     poll_s: float,
     log,
     ignore_existing: bool,
+    rule_plan: list[tuple[str, str]],
+    rule_limit: int,
 ) -> dict[str, str]:
     deadline = time.time() + timeout_s
     bridge_map: dict[str, str] = {}
@@ -151,16 +178,11 @@ def wait_and_prepare(
                 bridge_map[net["name"]] = bridge_name
 
         if len(bridge_map) == len(networks):
+            if len(rule_plan) > rule_limit:
+                raise ValueError(f"Forwarding rule estimate {len(rule_plan)} exceeds limit {rule_limit}.")
             delete_tagged_rules(log)
-            for source_net in networks:
-                for destination_net in networks:
-                    if source_net["name"] == destination_net["name"]:
-                        continue
-                    ensure_accept_rule(
-                        bridge_map[source_net["name"]],
-                        destination_net["subnet"],
-                        log,
-                    )
+            for source_name, destination_subnet in rule_plan:
+                ensure_accept_rule(bridge_map[source_name], destination_subnet, log)
             return bridge_map
 
         time.sleep(poll_s)
@@ -177,10 +199,13 @@ def main() -> int:
     parser.add_argument("--evidence", default="")
     parser.add_argument("--ignore-existing", action="store_true")
     parser.add_argument("--cleanup", action="store_true")
+    parser.add_argument("--rule-limit", type=int, default=DEFAULT_RULE_LIMIT)
+    parser.add_argument("--estimate-only", action="store_true")
     args = parser.parse_args()
 
     scenario_path = Path(args.scenario)
     networks = load_networks(scenario_path)
+    rule_plan = build_rule_plan(scenario_path, networks)
 
     if args.evidence:
         evidence_path = Path(args.evidence)
@@ -195,12 +220,17 @@ def main() -> int:
             delete_tagged_rules(log)
             print("Cleanup complete.", file=log, flush=True)
             return 0
+        if args.estimate_only:
+            print(json.dumps({"network_count": len(networks), "rule_count": len(rule_plan), "rule_limit": args.rule_limit}, indent=2), file=log)
+            return 0
         bridge_map = wait_and_prepare(
             networks,
             args.timeout,
             args.poll_interval,
             log,
             args.ignore_existing,
+            rule_plan,
+            args.rule_limit,
         )
         print(json.dumps(bridge_map, indent=2), file=log, flush=True)
     finally:

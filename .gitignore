@@ -8,6 +8,7 @@ venv/
 .venv/
 .venv-win311/
 .venv-wsl311/
+.venv-streamlit/
 env/
 ENV/
 __pycache__/
