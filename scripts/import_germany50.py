@@ -3,7 +3,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from topology_utils import import_topology_zoo_gml
+from topology_utils import import_sndlib_native
 
 
 def sha256_file(path: Path) -> str:
@@ -16,26 +16,32 @@ def sha256_file(path: Path) -> str:
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--source-gml", type=Path, required=True)
+    parser.add_argument("--source-native", type=Path, required=True)
     parser.add_argument("--output-scenario", type=Path, required=True)
     parser.add_argument("--metadata-output", type=Path, required=True)
     parser.add_argument("--source-url", required=True)
-    parser.add_argument("--topology-name", default="germany50-dfn")
+    parser.add_argument("--license-name", required=True)
+    parser.add_argument("--license-url", required=True)
+    parser.add_argument("--topology-name", default="sndlib-germany50")
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-    scenario = import_topology_zoo_gml(
-        args.source_gml,
+    scenario = import_sndlib_native(
+        args.source_native,
         topology_name=args.topology_name,
         source_url=args.source_url,
+        license_name=args.license_name,
+        license_url=args.license_url,
     )
-    source_sha256 = sha256_file(args.source_gml)
+    source_sha256 = sha256_file(args.source_native)
     metadata = {
-        "source_file": str(args.source_gml),
+        "source_file": str(args.source_native),
         "source_url": args.source_url,
         "source_sha256": source_sha256,
+        "license_name": args.license_name,
+        "license_url": args.license_url,
         "node_count": len(scenario["nodes"]),
         "link_count": len(scenario["links"]),
         "source_metadata": scenario.get("source_metadata", {}),

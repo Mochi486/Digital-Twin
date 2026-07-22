@@ -16,19 +16,14 @@ from topology_utils import (
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RUNS_ROOT = PROJECT_ROOT / "runs"
 EVIDENCE_ROOT = PROJECT_ROOT / ".local-evidence"
-PREPARE_SCRIPT = PROJECT_ROOT / "scripts" / "prepare_wsl_docker.py"
 SIMULATOR_SCRIPT = PROJECT_ROOT / "scripts" / "simulator_topology.py"
 IMPORT_SCRIPT = PROJECT_ROOT / "scripts" / "import_germany50.py"
-RAW_GML_PATH = PROJECT_ROOT / "data" / "external" / "germany50" / "gml" / "Dfn.gml"
+RAW_NATIVE_PATH = PROJECT_ROOT / "data" / "external" / "germany50" / "native" / "germany50.txt"
 SCENARIO_PATH = PROJECT_ROOT / "data" / "scenario_germany50.json"
 METADATA_PATH = PROJECT_ROOT / "data" / "external" / "germany50" / "source-metadata.json"
-SOURCE_URL = "https://adelaide.figshare.com/articles/dataset/Internet_Topology_Zoo_Data_Set_/30153949"
-
-
-def ensure_root():
-    result = subprocess.run(["id", "-u"], capture_output=True, text=True, check=True)
-    if result.stdout.strip() != "0":
-        raise RuntimeError("run_germany50_phase.py must run as root for prepare_wsl_docker.py.")
+SOURCE_URL = "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt"
+LICENSE_NAME = "ZIB Academic License"
+LICENSE_URL = "https://sndlib.put.poznan.pl/LICENSE.txt"
 
 
 def run_command(cmd, cwd=PROJECT_ROOT):
@@ -40,16 +35,20 @@ def import_source():
         [
             sys.executable,
             str(IMPORT_SCRIPT),
-            "--source-gml",
-            str(RAW_GML_PATH),
+            "--source-native",
+            str(RAW_NATIVE_PATH),
             "--output-scenario",
             str(SCENARIO_PATH),
             "--metadata-output",
             str(METADATA_PATH),
             "--source-url",
             SOURCE_URL,
+            "--license-name",
+            LICENSE_NAME,
+            "--license-url",
+            LICENSE_URL,
             "--topology-name",
-            "germany50-dfn",
+            "sndlib-germany50",
         ],
         cwd=PROJECT_ROOT,
         text=True,
@@ -76,14 +75,12 @@ def assign_traffic_endpoint_roles(scenario: dict):
             node["type"] = "router"
 
 
-def run_prepare_and_simulator(name: str, scenario_path: Path, evidence_dir: Path, smoke=False, dry_run=False):
+def run_dry_run(name: str, scenario_path: Path, evidence_dir: Path):
     run_dir = RUNS_ROOT / evidence_dir.name / name
     run_dir.mkdir(parents=True, exist_ok=True)
-    metrics_path = run_dir / ("dry-run.json" if dry_run else "metrics.json")
+    metrics_path = run_dir / "dry-run.json"
     plot_path = run_dir / "topology.svg"
     simulator_log = evidence_dir / f"{name}-simulator.log"
-    prepare_log = evidence_dir / f"{name}-prepare.log"
-
     cmd = [
         sys.executable,
         str(SIMULATOR_SCRIPT),
@@ -94,30 +91,7 @@ def run_prepare_and_simulator(name: str, scenario_path: Path, evidence_dir: Path
         "--plot",
         str(plot_path),
     ]
-    if smoke:
-        cmd.append("--smoke")
-    if dry_run:
-        cmd.append("--dry-run")
-
-    prepare_rc = 0
-    if not dry_run:
-        prepare_proc = subprocess.Popen(
-            [
-                sys.executable,
-                str(PREPARE_SCRIPT),
-                "--scenario",
-                str(scenario_path),
-                "--ignore-existing",
-                "--evidence",
-                str(prepare_log),
-            ],
-            cwd=PROJECT_ROOT,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.STDOUT,
-            text=True,
-        )
-    else:
-        prepare_proc = None
+    cmd.append("--dry-run")
 
     with simulator_log.open("w", encoding="utf-8") as log_file:
         sim_result = subprocess.run(
@@ -128,14 +102,10 @@ def run_prepare_and_simulator(name: str, scenario_path: Path, evidence_dir: Path
             stderr=subprocess.STDOUT,
         )
 
-    if prepare_proc is not None:
-        prepare_rc = prepare_proc.wait()
-
     record = {
         "name": name,
-        "success": sim_result.returncode == 0 and prepare_rc == 0 and metrics_path.exists(),
+        "success": sim_result.returncode == 0 and metrics_path.exists(),
         "simulator_exit_code": sim_result.returncode,
-        "prepare_exit_code": prepare_rc,
         "metrics_file": str(metrics_path),
         "plot_file": str(plot_path),
     }
@@ -180,7 +150,6 @@ def configure_pair_scenario(base_scenario: dict, pair: tuple[str, str], hop_coun
 
 
 def main():
-    ensure_root()
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     evidence_dir = EVIDENCE_ROOT / f"germany50-phase-{stamp}"
     evidence_dir.mkdir(parents=True, exist_ok=True)
@@ -199,39 +168,31 @@ def main():
     write_scenario(subset5_path, subset5)
     write_scenario(subset10_path, subset10)
 
-    dry_run_result = run_prepare_and_simulator("germany50-dry-run", SCENARIO_PATH, evidence_dir, dry_run=True)
-    smoke5_result = run_prepare_and_simulator("germany50-subset-5-smoke", subset5_path, evidence_dir, smoke=True)
-    smoke10_result = run_prepare_and_simulator("germany50-subset-10-smoke", subset10_path, evidence_dir, smoke=True)
+    dry_run_result = run_dry_run("germany50-dry-run", SCENARIO_PATH, evidence_dir)
+    subset5_result = run_dry_run("germany50-subset-5-dry-run", subset5_path, evidence_dir)
+    subset10_result = run_dry_run("germany50-subset-10-dry-run", subset10_path, evidence_dir)
 
     path_samples = choose_path_length_samples(scenario)
-    full_start_results = {}
+    selected_path_scenarios = {}
+    for name, sample in path_samples.items():
+        path_scenario = configure_pair_scenario(scenario, sample["pair"], sample["hop_count"])
+        path_file = evidence_dir / f"scenario-germany50-{name}-path.json"
+        write_scenario(path_file, path_scenario)
+        selected_path_scenarios[name] = {
+            **sample,
+            "scenario_file": str(path_file),
+            "route_count": len(load_topology_scenario(path_file)["routes"]),
+        }
     resource_estimate = build_resource_estimate(scenario)
-    can_attempt_full = resource_estimate["node_count"] <= 60 and resource_estimate["network_count"] <= 90
-
-    if can_attempt_full:
-        for key, sample in path_samples.items():
-            pair_scenario = configure_pair_scenario(scenario, sample["pair"], sample["hop_count"])
-            pair_path = evidence_dir / f"scenario-{key}.json"
-            write_scenario(pair_path, pair_scenario)
-            full_start_results[key] = run_prepare_and_simulator(
-                f"germany50-{key}-path",
-                pair_path,
-                evidence_dir,
-                smoke=False,
-            )
-            full_start_results[key]["pair"] = sample["pair"]
-            full_start_results[key]["path"] = sample["path"]
-            full_start_results[key]["hop_count"] = sample["hop_count"]
 
     summary = {
         "source": metadata,
         "resource_estimate": resource_estimate,
         "dry_run": dry_run_result,
-        "subset_5_smoke": smoke5_result,
-        "subset_10_smoke": smoke10_result,
-        "path_samples": path_samples,
-        "full_start_attempted": can_attempt_full,
-        "full_start_results": full_start_results,
+        "subset_5_dry_run": subset5_result,
+        "subset_10_dry_run": subset10_result,
+        "path_samples": selected_path_scenarios,
+        "full_traffic_not_run": True,
         "topology_plot": str(evidence_dir / "germany50-topology.svg"),
     }
     summary_path = evidence_dir / "germany50-summary.json"

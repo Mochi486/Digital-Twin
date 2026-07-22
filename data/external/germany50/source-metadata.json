@@ -1,13 +1,16 @@
 {
-  "source_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/gml/Dfn.gml",
-  "source_url": "https://adelaide.figshare.com/articles/dataset/Internet_Topology_Zoo_Data_Set_/30153949",
-  "source_sha256": "7a807ebcce00bd9a3c645fddc8024471dc7c4b44860cf35e596367e6a35b397c",
-  "node_count": 58,
-  "link_count": 87,
+  "source_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+  "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+  "source_sha256": "a295adf283f42c5cce8cd5f9c2fbd8b3071bd02c011c841726c0ec29c744c1fe",
+  "license_name": "ZIB Academic License",
+  "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt",
+  "node_count": 50,
+  "link_count": 88,
   "source_metadata": {
-    "source_url": "https://adelaide.figshare.com/articles/dataset/Internet_Topology_Zoo_Data_Set_/30153949",
-    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/gml/Dfn.gml",
-    "geo_location": "Germany",
-    "network_label": "Dfn"
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
   }
 }

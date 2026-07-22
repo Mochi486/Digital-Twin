@@ -12,6 +12,7 @@ from topology_utils import (
     get_bandwidth_plan,
     get_link_impairment_plan,
     import_topology_zoo_gml,
+    import_sndlib_native,
     select_connected_subset,
     shortest_path,
     validate_topology_scenario,
@@ -205,6 +206,38 @@ class TopologyUtilsTests(unittest.TestCase):
             self.assertEqual(len(scenario["nodes"]), 2)
             self.assertEqual(len(scenario["links"]), 1)
             self.assertEqual(scenario["source_metadata"]["geo_location"], "Germany")
+
+    def test_import_sndlib_native_allocates_routes_for_real_format(self):
+        native_text = """?SNDlib native format; type: network; version: 1.0
+# NODE SECTION
+NODES (
+  Alpha ( 1.0 2.0 )
+  Beta ( 2.0 3.0 )
+  Gamma ( 3.0 4.0 )
+)
+# LINK SECTION
+LINKS (
+  L1 ( Alpha Beta ) 0.00 0.00 0.00 0.00 ( 40.00 1.00 )
+  L2 ( Beta Gamma ) 0.00 0.00 0.00 0.00 ( 40.00 1.00 )
+)
+# DEMAND SECTION
+DEMANDS (
+)
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            native_path = Path(temp_dir) / "mini.txt"
+            native_path.write_text(native_text, encoding="utf-8")
+            scenario = import_sndlib_native(
+                native_path,
+                topology_name="mini-sndlib",
+                source_url="https://example.test/mini.txt",
+                license_name="Example License",
+                license_url="https://example.test/license",
+            )
+        self.assertEqual(len(scenario["nodes"]), 3)
+        self.assertEqual(len(scenario["links"]), 2)
+        self.assertEqual(len(scenario["subnets"]), 2)
+        self.assertEqual(scenario["source_metadata"]["format"], "SNDlib native network 1.0")
 
 
 if __name__ == "__main__":
