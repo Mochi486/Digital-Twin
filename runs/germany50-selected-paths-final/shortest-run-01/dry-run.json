@@ -1,0 +1,17 @@
+{
+  "topology": "sndlib-germany50-selected-shortest",
+  "resource_estimate": {
+    "node_count": 4,
+    "router_count": 2,
+    "link_count": 3,
+    "network_count": 3,
+    "route_count": 6,
+    "impairment_applications": 4,
+    "bandwidth_controls": 2
+  },
+  "node_count": 4,
+  "link_count": 3,
+  "route_count": 6,
+  "subnet_count": 3,
+  "plot_file": "runs/germany50-selected-paths-final/shortest-run-01/topology.svg"
+}

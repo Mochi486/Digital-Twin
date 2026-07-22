@@ -1,0 +1,17 @@
+{
+  "topology": "sndlib-germany50-selected-median",
+  "resource_estimate": {
+    "node_count": 7,
+    "router_count": 5,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 30,
+    "impairment_applications": 10,
+    "bandwidth_controls": 5
+  },
+  "node_count": 7,
+  "link_count": 6,
+  "route_count": 30,
+  "subnet_count": 6,
+  "plot_file": "runs/germany50-selected-paths-final/median-run-03/topology.svg"
+}

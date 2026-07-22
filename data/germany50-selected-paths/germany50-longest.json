@@ -1,0 +1,1842 @@
+{
+  "topology_name": "sndlib-germany50-selected-longest",
+  "experiment_scope": "Germany50 path-extracted experiment; not a full 50-node run",
+  "source_metadata": {
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
+  },
+  "addressing": {
+    "base_cidr": "10.64.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "g50-longest-client",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-longest-client_oldenburg",
+          "ip": "10.64.0.2"
+        }
+      ]
+    },
+    {
+      "id": "oldenburg",
+      "original_id": 39,
+      "original_label": "Oldenburg",
+      "country": "Germany",
+      "latitude": 53.11,
+      "longitude": 8.21,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-longest-client_oldenburg",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_oldenburg_bremen",
+          "ip": "10.64.0.10"
+        }
+      ]
+    },
+    {
+      "id": "bremen",
+      "original_id": 7,
+      "original_label": "Bremen",
+      "country": "Germany",
+      "latitude": 53.11,
+      "longitude": 8.85,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_oldenburg_bremen",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_003_bremen_hannover",
+          "ip": "10.64.0.18"
+        }
+      ]
+    },
+    {
+      "id": "hannover",
+      "original_id": 23,
+      "original_label": "Hannover",
+      "country": "Germany",
+      "latitude": 52.38,
+      "longitude": 9.72,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_003_bremen_hannover",
+          "ip": "10.64.0.19"
+        },
+        {
+          "subnet": "net_004_hannover_braunschweig",
+          "ip": "10.64.0.26"
+        }
+      ]
+    },
+    {
+      "id": "braunschweig",
+      "original_id": 6,
+      "original_label": "Braunschweig",
+      "country": "Germany",
+      "latitude": 52.28,
+      "longitude": 10.55,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_004_hannover_braunschweig",
+          "ip": "10.64.0.27"
+        },
+        {
+          "subnet": "net_005_braunschweig_kassel",
+          "ip": "10.64.0.34"
+        }
+      ]
+    },
+    {
+      "id": "kassel",
+      "original_id": 26,
+      "original_label": "Kassel",
+      "country": "Germany",
+      "latitude": 51.32,
+      "longitude": 9.51,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_005_braunschweig_kassel",
+          "ip": "10.64.0.35"
+        },
+        {
+          "subnet": "net_006_kassel_erfurt",
+          "ip": "10.64.0.42"
+        }
+      ]
+    },
+    {
+      "id": "erfurt",
+      "original_id": 14,
+      "original_label": "Erfurt",
+      "country": "Germany",
+      "latitude": 50.98,
+      "longitude": 11.04,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_006_kassel_erfurt",
+          "ip": "10.64.0.43"
+        },
+        {
+          "subnet": "net_007_erfurt_wuerzburg",
+          "ip": "10.64.0.50"
+        }
+      ]
+    },
+    {
+      "id": "wuerzburg",
+      "original_id": 50,
+      "original_label": "Wuerzburg",
+      "country": "Germany",
+      "latitude": 49.78,
+      "longitude": 9.97,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_007_erfurt_wuerzburg",
+          "ip": "10.64.0.51"
+        },
+        {
+          "subnet": "net_008_wuerzburg_augsburg",
+          "ip": "10.64.0.58"
+        }
+      ]
+    },
+    {
+      "id": "augsburg",
+      "original_id": 2,
+      "original_label": "Augsburg",
+      "country": "Germany",
+      "latitude": 48.33,
+      "longitude": 10.9,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_008_wuerzburg_augsburg",
+          "ip": "10.64.0.59"
+        },
+        {
+          "subnet": "net_009_augsburg_muenchen",
+          "ip": "10.64.0.66"
+        }
+      ]
+    },
+    {
+      "id": "muenchen",
+      "original_id": 35,
+      "original_label": "Muenchen",
+      "country": "Germany",
+      "latitude": 48.15,
+      "longitude": 11.57,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_009_augsburg_muenchen",
+          "ip": "10.64.0.67"
+        },
+        {
+          "subnet": "net_010_muenchen_passau",
+          "ip": "10.64.0.74"
+        }
+      ]
+    },
+    {
+      "id": "passau",
+      "original_id": 41,
+      "original_label": "Passau",
+      "country": "Germany",
+      "latitude": 48.57,
+      "longitude": 13.46,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_010_muenchen_passau",
+          "ip": "10.64.0.75"
+        },
+        {
+          "subnet": "net_011_passau_g50-longest-server",
+          "ip": "10.64.0.82"
+        }
+      ]
+    },
+    {
+      "id": "g50-longest-server",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_011_passau_g50-longest-server",
+          "ip": "10.64.0.83"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "g50-longest-client",
+      "target": "oldenburg",
+      "role": "access-source",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_g50-longest-client_oldenburg"
+    },
+    {
+      "source": "oldenburg",
+      "target": "bremen",
+      "original_id": "L45",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_oldenburg_bremen"
+    },
+    {
+      "source": "bremen",
+      "target": "hannover",
+      "original_id": "L47",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_bremen_hannover"
+    },
+    {
+      "source": "hannover",
+      "target": "braunschweig",
+      "original_id": "L53",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_004_hannover_braunschweig"
+    },
+    {
+      "source": "braunschweig",
+      "target": "kassel",
+      "original_id": "L56",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_005_braunschweig_kassel"
+    },
+    {
+      "source": "kassel",
+      "target": "erfurt",
+      "original_id": "L34",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_006_kassel_erfurt"
+    },
+    {
+      "source": "erfurt",
+      "target": "wuerzburg",
+      "original_id": "L35",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_007_erfurt_wuerzburg"
+    },
+    {
+      "source": "wuerzburg",
+      "target": "augsburg",
+      "original_id": "L84",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_008_wuerzburg_augsburg"
+    },
+    {
+      "source": "augsburg",
+      "target": "muenchen",
+      "original_id": "L79",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_009_augsburg_muenchen"
+    },
+    {
+      "source": "muenchen",
+      "target": "passau",
+      "original_id": "L81",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_010_muenchen_passau"
+    },
+    {
+      "source": "passau",
+      "target": "g50-longest-server",
+      "role": "access-destination",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_011_passau_g50-longest-server"
+    }
+  ],
+  "traffic": {
+    "source": "g50-longest-client",
+    "destination": "g50-longest-server",
+    "protocol": "tcp",
+    "duration_s": 5,
+    "ping_count": 100,
+    "ping_flood": true,
+    "reverse": true
+  },
+  "experiment_metadata": {
+    "path_class": "longest",
+    "backbone_path": [
+      "oldenburg",
+      "bremen",
+      "hannover",
+      "braunschweig",
+      "kassel",
+      "erfurt",
+      "wuerzburg",
+      "augsburg",
+      "muenchen",
+      "passau"
+    ],
+    "backbone_hop_count": 9,
+    "path_definition": "fixed SNDlib Germany50 selected path"
+  },
+  "subnets": [
+    {
+      "name": "net_001_g50-longest-client_oldenburg",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_oldenburg_bremen",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_bremen_hannover",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_hannover_braunschweig",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_braunschweig_kassel",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_kassel_erfurt",
+      "cidr": "10.64.0.40/29"
+    },
+    {
+      "name": "net_007_erfurt_wuerzburg",
+      "cidr": "10.64.0.48/29"
+    },
+    {
+      "name": "net_008_wuerzburg_augsburg",
+      "cidr": "10.64.0.56/29"
+    },
+    {
+      "name": "net_009_augsburg_muenchen",
+      "cidr": "10.64.0.64/29"
+    },
+    {
+      "name": "net_010_muenchen_passau",
+      "cidr": "10.64.0.72/29"
+    },
+    {
+      "name": "net_011_passau_g50-longest-server",
+      "cidr": "10.64.0.80/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 9
+    },
+    {
+      "node": "g50-longest-client",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-longest-client",
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 10
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.11",
+      "path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 9
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.19",
+      "path": [
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "hannover",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.27",
+      "path": [
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.26",
+      "path": [
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "braunschweig",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.35",
+      "path": [
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.34",
+      "path": [
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.34",
+      "path": [
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.34",
+      "path": [
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.43",
+      "path": [
+        "kassel",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.43",
+      "path": [
+        "kassel",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.43",
+      "path": [
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.43",
+      "path": [
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "kassel",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.43",
+      "path": [
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "path": [
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "path": [
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "path": [
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "path": [
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.51",
+      "path": [
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.51",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.51",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.51",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.50",
+      "path": [
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.58",
+      "path": [
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.67",
+      "path": [
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.67",
+      "path": [
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.66",
+      "path": [
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.75",
+      "path": [
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 9
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.74",
+      "path": [
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 10
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover",
+        "bremen"
+      ],
+      "hop_count": 9
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig",
+        "hannover"
+      ],
+      "hop_count": 8
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel",
+        "braunschweig"
+      ],
+      "hop_count": 7
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "kassel"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-longest-server",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.82",
+      "path": [
+        "g50-longest-server",
+        "passau"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 12,
+    "router_count": 10,
+    "link_count": 11,
+    "network_count": 11,
+    "route_count": 110,
+    "impairment_applications": 20,
+    "bandwidth_controls": 10
+  }
+}

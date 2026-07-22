@@ -1,0 +1,199 @@
+{
+  "experiment_scope": "Germany50 path-extracted experiment; not a full 50-node run",
+  "run_root": "runs/germany50-selected-paths-final",
+  "records": [
+    {
+      "path_class": "longest",
+      "run_index": 1,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/longest-run-01/metrics.json",
+      "backbone_hop_count": 9,
+      "rtt_avg_ms": 213.992,
+      "throughput_mbps": 15.7,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 6.196
+    },
+    {
+      "path_class": "longest",
+      "run_index": 2,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/longest-run-02/metrics.json",
+      "backbone_hop_count": 9,
+      "rtt_avg_ms": 214.409,
+      "throughput_mbps": 15.7,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 5.932
+    },
+    {
+      "path_class": "longest",
+      "run_index": 3,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/longest-run-03/metrics.json",
+      "backbone_hop_count": 9,
+      "rtt_avg_ms": 214.873,
+      "throughput_mbps": 15.7,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 6.087
+    },
+    {
+      "path_class": "median",
+      "run_index": 1,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/median-run-01/metrics.json",
+      "backbone_hop_count": 4,
+      "rtt_avg_ms": 105.563,
+      "throughput_mbps": 17.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 3.22
+    },
+    {
+      "path_class": "median",
+      "run_index": 2,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/median-run-02/metrics.json",
+      "backbone_hop_count": 4,
+      "rtt_avg_ms": 104.378,
+      "throughput_mbps": 17.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 3.341
+    },
+    {
+      "path_class": "median",
+      "run_index": 3,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/median-run-03/metrics.json",
+      "backbone_hop_count": 4,
+      "rtt_avg_ms": 103.928,
+      "throughput_mbps": 17.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 3.342
+    },
+    {
+      "path_class": "shortest",
+      "run_index": 1,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/shortest-run-01/metrics.json",
+      "backbone_hop_count": 1,
+      "rtt_avg_ms": 40.999,
+      "throughput_mbps": 18.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 1.513
+    },
+    {
+      "path_class": "shortest",
+      "run_index": 2,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/shortest-run-02/metrics.json",
+      "backbone_hop_count": 1,
+      "rtt_avg_ms": 41.101,
+      "throughput_mbps": 18.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 1.754
+    },
+    {
+      "path_class": "shortest",
+      "run_index": 3,
+      "success": true,
+      "metrics_file": "runs/germany50-selected-paths-final/shortest-run-03/metrics.json",
+      "backbone_hop_count": 1,
+      "rtt_avg_ms": 41.489,
+      "throughput_mbps": 18.8,
+      "route_verified": true,
+      "qdisc_verified": true,
+      "cleanup_time_s": 1.646
+    }
+  ],
+  "summaries": [
+    {
+      "path_class": "longest",
+      "backbone_path": [
+        "oldenburg",
+        "bremen",
+        "hannover",
+        "braunschweig",
+        "kassel",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "backbone_hop_count": 9,
+      "runs": 3,
+      "rtt_ms": {
+        "mean": 214.42466666666667,
+        "std": 0.3598373089173619,
+        "min": 213.992,
+        "max": 214.873
+      },
+      "throughput_mbps": {
+        "mean": 15.699999999999998,
+        "std": 0.0,
+        "min": 15.7,
+        "max": 15.7
+      },
+      "route_verification": true,
+      "qdisc_verification": true,
+      "cleanup": true
+    },
+    {
+      "path_class": "median",
+      "backbone_path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "backbone_hop_count": 4,
+      "runs": 3,
+      "rtt_ms": {
+        "mean": 104.623,
+        "std": 0.68960133410544,
+        "min": 103.928,
+        "max": 105.563
+      },
+      "throughput_mbps": {
+        "mean": 17.8,
+        "std": 0.0,
+        "min": 17.8,
+        "max": 17.8
+      },
+      "route_verification": true,
+      "qdisc_verification": true,
+      "cleanup": true
+    },
+    {
+      "path_class": "shortest",
+      "backbone_path": [
+        "aachen",
+        "koeln"
+      ],
+      "backbone_hop_count": 1,
+      "runs": 3,
+      "rtt_ms": {
+        "mean": 41.196333333333335,
+        "std": 0.2110945022706373,
+        "min": 40.999,
+        "max": 41.489
+      },
+      "throughput_mbps": {
+        "mean": 18.8,
+        "std": 0.0,
+        "min": 18.8,
+        "max": 18.8
+      },
+      "route_verification": true,
+      "qdisc_verification": true,
+      "cleanup": true
+    }
+  ]
+}

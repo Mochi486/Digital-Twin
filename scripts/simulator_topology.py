@@ -368,6 +368,8 @@ def ping_test(scenario, smoke_mode):
     traffic = effective_traffic(scenario, smoke_mode)
     destination_ip = get_destination_ip(scenario)
     cmd = ["docker", "exec", traffic["source"], "ping", "-c", str(traffic.get("ping_count", 3))]
+    if traffic.get("ping_flood", False):
+        cmd.insert(-2, "-f")
     if "ping_interval_s" in traffic:
         cmd.extend(["-i", str(traffic["ping_interval_s"])])
     cmd.append(destination_ip)

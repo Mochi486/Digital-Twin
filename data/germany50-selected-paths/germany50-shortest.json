@@ -1,0 +1,210 @@
+{
+  "topology_name": "sndlib-germany50-selected-shortest",
+  "experiment_scope": "Germany50 path-extracted experiment; not a full 50-node run",
+  "source_metadata": {
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
+  },
+  "addressing": {
+    "base_cidr": "10.64.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "g50-shortest-client",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-shortest-client_aachen",
+          "ip": "10.64.0.2"
+        }
+      ]
+    },
+    {
+      "id": "aachen",
+      "original_id": 1,
+      "original_label": "Aachen",
+      "country": "Germany",
+      "latitude": 50.76,
+      "longitude": 6.04,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-shortest-client_aachen",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_aachen_koeln",
+          "ip": "10.64.0.10"
+        }
+      ]
+    },
+    {
+      "id": "koeln",
+      "original_id": 30,
+      "original_label": "Koeln",
+      "country": "Germany",
+      "latitude": 50.94,
+      "longitude": 6.87,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_aachen_koeln",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_003_koeln_g50-shortest-server",
+          "ip": "10.64.0.18"
+        }
+      ]
+    },
+    {
+      "id": "g50-shortest-server",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_003_koeln_g50-shortest-server",
+          "ip": "10.64.0.19"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "g50-shortest-client",
+      "target": "aachen",
+      "role": "access-source",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_g50-shortest-client_aachen"
+    },
+    {
+      "source": "aachen",
+      "target": "koeln",
+      "original_id": "L5",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_aachen_koeln"
+    },
+    {
+      "source": "koeln",
+      "target": "g50-shortest-server",
+      "role": "access-destination",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_koeln_g50-shortest-server"
+    }
+  ],
+  "traffic": {
+    "source": "g50-shortest-client",
+    "destination": "g50-shortest-server",
+    "protocol": "tcp",
+    "duration_s": 5,
+    "ping_count": 100,
+    "ping_flood": true,
+    "reverse": true
+  },
+  "experiment_metadata": {
+    "path_class": "shortest",
+    "backbone_path": [
+      "aachen",
+      "koeln"
+    ],
+    "backbone_hop_count": 1,
+    "path_definition": "fixed SNDlib Germany50 selected path"
+  },
+  "subnets": [
+    {
+      "name": "net_001_g50-shortest-client_aachen",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_aachen_koeln",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_koeln_g50-shortest-server",
+      "cidr": "10.64.0.16/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-shortest-client",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-shortest-client",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "g50-shortest-server",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "g50-shortest-server",
+        "koeln"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 4,
+    "router_count": 2,
+    "link_count": 3,
+    "network_count": 3,
+    "route_count": 6,
+    "impairment_applications": 4,
+    "bandwidth_controls": 2
+  }
+}

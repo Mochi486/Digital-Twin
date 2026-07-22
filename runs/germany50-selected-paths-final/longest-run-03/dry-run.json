@@ -1,0 +1,17 @@
+{
+  "topology": "sndlib-germany50-selected-longest",
+  "resource_estimate": {
+    "node_count": 12,
+    "router_count": 10,
+    "link_count": 11,
+    "network_count": 11,
+    "route_count": 110,
+    "impairment_applications": 20,
+    "bandwidth_controls": 10
+  },
+  "node_count": 12,
+  "link_count": 11,
+  "route_count": 110,
+  "subnet_count": 11,
+  "plot_file": "runs/germany50-selected-paths-final/longest-run-03/topology.svg"
+}

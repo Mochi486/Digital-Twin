@@ -1,0 +1,267 @@
+{
+  "topology": "sndlib-germany50-selected-shortest",
+  "smoke_mode": false,
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20.0,
+  "configured_delay_ms": 10.0,
+  "configured_packet_loss_percent": 0.0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress interfaces selected by link definitions. Measured ping RTT is reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress interfaces selected by link definitions. Measured ping packet loss is reported separately.",
+  "subnets": [
+    {
+      "name": "net_001_g50-shortest-client_aachen",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_aachen_koeln",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_koeln_g50-shortest-server",
+      "cidr": "10.64.0.16/29"
+    }
+  ],
+  "static_routes": [
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-shortest-client",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-shortest-client",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "g50-shortest-server",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "g50-shortest-server",
+        "koeln"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "route_verification": [
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "g50-shortest-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.10 dev eth0"
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.18 dev eth0"
+    },
+    {
+      "node": "g50-shortest-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.18 dev eth0"
+    }
+  ],
+  "delay_loss_applications": [
+    {
+      "link": "g50-shortest-client->aachen",
+      "subnet": "net_001_g50-shortest-client_aachen",
+      "node": "aachen",
+      "interface_ip": "10.64.0.3",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 801b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "aachen->koeln",
+      "subnet": "net_002_aachen_koeln",
+      "node": "aachen",
+      "interface_ip": "10.64.0.10",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 801c: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "aachen->koeln",
+      "subnet": "net_002_aachen_koeln",
+      "node": "koeln",
+      "interface_ip": "10.64.0.11",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 801d: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "koeln->g50-shortest-server",
+      "subnet": "net_003_koeln_g50-shortest-server",
+      "node": "koeln",
+      "interface_ip": "10.64.0.18",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 801e: root refcnt 9 limit 1000 delay 10ms"
+    }
+  ],
+  "bandwidth_controls": [
+    {
+      "link": "koeln->aachen",
+      "subnet": "net_002_aachen_koeln",
+      "node": "koeln",
+      "interface_ip": "10.64.0.11",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-shortest-server",
+        "koeln",
+        "aachen",
+        "g50-shortest-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 801d: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "aachen->g50-shortest-client",
+      "subnet": "net_001_g50-shortest-client_aachen",
+      "node": "aachen",
+      "interface_ip": "10.64.0.3",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-shortest-server",
+        "koeln",
+        "aachen",
+        "g50-shortest-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 801b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    }
+  ],
+  "all_node_route_tables": {
+    "g50-shortest-client": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.2 \n10.64.0.8/29 via 10.64.0.3 dev eth0 \n10.64.0.16/29 via 10.64.0.3 dev eth0",
+    "aachen": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.11 dev eth1",
+    "koeln": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.18",
+    "g50-shortest-server": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.18 dev eth0 \n10.64.0.8/29 via 10.64.0.18 dev eth0 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.19"
+  },
+  "router_route_tables": {
+    "aachen": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.11 dev eth1",
+    "koeln": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.18"
+  },
+  "router_qdisc_state": {
+    "aachen": {
+      "eth0": "qdisc netem 801b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 801c: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "koeln": {
+      "eth0": "qdisc netem 801d: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 801e: root refcnt 9 limit 1000 delay 10ms"
+    }
+  },
+  "ping_packets_transmitted": 100,
+  "ping_packets_received": 100,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 40.21,
+  "ping_rtt_avg_ms": 41.101,
+  "ping_rtt_max_ms": 80.6,
+  "ping_rtt_mdev_ms": 4.984,
+  "throughput_mbps": 18.8,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "resource_estimate": {
+    "node_count": 4,
+    "router_count": 2,
+    "link_count": 3,
+    "network_count": 3,
+    "route_count": 6,
+    "impairment_applications": 4,
+    "bandwidth_controls": 2
+  },
+  "resource_usage": {
+    "running_container_count": 6,
+    "running_network_count": 8
+  },
+  "stage_timings_s": {
+    "initial_cleanup_s": 0.419,
+    "create_subnets_s": 0.288,
+    "start_nodes_s": 2.486,
+    "configure_routes_s": 0.772,
+    "verify_routes_s": 0.813,
+    "apply_impairments_s": 2.936,
+    "apply_bandwidth_s": 0.0,
+    "setup_total_s": 7.295,
+    "ping_s": 2.02,
+    "iperf_s": 6.525
+  },
+  "cleanup_time_s": 1.754
+}

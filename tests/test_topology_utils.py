@@ -1,3 +1,4 @@
+import json
 import sys
 import tempfile
 import unittest
@@ -17,6 +18,7 @@ from topology_utils import (
     shortest_path,
     validate_topology_scenario,
 )
+from germany50_selected_paths import PATHS, build_selected_path_scenario
 
 
 def make_scenario():
@@ -238,6 +240,15 @@ DEMANDS (
         self.assertEqual(len(scenario["links"]), 2)
         self.assertEqual(len(scenario["subnets"]), 2)
         self.assertEqual(scenario["source_metadata"]["format"], "SNDlib native network 1.0")
+
+    def test_selected_germany50_path_scenarios_are_bounded_and_deterministic(self):
+        base = json.loads((Path(__file__).resolve().parent.parent / "data" / "scenario_germany50.json").read_text())
+        scenario = build_selected_path_scenario(base, "longest")
+        self.assertEqual(scenario["experiment_metadata"]["backbone_path"], PATHS["longest"])
+        self.assertEqual(scenario["experiment_metadata"]["backbone_hop_count"], 9)
+        self.assertEqual(len(scenario["nodes"]), 12)
+        self.assertEqual(len(scenario["links"]), 11)
+        self.assertEqual(scenario["traffic"]["ping_count"], 100)
 
 
 if __name__ == "__main__":
