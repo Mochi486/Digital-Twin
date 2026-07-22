@@ -3,7 +3,26 @@ import json
 import re
 from copy import deepcopy
 
+from config import (
+    FORBIDDEN_STRING_PATTERNS,
+    ID_PATTERN,
+    MAX_BANDWIDTH_MBPS,
+    MAX_DELAY_MS,
+    MAX_GENERATED_NODE_COUNT,
+    MAX_PACKET_LOSS_PERCENT,
+    MAX_PING_COUNT,
+    MAX_TRAFFIC_DURATION_S,
+    MIN_BANDWIDTH_MBPS,
+    MIN_GENERATED_NODE_COUNT,
+    OPENAI_SYSTEM_PROMPT,
+    PROTOCOL_VALUES,
+    ROLE_VALUES,
+)
+from logging_utils import get_logger
 from topology_utils import build_graph_adjacency, validate_topology_scenario
+
+
+logger = get_logger(__name__)
 
 
 DEFAULT_PROVIDER = "mock"
@@ -15,43 +34,6 @@ DEFAULT_COMPATIBLE_MODELS = [
     "qwen3.7-plus",
     "qwen3.6-flash",
 ]
-MAX_GENERATED_NODE_COUNT = 10
-MIN_GENERATED_NODE_COUNT = 2
-MAX_DELAY_MS = 250
-MAX_PACKET_LOSS_PERCENT = 20
-MAX_BANDWIDTH_MBPS = 1000
-ID_PATTERN = re.compile(r"^[a-z][a-z0-9-]{0,31}$")
-ROLE_VALUES = {"client", "router", "server"}
-PROTOCOL_VALUES = {"tcp"}
-FORBIDDEN_STRING_PATTERNS = [
-    re.compile(pattern, re.IGNORECASE)
-    for pattern in (
-        r"\bdocker\b",
-        r"\biptables\b",
-        r"\bip\s+route\b",
-        r"\broute\s+add\b",
-        r"\broute\s+del\b",
-        r"\broute\b",
-        r"\bsubnet\b",
-        r"\bpython(?:3)?\b",
-        r"\bsh\b",
-        r"\bbash\b",
-        r"\bsudo\b",
-        r"\btc\b",
-        r"\b\d{1,3}(?:\.\d{1,3}){3}(?:/\d{1,2})?\b",
-        r";",
-        r"\|\|",
-        r"&&",
-    )
-]
-
-OPENAI_SYSTEM_PROMPT = """You generate abstract routed network scenarios as JSON only.
-Return only nodes, links, and traffic plus per-link network conditions.
-Do not generate shell, Docker, iptables, IP, subnet, route, or tc commands.
-Keep the topology small and safe to run locally.
-Use lowercase node ids with letters, digits, and dashes.
-Prefer exactly one client, one server, and router nodes in between.
-"""
 
 
 def build_generation_schema() -> dict:
@@ -62,7 +44,7 @@ def build_generation_schema() -> dict:
         "properties": {
             "nodes": {
                 "type": "array",
-                "minItems": 2,
+                "minItems": MIN_GENERATED_NODE_COUNT,
                 "maxItems": MAX_GENERATED_NODE_COUNT,
                 "items": {
                     "type": "object",
@@ -84,7 +66,7 @@ def build_generation_schema() -> dict:
                     "properties": {
                         "source": {"type": "string"},
                         "target": {"type": "string"},
-                        "bandwidth_mbps": {"type": "number", "minimum": 1, "maximum": MAX_BANDWIDTH_MBPS},
+                        "bandwidth_mbps": {"type": "number", "minimum": MIN_BANDWIDTH_MBPS, "maximum": MAX_BANDWIDTH_MBPS},
                         "delay_ms": {"type": "number", "minimum": 0, "maximum": MAX_DELAY_MS},
                         "packet_loss_percent": {
                             "type": "number",
@@ -102,8 +84,8 @@ def build_generation_schema() -> dict:
                     "source": {"type": "string"},
                     "destination": {"type": "string"},
                     "protocol": {"type": "string", "enum": sorted(PROTOCOL_VALUES)},
-                    "duration_s": {"type": "integer", "minimum": 1, "maximum": 30},
-                    "ping_count": {"type": "integer", "minimum": 1, "maximum": 10},
+                    "duration_s": {"type": "integer", "minimum": 1, "maximum": MAX_TRAFFIC_DURATION_S},
+                    "ping_count": {"type": "integer", "minimum": 1, "maximum": MAX_PING_COUNT},
                     "reverse": {"type": "boolean"},
                 },
             },
@@ -120,7 +102,7 @@ def build_openai_text_format() -> dict:
     }
 
 
-def _append_error(errors: list[str], message: str):
+def _append_error(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
@@ -257,9 +239,6 @@ def validate_generated_semantics(candidate: dict, max_nodes: int = MAX_GENERATED
     if duplicate_ids:
         _append_error(errors, f"Duplicate node ids: {', '.join(duplicate_ids)}")
 
-    if len(set(node_ids)) != len(node_ids):
-        pass
-
     if traffic.get("protocol") not in PROTOCOL_VALUES:
         _append_error(errors, f"traffic.protocol must be one of {', '.join(sorted(PROTOCOL_VALUES))}.")
 
@@ -304,8 +283,8 @@ def validate_generated_semantics(candidate: dict, max_nodes: int = MAX_GENERATED
                 errors,
                 f"links[{index}].packet_loss_percent must be between 0 and {MAX_PACKET_LOSS_PERCENT}.",
             )
-        if "bandwidth_mbps" in link and not 1 <= float(link["bandwidth_mbps"]) <= MAX_BANDWIDTH_MBPS:
-            _append_error(errors, f"links[{index}].bandwidth_mbps must be between 1 and {MAX_BANDWIDTH_MBPS}.")
+        if "bandwidth_mbps" in link and not MIN_BANDWIDTH_MBPS <= float(link["bandwidth_mbps"]) <= MAX_BANDWIDTH_MBPS:
+            _append_error(errors, f"links[{index}].bandwidth_mbps must be between {MIN_BANDWIDTH_MBPS} and {MAX_BANDWIDTH_MBPS}.")
 
     errors.extend(find_forbidden_content(candidate))
 
