@@ -1,0 +1,21 @@
+{
+  "topology_name": "minimal-rl-dual-path",
+  "addressing": {"base_cidr": "10.74.0.0/16", "subnet_prefixlen": 29},
+  "nodes": [
+    {"id": "rl-client", "type": "client"},
+    {"id": "r1", "type": "router"},
+    {"id": "r2", "type": "router"},
+    {"id": "r3", "type": "router"},
+    {"id": "r4", "type": "router"},
+    {"id": "rl-server", "type": "server"}
+  ],
+  "links": [
+    {"source": "rl-client", "target": "r1", "bandwidth_mbps": 20, "delay_ms": 2, "packet_loss_percent": 0},
+    {"source": "r1", "target": "r2", "bandwidth_mbps": 20, "delay_ms": 5, "packet_loss_percent": 0},
+    {"source": "r2", "target": "r4", "bandwidth_mbps": 20, "delay_ms": 5, "packet_loss_percent": 0},
+    {"source": "r1", "target": "r3", "bandwidth_mbps": 12, "delay_ms": 30, "packet_loss_percent": 4},
+    {"source": "r3", "target": "r4", "bandwidth_mbps": 12, "delay_ms": 30, "packet_loss_percent": 4},
+    {"source": "r4", "target": "rl-server", "bandwidth_mbps": 20, "delay_ms": 2, "packet_loss_percent": 0}
+  ],
+  "traffic": {"source": "rl-client", "destination": "rl-server", "protocol": "tcp", "duration_s": 1, "ping_count": 5, "reverse": true}
+}

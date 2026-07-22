@@ -1,0 +1,439 @@
+{
+  "topology_name": "minimal-rl-dual-path",
+  "addressing": {
+    "base_cidr": "10.74.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "rl-client",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_rl-client_r1",
+          "ip": "10.74.0.2"
+        }
+      ]
+    },
+    {
+      "id": "r1",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_rl-client_r1",
+          "ip": "10.74.0.3"
+        },
+        {
+          "subnet": "net_002_r1_r2",
+          "ip": "10.74.0.10"
+        },
+        {
+          "subnet": "net_004_r1_r3",
+          "ip": "10.74.0.26"
+        }
+      ]
+    },
+    {
+      "id": "r2",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_r1_r2",
+          "ip": "10.74.0.11"
+        },
+        {
+          "subnet": "net_003_r2_r4",
+          "ip": "10.74.0.18"
+        }
+      ]
+    },
+    {
+      "id": "r3",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_004_r1_r3",
+          "ip": "10.74.0.27"
+        },
+        {
+          "subnet": "net_005_r3_r4",
+          "ip": "10.74.0.34"
+        }
+      ]
+    },
+    {
+      "id": "r4",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_003_r2_r4",
+          "ip": "10.74.0.19"
+        },
+        {
+          "subnet": "net_005_r3_r4",
+          "ip": "10.74.0.35"
+        },
+        {
+          "subnet": "net_006_r4_rl-server",
+          "ip": "10.74.0.42"
+        }
+      ]
+    },
+    {
+      "id": "rl-server",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_006_r4_rl-server",
+          "ip": "10.74.0.43"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "rl-client",
+      "target": "r1",
+      "bandwidth_mbps": 20,
+      "delay_ms": 2,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_rl-client_r1"
+    },
+    {
+      "source": "r1",
+      "target": "r2",
+      "bandwidth_mbps": 20,
+      "delay_ms": 5,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_r1_r2"
+    },
+    {
+      "source": "r2",
+      "target": "r4",
+      "bandwidth_mbps": 20,
+      "delay_ms": 5,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_r2_r4"
+    },
+    {
+      "source": "r1",
+      "target": "r3",
+      "bandwidth_mbps": 12,
+      "delay_ms": 30,
+      "packet_loss_percent": 4,
+      "subnet": "net_004_r1_r3"
+    },
+    {
+      "source": "r3",
+      "target": "r4",
+      "bandwidth_mbps": 12,
+      "delay_ms": 30,
+      "packet_loss_percent": 4,
+      "subnet": "net_005_r3_r4"
+    },
+    {
+      "source": "r4",
+      "target": "rl-server",
+      "bandwidth_mbps": 20,
+      "delay_ms": 2,
+      "packet_loss_percent": 0,
+      "subnet": "net_006_r4_rl-server"
+    }
+  ],
+  "traffic": {
+    "source": "rl-client",
+    "destination": "rl-server",
+    "protocol": "tcp",
+    "duration_s": 1,
+    "ping_count": 5,
+    "reverse": true
+  },
+  "subnets": [
+    {
+      "name": "net_001_rl-client_r1",
+      "cidr": "10.74.0.0/29"
+    },
+    {
+      "name": "net_002_r1_r2",
+      "cidr": "10.74.0.8/29"
+    },
+    {
+      "name": "net_003_r2_r4",
+      "cidr": "10.74.0.16/29"
+    },
+    {
+      "name": "net_004_r1_r3",
+      "cidr": "10.74.0.24/29"
+    },
+    {
+      "name": "net_005_r3_r4",
+      "cidr": "10.74.0.32/29"
+    },
+    {
+      "name": "net_006_r4_rl-server",
+      "cidr": "10.74.0.40/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "rl-client",
+      "destination": "10.74.0.8/29",
+      "via": "10.74.0.3",
+      "path": [
+        "rl-client",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "rl-client",
+      "destination": "10.74.0.16/29",
+      "via": "10.74.0.3",
+      "path": [
+        "rl-client",
+        "r1",
+        "r2"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "rl-client",
+      "destination": "10.74.0.24/29",
+      "via": "10.74.0.3",
+      "path": [
+        "rl-client",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "rl-client",
+      "destination": "10.74.0.32/29",
+      "via": "10.74.0.3",
+      "path": [
+        "rl-client",
+        "r1",
+        "r3"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "rl-client",
+      "destination": "10.74.0.40/29",
+      "via": "10.74.0.3",
+      "path": [
+        "rl-client",
+        "r1",
+        "r2",
+        "r4"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "r1",
+      "destination": "10.74.0.16/29",
+      "via": "10.74.0.11",
+      "path": [
+        "r1",
+        "r2"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r1",
+      "destination": "10.74.0.32/29",
+      "via": "10.74.0.27",
+      "path": [
+        "r1",
+        "r3"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r1",
+      "destination": "10.74.0.40/29",
+      "via": "10.74.0.11",
+      "path": [
+        "r1",
+        "r2",
+        "r4"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "r2",
+      "destination": "10.74.0.0/29",
+      "via": "10.74.0.10",
+      "path": [
+        "r2",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r2",
+      "destination": "10.74.0.24/29",
+      "via": "10.74.0.10",
+      "path": [
+        "r2",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r2",
+      "destination": "10.74.0.32/29",
+      "via": "10.74.0.19",
+      "path": [
+        "r2",
+        "r4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r2",
+      "destination": "10.74.0.40/29",
+      "via": "10.74.0.19",
+      "path": [
+        "r2",
+        "r4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r3",
+      "destination": "10.74.0.0/29",
+      "via": "10.74.0.26",
+      "path": [
+        "r3",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r3",
+      "destination": "10.74.0.8/29",
+      "via": "10.74.0.26",
+      "path": [
+        "r3",
+        "r1"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r3",
+      "destination": "10.74.0.16/29",
+      "via": "10.74.0.35",
+      "path": [
+        "r3",
+        "r4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r3",
+      "destination": "10.74.0.40/29",
+      "via": "10.74.0.35",
+      "path": [
+        "r3",
+        "r4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r4",
+      "destination": "10.74.0.0/29",
+      "via": "10.74.0.18",
+      "path": [
+        "r4",
+        "r2",
+        "r1"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "r4",
+      "destination": "10.74.0.8/29",
+      "via": "10.74.0.18",
+      "path": [
+        "r4",
+        "r2"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "r4",
+      "destination": "10.74.0.24/29",
+      "via": "10.74.0.34",
+      "path": [
+        "r4",
+        "r3"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "rl-server",
+      "destination": "10.74.0.0/29",
+      "via": "10.74.0.42",
+      "path": [
+        "rl-server",
+        "r4",
+        "r2",
+        "r1"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "rl-server",
+      "destination": "10.74.0.8/29",
+      "via": "10.74.0.42",
+      "path": [
+        "rl-server",
+        "r4",
+        "r2"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "rl-server",
+      "destination": "10.74.0.16/29",
+      "via": "10.74.0.42",
+      "path": [
+        "rl-server",
+        "r4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "rl-server",
+      "destination": "10.74.0.24/29",
+      "via": "10.74.0.42",
+      "path": [
+        "rl-server",
+        "r4",
+        "r3"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "rl-server",
+      "destination": "10.74.0.32/29",
+      "via": "10.74.0.42",
+      "path": [
+        "rl-server",
+        "r4"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 6,
+    "router_count": 4,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 24,
+    "impairment_applications": 10,
+    "bandwidth_controls": 3
+  }
+}
