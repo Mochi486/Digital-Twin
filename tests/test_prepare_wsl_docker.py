@@ -38,6 +38,32 @@ class PrepareWslDockerTests(unittest.TestCase):
             path.write_text('{"subnets":[{"name":"a","cidr":"10.0.0.0/29"},{"name":"b","cidr":"10.0.0.8/29"},{"name":"c","cidr":"10.0.0.16/29"}],"nodes":[{"id":"r","type":"router"}],"links":[{"source":"r","target":"x","subnet":"a"},{"source":"r","target":"y","subnet":"b"},{"source":"r","target":"z","subnet":"c"}]}')
             self.assertEqual(len(build_rule_plan(path, load_networks(path))), 6)
 
+    def test_rule_plan_includes_multi_interface_endpoint_access(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text('{"subnets":[{"name":"access","cidr":"10.0.0.0/29"},{"name":"primary","cidr":"10.0.0.8/29"}],"nodes":[{"id":"client","type":"client"}],"links":[{"source":"client","target":"x","subnet":"access"},{"source":"client","target":"y","subnet":"primary"}]}')
+            self.assertEqual(len(build_rule_plan(path, load_networks(path))), 2)
+
+    def test_traffic_plan_targets_source_egress_subnet_on_reverse_path(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text(
+                '{"networks":[{"name":"primary","subnet":"10.0.0.0/29"},'
+                '{"name":"access","subnet":"10.0.0.8/29"},'
+                '{"name":"destination","subnet":"10.0.0.16/29"}],'
+                '"traffic":{"source":"client","destination":"server"},'
+                '"nodes":[{"id":"client","interfaces":[{"subnet":"primary"},{"subnet":"access"}]},'
+                '{"id":"router","interfaces":[{"subnet":"access"},{"subnet":"destination"}]},'
+                '{"id":"server","interfaces":[{"subnet":"destination"}]}],'
+                '"links":[{"source":"client","target":"router","subnet":"access"},'
+                '{"source":"router","target":"server","subnet":"destination"}]}'
+            )
+            self.assertEqual(
+                build_rule_plan(path, load_networks(path)),
+                [("access", "10.0.0.16/29"), ("access", "10.0.0.8/29"),
+                 ("destination", "10.0.0.16/29"), ("destination", "10.0.0.8/29")],
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

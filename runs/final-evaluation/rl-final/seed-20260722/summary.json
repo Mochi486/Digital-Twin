@@ -1,0 +1,100 @@
+{
+  "scope": "Minimal six-node dual-static-path experiment; not Germany50 or DFN full topology.",
+  "seed": 20260722,
+  "episodes": 20,
+  "reward_definition": "throughput_mbps - 0.05 * rtt_ms - 0.50 * packet_loss_percent",
+  "docker_real_run": false,
+  "topology_node_count": 6,
+  "path_definitions": {
+    "A": [
+      "r1",
+      "r2",
+      "r4"
+    ],
+    "B": [
+      "r1",
+      "r3",
+      "r4"
+    ]
+  },
+  "selected_path_counts": {
+    "A": 14,
+    "B": 6
+  },
+  "q_learning": {
+    "mean_reward": {
+      "mean": 10.123,
+      "sample_std": 8.573,
+      "min": -0.208,
+      "max": 17.035
+    },
+    "mean_rtt_ms": {
+      "mean": 73.888,
+      "sample_std": 50.208,
+      "min": 33.443,
+      "max": 134.567
+    },
+    "mean_throughput_mbps": {
+      "mean": 14.617,
+      "sample_std": 5.058,
+      "min": 8.495,
+      "max": 18.732
+    }
+  },
+  "baselines": {
+    "fixed_a": {
+      "mean_reward": {
+        "mean": 8.425,
+        "sample_std": 8.733,
+        "min": -0.179,
+        "max": 17.035
+      },
+      "path_counts": {
+        "A": 20
+      }
+    },
+    "fixed_b": {
+      "mean_reward": {
+        "mean": 8.439,
+        "sample_std": 8.68,
+        "min": -0.208,
+        "max": 17.028
+      },
+      "path_counts": {
+        "B": 20
+      }
+    },
+    "threshold_heuristic": {
+      "mean_reward": {
+        "mean": 16.918,
+        "sample_std": 0.074,
+        "min": 16.803,
+        "max": 17.035
+      },
+      "path_counts": {
+        "A": 10,
+        "B": 10
+      }
+    }
+  },
+  "route_switch_verification": "mock-not-applicable",
+  "cleanup_time_s": 0.0,
+  "q_table": {
+    "low|none|high|A": {
+      "A": 20.258532,
+      "B": 3.696271
+    },
+    "high|loss|low|B": {
+      "A": 23.28447,
+      "B": 0.0
+    },
+    "high|loss|low|A": {
+      "A": -0.06265,
+      "B": 16.988269
+    },
+    "low|none|high|B": {
+      "A": 9.406586,
+      "B": 0.0
+    }
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "completed_nodes": [
+    {
+      "node": "aachen",
+      "count": 1,
+      "stderr": ""
+    },
+    {
+      "node": "erfurt",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "wuerzburg",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "augsburg",
+      "count": 3,
+      "stderr": ""
+    },
+    {
+      "node": "passau",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "muenchen",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "oldenburg",
+      "count": 1,
+      "stderr": ""
+    },
+    {
+      "node": "bremen",
+      "count": 1,
+      "stderr": ""
+    },
+    {
+      "node": "hannover",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "braunschweig",
+      "count": 2,
+      "stderr": ""
+    },
+    {
+      "node": "kassel",
+      "count": 2,
+      "stderr": ""
+    }
+  ],
+  "failed_nodes": [],
+  "installed_route_count": 20,
+  "elapsed_s": 1.295
+}

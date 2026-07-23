@@ -136,7 +136,10 @@ class DockerDualPathBackend:
             checks.append({"node": node, "destination": destination, "via": via, "matched": f"via {via}" in output})
         if not all(item["matched"] for item in checks):
             raise RuntimeError("In-place route selection verification failed.")
-        ok, ping, _ = ping_test(self.scenario, False)
+        # Keep the real Docker evaluation bounded: two real ICMP probes per
+        # episode are sufficient for route/RTT verification while iperf3
+        # remains a real per-episode throughput measurement.
+        ok, ping, _ = ping_test(self.scenario, True)
         if not ok:
             raise RuntimeError("RL path ping failed.")
         throughput = parse_throughput(run_iperf(self.scenario, False))
@@ -186,10 +189,18 @@ def run_experiment(episodes: int, output_dir: Path, seed: int = 20260722, docker
             next_state = state_from_metrics(metrics, action)
             agent.update(state, action, observed_reward, next_state)
             rows.append({"episode": episode, "phase": phase["name"], "path": action, "reward": observed_reward, **metrics})
+            # A foreground execution window can interrupt a real Docker run;
+            # preserve every completed episode atomically for resume evidence.
+            progress = output_dir / "episodes-progress.json"
+            temporary = progress.with_suffix(".tmp")
+            temporary.write_text(json.dumps({"seed": seed, "docker": docker, "completed_episodes": len(rows), "rows": rows}, indent=2) + "\n", encoding="utf-8")
+            temporary.replace(progress)
             current_path, current_metrics = action, metrics
     finally:
         if backend:
             cleanup_time_s = backend.close()
+        if docker and rows:
+            (output_dir / "docker-terminal-evidence.json").write_text(json.dumps({"completed_episodes": len(rows), "cleanup_time_s": cleanup_time_s}, indent=2) + "\n", encoding="utf-8")
     for field, filename, title in (("reward", "reward.svg", "Episode reward"), ("rtt_ms", "rtt.svg", "Episode RTT (ms)"), ("throughput_mbps", "throughput.svg", "Episode throughput (Mbps)")):
         write_svg(output_dir / filename, title, rows, field)
     write_svg(output_dir / "path-selection.svg", "Path selection (A=1, B=2)", [{**row, "path_number": 1 if row["path"] == "A" else 2} for row in rows], "path_number")

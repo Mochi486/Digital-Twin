@@ -1,0 +1,21 @@
+{
+  "generated_from_raw_measurements": true,
+  "sources": [
+    "runs/germany50-selected-paths-final/summary.json",
+    "runs/final-evaluation/germany50-full-fixed/selected-attempt-1/summary.json",
+    "runs/final-evaluation/rl-final/seed-20260722/summary.json",
+    "runs/final-evaluation/rl-final/seed-20260723/summary.json",
+    "runs/final-evaluation/rl-final/seed-20260724/summary.json",
+    "runs/final-evaluation/rl-final/seed-20260725/summary.json",
+    "runs/final-evaluation/rl-final/seed-20260726/summary.json"
+  ],
+  "statuses": {
+    "germany50_selected_paths": "success",
+    "germany50_full_selected": "success",
+    "rl_seed_20260722": "success",
+    "rl_seed_20260723": "success",
+    "rl_seed_20260724": "success",
+    "rl_seed_20260725": "success",
+    "rl_seed_20260726": "success"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "status": "success",
+  "route_mode": "selected",
+  "preflight": {
+    "node_count": 50,
+    "network_count": 88,
+    "theoretical_route_count": 4224
+  },
+  "selected_route_count": 20,
+  "route_reduction_percent": 99.53,
+  "forwarding_returncode": 0,
+  "route_checkpoint": "runs/final-evaluation/germany50-full-fixed/selected-attempt-1/route-provisioning.json",
+  "paths": {
+    "shortest": {
+      "pair": [
+        "aachen",
+        "koeln"
+      ],
+      "runs": [
+        {
+          "ping_success": true,
+          "rtt_ms": 0.079,
+          "loss_percent": 0.0,
+          "throughput_mbps": 25200.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.074,
+          "loss_percent": 0.0,
+          "throughput_mbps": 17500.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.077,
+          "loss_percent": 0.0,
+          "throughput_mbps": 22200.0
+        }
+      ]
+    },
+    "median": {
+      "pair": [
+        "erfurt",
+        "passau"
+      ],
+      "runs": [
+        {
+          "ping_success": true,
+          "rtt_ms": 0.149,
+          "loss_percent": 0.0,
+          "throughput_mbps": 11000.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.154,
+          "loss_percent": 0.0,
+          "throughput_mbps": 11300.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.149,
+          "loss_percent": 0.0,
+          "throughput_mbps": 11900.0
+        }
+      ]
+    },
+    "longest": {
+      "pair": [
+        "oldenburg",
+        "passau"
+      ],
+      "runs": [
+        {
+          "ping_success": true,
+          "rtt_ms": 0.385,
+          "loss_percent": 0.0,
+          "throughput_mbps": 6850.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.223,
+          "loss_percent": 0.0,
+          "throughput_mbps": 6270.0
+        },
+        {
+          "ping_success": true,
+          "rtt_ms": 0.211,
+          "loss_percent": 0.0,
+          "throughput_mbps": 7310.0
+        }
+      ]
+    }
+  },
+  "cleanup_time_s": 42.576
+}
