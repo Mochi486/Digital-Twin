@@ -30,6 +30,12 @@ statistics and confidence intervals are in `summary.json` and
 `policy-summary.csv`. The figures directory contains reward, RTT, loss,
 throughput, path-selection timeline, and policy-comparison SVGs.
 
+Two failed trials were retained as `FAILED_RETRIED` checkpoint attempts rather
+than silently discarded: heuristic episode 11 exposed the now-fixed
+runtime-path forwarding omission, and fixed-A episode 14 had a transient
+zero-reply ping under the impaired phase. Only their corresponding episode
+indices were retried; all 80 completed rows remain in the statistics.
+
 ## Conclusion
 
 The threshold heuristic outperformed Q-learning in this low-dimensional,

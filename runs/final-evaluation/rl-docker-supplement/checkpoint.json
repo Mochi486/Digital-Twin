@@ -2111,13 +2111,32 @@
   ],
   "invalid_existing_episodes": [],
   "next_action": "Run requested policy episodes.",
-  "attempts": {},
+  "attempts": {
+    "heuristic": [
+      {
+        "episode": 11,
+        "status": "FAILED_RETRIED",
+        "evidence": ".local-evidence/rl-docker-supplement-heuristic-11-12.log",
+        "reason": "pre-multipath-forwarding path-B zero-reply ping",
+        "recorded_at": "2026-07-24T01:21:41.813369+00:00"
+      }
+    ],
+    "fixed_a": [
+      {
+        "episode": 14,
+        "status": "FAILED_RETRIED",
+        "evidence": ".local-evidence/rl-docker-supplement-fixed-a-13-14.log",
+        "reason": "impaired-phase transient zero-reply ping",
+        "recorded_at": "2026-07-24T01:21:42.030394+00:00"
+      }
+    ]
+  },
   "artifacts": {
     "summary": "runs/final-evaluation/rl-docker-supplement/summary.json",
     "per_episode_csv": "runs/final-evaluation/rl-docker-supplement/per-episode-results.csv",
     "policy_summary_csv": "runs/final-evaluation/rl-docker-supplement/policy-summary.csv"
   },
-  "updated_at": "2026-07-24T01:16:21.312630+00:00",
+  "updated_at": "2026-07-24T01:21:42.030456+00:00",
   "cleanup_time_s": 3.574,
   "last_successful_episode": 20
 }

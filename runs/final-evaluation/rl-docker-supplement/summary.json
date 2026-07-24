@@ -34,7 +34,7 @@
     },
     "heuristic": {
       "valid_episodes": 20,
-      "failed_or_retried": 0,
+      "failed_or_retried": 1,
       "switch_count": 1,
       "path_selection_counts": {
         "A": 10,
@@ -65,7 +65,7 @@
     },
     "fixed_a": {
       "valid_episodes": 20,
-      "failed_or_retried": 0,
+      "failed_or_retried": 1,
       "switch_count": 0,
       "path_selection_counts": {
         "A": 20,
