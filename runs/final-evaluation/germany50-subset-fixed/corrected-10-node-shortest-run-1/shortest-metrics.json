@@ -1,0 +1,1879 @@
+{
+  "topology": "sndlib-germany50-subset-10",
+  "smoke_mode": false,
+  "ping_success": true,
+  "configured_bandwidth_mbps": null,
+  "configured_delay_ms": 0,
+  "configured_packet_loss_percent": 0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress interfaces selected by link definitions. Measured ping RTT is reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress interfaces selected by link definitions. Measured ping packet loss is reported separately.",
+  "subnets": [
+    {
+      "name": "net_001_duesseldorf_essen",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_wesel_essen",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_koeln_duesseldorf",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_aachen_koeln",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_koblenz_koeln",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_wesel_aachen",
+      "cidr": "10.64.0.40/29"
+    },
+    {
+      "name": "net_007_trier_aachen",
+      "cidr": "10.64.0.48/29"
+    },
+    {
+      "name": "net_008_trier_koblenz",
+      "cidr": "10.64.0.56/29"
+    },
+    {
+      "name": "net_009_oldenburg_wesel",
+      "cidr": "10.64.0.64/29"
+    },
+    {
+      "name": "net_010_norden_wesel",
+      "cidr": "10.64.0.72/29"
+    },
+    {
+      "name": "net_011_norden_oldenburg",
+      "cidr": "10.64.0.80/29"
+    },
+    {
+      "name": "net_012_saarbruecken_trier",
+      "cidr": "10.64.0.88/29"
+    }
+  ],
+  "static_routes": [
+    {
+      "node": "aachen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.50",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.50",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.19",
+      "path": [
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.59",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.11",
+      "path": [
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.74",
+      "path": [
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.58",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.58",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.83",
+      "path": [
+        "norden",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.82",
+      "path": [
+        "oldenburg",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    }
+  ],
+  "route_verification": [
+    {
+      "node": "aachen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.27 dev eth0"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.42 dev eth1"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.27 dev eth0"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.27 dev eth0"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.50",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.50 dev eth2"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.42 dev eth1"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.42 dev eth1"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.42 dev eth1"
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.50",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.50 dev eth2"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.19",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.19 dev eth0"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.34 dev eth2"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.26 dev eth1"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.59",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.59 dev eth1"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.51",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.51 dev eth0"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.11 dev eth0"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.74",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.74 dev eth3"
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.43",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.43 dev eth1"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.18 dev eth1"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.18 dev eth1"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.18 dev eth1"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.18 dev eth1"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.18 dev eth1"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.58",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.58 dev eth1"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.35 dev eth0"
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.58",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.58 dev eth1"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.91",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.91 dev eth0"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.2",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.2 dev eth0"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.2",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.2 dev eth0"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.2",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.2 dev eth0"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.2",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.2 dev eth0"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.80/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.10 dev eth1"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.83",
+      "matched": true,
+      "route_output": "10.64.0.64/29 via 10.64.0.83 dev eth1"
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.75",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.75 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.48/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.56/29 via 10.64.0.67 dev eth0"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.82",
+      "matched": true,
+      "route_output": "10.64.0.72/29 via 10.64.0.82 dev eth1"
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.67",
+      "matched": true,
+      "route_output": "10.64.0.88/29 via 10.64.0.67 dev eth0"
+    }
+  ],
+  "delay_loss_applications": [],
+  "bandwidth_controls": [],
+  "all_node_route_tables": {
+    "aachen": "default via 10.64.0.25 dev eth0 \n10.64.0.0/29 via 10.64.0.27 dev eth0 \n10.64.0.8/29 via 10.64.0.42 dev eth1 \n10.64.0.16/29 via 10.64.0.27 dev eth0 \n10.64.0.24/29 dev eth0 proto kernel scope link src 10.64.0.26 \n10.64.0.32/29 via 10.64.0.27 dev eth0 \n10.64.0.40/29 dev eth1 proto kernel scope link src 10.64.0.43 \n10.64.0.48/29 dev eth2 proto kernel scope link src 10.64.0.51 \n10.64.0.56/29 via 10.64.0.50 dev eth2 \n10.64.0.64/29 via 10.64.0.42 dev eth1 \n10.64.0.72/29 via 10.64.0.42 dev eth1 \n10.64.0.80/29 via 10.64.0.42 dev eth1 \n10.64.0.88/29 via 10.64.0.50 dev eth2",
+    "koeln": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.19 dev eth0 \n10.64.0.8/29 via 10.64.0.26 dev eth1 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.18 \n10.64.0.24/29 dev eth1 proto kernel scope link src 10.64.0.27 \n10.64.0.32/29 dev eth2 proto kernel scope link src 10.64.0.35 \n10.64.0.40/29 via 10.64.0.26 dev eth1 \n10.64.0.48/29 via 10.64.0.26 dev eth1 \n10.64.0.56/29 via 10.64.0.34 dev eth2 \n10.64.0.64/29 via 10.64.0.26 dev eth1 \n10.64.0.72/29 via 10.64.0.26 dev eth1 \n10.64.0.80/29 via 10.64.0.26 dev eth1 \n10.64.0.88/29 via 10.64.0.26 dev eth1",
+    "trier": "default via 10.64.0.49 dev eth0 \n10.64.0.0/29 via 10.64.0.51 dev eth0 \n10.64.0.8/29 via 10.64.0.51 dev eth0 \n10.64.0.16/29 via 10.64.0.51 dev eth0 \n10.64.0.24/29 via 10.64.0.51 dev eth0 \n10.64.0.32/29 via 10.64.0.59 dev eth1 \n10.64.0.40/29 via 10.64.0.51 dev eth0 \n10.64.0.48/29 dev eth0 proto kernel scope link src 10.64.0.50 \n10.64.0.56/29 dev eth1 proto kernel scope link src 10.64.0.58 \n10.64.0.64/29 via 10.64.0.51 dev eth0 \n10.64.0.72/29 via 10.64.0.51 dev eth0 \n10.64.0.80/29 via 10.64.0.51 dev eth0 \n10.64.0.88/29 dev eth2 proto kernel scope link src 10.64.0.91",
+    "wesel": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.11 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.43 dev eth1 \n10.64.0.24/29 via 10.64.0.43 dev eth1 \n10.64.0.32/29 via 10.64.0.43 dev eth1 \n10.64.0.40/29 dev eth1 proto kernel scope link src 10.64.0.42 \n10.64.0.48/29 via 10.64.0.43 dev eth1 \n10.64.0.56/29 via 10.64.0.43 dev eth1 \n10.64.0.64/29 dev eth2 proto kernel scope link src 10.64.0.67 \n10.64.0.72/29 dev eth3 proto kernel scope link src 10.64.0.75 \n10.64.0.80/29 via 10.64.0.74 dev eth3 \n10.64.0.88/29 via 10.64.0.43 dev eth1",
+    "duesseldorf": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.2 \n10.64.0.8/29 via 10.64.0.3 dev eth0 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 via 10.64.0.18 dev eth1 \n10.64.0.32/29 via 10.64.0.18 dev eth1 \n10.64.0.40/29 via 10.64.0.3 dev eth0 \n10.64.0.48/29 via 10.64.0.18 dev eth1 \n10.64.0.56/29 via 10.64.0.18 dev eth1 \n10.64.0.64/29 via 10.64.0.3 dev eth0 \n10.64.0.72/29 via 10.64.0.3 dev eth0 \n10.64.0.80/29 via 10.64.0.3 dev eth0 \n10.64.0.88/29 via 10.64.0.18 dev eth1",
+    "koblenz": "default via 10.64.0.33 dev eth0 \n10.64.0.0/29 via 10.64.0.35 dev eth0 \n10.64.0.8/29 via 10.64.0.35 dev eth0 \n10.64.0.16/29 via 10.64.0.35 dev eth0 \n10.64.0.24/29 via 10.64.0.35 dev eth0 \n10.64.0.32/29 dev eth0 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth0 \n10.64.0.48/29 via 10.64.0.58 dev eth1 \n10.64.0.56/29 dev eth1 proto kernel scope link src 10.64.0.59 \n10.64.0.64/29 via 10.64.0.35 dev eth0 \n10.64.0.72/29 via 10.64.0.35 dev eth0 \n10.64.0.80/29 via 10.64.0.35 dev eth0 \n10.64.0.88/29 via 10.64.0.58 dev eth1",
+    "saarbruecken": "default via 10.64.0.89 dev eth0 \n10.64.0.0/29 via 10.64.0.91 dev eth0 \n10.64.0.8/29 via 10.64.0.91 dev eth0 \n10.64.0.16/29 via 10.64.0.91 dev eth0 \n10.64.0.24/29 via 10.64.0.91 dev eth0 \n10.64.0.32/29 via 10.64.0.91 dev eth0 \n10.64.0.40/29 via 10.64.0.91 dev eth0 \n10.64.0.48/29 via 10.64.0.91 dev eth0 \n10.64.0.56/29 via 10.64.0.91 dev eth0 \n10.64.0.64/29 via 10.64.0.91 dev eth0 \n10.64.0.72/29 via 10.64.0.91 dev eth0 \n10.64.0.80/29 via 10.64.0.91 dev eth0 \n10.64.0.88/29 dev eth0 proto kernel scope link src 10.64.0.90",
+    "essen": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 via 10.64.0.2 dev eth0 \n10.64.0.24/29 via 10.64.0.2 dev eth0 \n10.64.0.32/29 via 10.64.0.2 dev eth0 \n10.64.0.40/29 via 10.64.0.10 dev eth1 \n10.64.0.48/29 via 10.64.0.10 dev eth1 \n10.64.0.56/29 via 10.64.0.2 dev eth0 \n10.64.0.64/29 via 10.64.0.10 dev eth1 \n10.64.0.72/29 via 10.64.0.10 dev eth1 \n10.64.0.80/29 via 10.64.0.10 dev eth1 \n10.64.0.88/29 via 10.64.0.10 dev eth1",
+    "norden": "default via 10.64.0.73 dev eth0 \n10.64.0.0/29 via 10.64.0.75 dev eth0 \n10.64.0.8/29 via 10.64.0.75 dev eth0 \n10.64.0.16/29 via 10.64.0.75 dev eth0 \n10.64.0.24/29 via 10.64.0.75 dev eth0 \n10.64.0.32/29 via 10.64.0.75 dev eth0 \n10.64.0.40/29 via 10.64.0.75 dev eth0 \n10.64.0.48/29 via 10.64.0.75 dev eth0 \n10.64.0.56/29 via 10.64.0.75 dev eth0 \n10.64.0.64/29 via 10.64.0.83 dev eth1 \n10.64.0.72/29 dev eth0 proto kernel scope link src 10.64.0.74 \n10.64.0.80/29 dev eth1 proto kernel scope link src 10.64.0.82 \n10.64.0.88/29 via 10.64.0.75 dev eth0",
+    "oldenburg": "default via 10.64.0.65 dev eth0 \n10.64.0.0/29 via 10.64.0.67 dev eth0 \n10.64.0.8/29 via 10.64.0.67 dev eth0 \n10.64.0.16/29 via 10.64.0.67 dev eth0 \n10.64.0.24/29 via 10.64.0.67 dev eth0 \n10.64.0.32/29 via 10.64.0.67 dev eth0 \n10.64.0.40/29 via 10.64.0.67 dev eth0 \n10.64.0.48/29 via 10.64.0.67 dev eth0 \n10.64.0.56/29 via 10.64.0.67 dev eth0 \n10.64.0.64/29 dev eth0 proto kernel scope link src 10.64.0.66 \n10.64.0.72/29 via 10.64.0.82 dev eth1 \n10.64.0.80/29 dev eth1 proto kernel scope link src 10.64.0.83 \n10.64.0.88/29 via 10.64.0.67 dev eth0"
+  },
+  "router_route_tables": {
+    "trier": "default via 10.64.0.49 dev eth0 \n10.64.0.0/29 via 10.64.0.51 dev eth0 \n10.64.0.8/29 via 10.64.0.51 dev eth0 \n10.64.0.16/29 via 10.64.0.51 dev eth0 \n10.64.0.24/29 via 10.64.0.51 dev eth0 \n10.64.0.32/29 via 10.64.0.59 dev eth1 \n10.64.0.40/29 via 10.64.0.51 dev eth0 \n10.64.0.48/29 dev eth0 proto kernel scope link src 10.64.0.50 \n10.64.0.56/29 dev eth1 proto kernel scope link src 10.64.0.58 \n10.64.0.64/29 via 10.64.0.51 dev eth0 \n10.64.0.72/29 via 10.64.0.51 dev eth0 \n10.64.0.80/29 via 10.64.0.51 dev eth0 \n10.64.0.88/29 dev eth2 proto kernel scope link src 10.64.0.91",
+    "wesel": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.11 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.43 dev eth1 \n10.64.0.24/29 via 10.64.0.43 dev eth1 \n10.64.0.32/29 via 10.64.0.43 dev eth1 \n10.64.0.40/29 dev eth1 proto kernel scope link src 10.64.0.42 \n10.64.0.48/29 via 10.64.0.43 dev eth1 \n10.64.0.56/29 via 10.64.0.43 dev eth1 \n10.64.0.64/29 dev eth2 proto kernel scope link src 10.64.0.67 \n10.64.0.72/29 dev eth3 proto kernel scope link src 10.64.0.75 \n10.64.0.80/29 via 10.64.0.74 dev eth3 \n10.64.0.88/29 via 10.64.0.43 dev eth1",
+    "duesseldorf": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.2 \n10.64.0.8/29 via 10.64.0.3 dev eth0 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 via 10.64.0.18 dev eth1 \n10.64.0.32/29 via 10.64.0.18 dev eth1 \n10.64.0.40/29 via 10.64.0.3 dev eth0 \n10.64.0.48/29 via 10.64.0.18 dev eth1 \n10.64.0.56/29 via 10.64.0.18 dev eth1 \n10.64.0.64/29 via 10.64.0.3 dev eth0 \n10.64.0.72/29 via 10.64.0.3 dev eth0 \n10.64.0.80/29 via 10.64.0.3 dev eth0 \n10.64.0.88/29 via 10.64.0.18 dev eth1",
+    "koblenz": "default via 10.64.0.33 dev eth0 \n10.64.0.0/29 via 10.64.0.35 dev eth0 \n10.64.0.8/29 via 10.64.0.35 dev eth0 \n10.64.0.16/29 via 10.64.0.35 dev eth0 \n10.64.0.24/29 via 10.64.0.35 dev eth0 \n10.64.0.32/29 dev eth0 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth0 \n10.64.0.48/29 via 10.64.0.58 dev eth1 \n10.64.0.56/29 dev eth1 proto kernel scope link src 10.64.0.59 \n10.64.0.64/29 via 10.64.0.35 dev eth0 \n10.64.0.72/29 via 10.64.0.35 dev eth0 \n10.64.0.80/29 via 10.64.0.35 dev eth0 \n10.64.0.88/29 via 10.64.0.58 dev eth1",
+    "saarbruecken": "default via 10.64.0.89 dev eth0 \n10.64.0.0/29 via 10.64.0.91 dev eth0 \n10.64.0.8/29 via 10.64.0.91 dev eth0 \n10.64.0.16/29 via 10.64.0.91 dev eth0 \n10.64.0.24/29 via 10.64.0.91 dev eth0 \n10.64.0.32/29 via 10.64.0.91 dev eth0 \n10.64.0.40/29 via 10.64.0.91 dev eth0 \n10.64.0.48/29 via 10.64.0.91 dev eth0 \n10.64.0.56/29 via 10.64.0.91 dev eth0 \n10.64.0.64/29 via 10.64.0.91 dev eth0 \n10.64.0.72/29 via 10.64.0.91 dev eth0 \n10.64.0.80/29 via 10.64.0.91 dev eth0 \n10.64.0.88/29 dev eth0 proto kernel scope link src 10.64.0.90",
+    "essen": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 via 10.64.0.2 dev eth0 \n10.64.0.24/29 via 10.64.0.2 dev eth0 \n10.64.0.32/29 via 10.64.0.2 dev eth0 \n10.64.0.40/29 via 10.64.0.10 dev eth1 \n10.64.0.48/29 via 10.64.0.10 dev eth1 \n10.64.0.56/29 via 10.64.0.2 dev eth0 \n10.64.0.64/29 via 10.64.0.10 dev eth1 \n10.64.0.72/29 via 10.64.0.10 dev eth1 \n10.64.0.80/29 via 10.64.0.10 dev eth1 \n10.64.0.88/29 via 10.64.0.10 dev eth1",
+    "norden": "default via 10.64.0.73 dev eth0 \n10.64.0.0/29 via 10.64.0.75 dev eth0 \n10.64.0.8/29 via 10.64.0.75 dev eth0 \n10.64.0.16/29 via 10.64.0.75 dev eth0 \n10.64.0.24/29 via 10.64.0.75 dev eth0 \n10.64.0.32/29 via 10.64.0.75 dev eth0 \n10.64.0.40/29 via 10.64.0.75 dev eth0 \n10.64.0.48/29 via 10.64.0.75 dev eth0 \n10.64.0.56/29 via 10.64.0.75 dev eth0 \n10.64.0.64/29 via 10.64.0.83 dev eth1 \n10.64.0.72/29 dev eth0 proto kernel scope link src 10.64.0.74 \n10.64.0.80/29 dev eth1 proto kernel scope link src 10.64.0.82 \n10.64.0.88/29 via 10.64.0.75 dev eth0",
+    "oldenburg": "default via 10.64.0.65 dev eth0 \n10.64.0.0/29 via 10.64.0.67 dev eth0 \n10.64.0.8/29 via 10.64.0.67 dev eth0 \n10.64.0.16/29 via 10.64.0.67 dev eth0 \n10.64.0.24/29 via 10.64.0.67 dev eth0 \n10.64.0.32/29 via 10.64.0.67 dev eth0 \n10.64.0.40/29 via 10.64.0.67 dev eth0 \n10.64.0.48/29 via 10.64.0.67 dev eth0 \n10.64.0.56/29 via 10.64.0.67 dev eth0 \n10.64.0.64/29 dev eth0 proto kernel scope link src 10.64.0.66 \n10.64.0.72/29 via 10.64.0.82 dev eth1 \n10.64.0.80/29 dev eth1 proto kernel scope link src 10.64.0.83 \n10.64.0.88/29 via 10.64.0.67 dev eth0"
+  },
+  "router_qdisc_state": {
+    "trier": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2",
+      "eth2": "qdisc noqueue 0: root refcnt 2"
+    },
+    "wesel": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2",
+      "eth2": "qdisc noqueue 0: root refcnt 2",
+      "eth3": "qdisc noqueue 0: root refcnt 2"
+    },
+    "duesseldorf": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    },
+    "koblenz": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    },
+    "saarbruecken": {
+      "eth0": "qdisc noqueue 0: root refcnt 2"
+    },
+    "essen": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    },
+    "norden": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    },
+    "oldenburg": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    }
+  },
+  "ping_packets_transmitted": 5,
+  "ping_packets_received": 5,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 0.058,
+  "ping_rtt_avg_ms": 0.081,
+  "ping_rtt_max_ms": 0.097,
+  "ping_rtt_mdev_ms": 0.012,
+  "throughput_mbps": 32800.0,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "resource_estimate": {
+    "node_count": 10,
+    "router_count": 8,
+    "link_count": 12,
+    "network_count": 12,
+    "route_count": 96,
+    "impairment_applications": 0,
+    "bandwidth_controls": 0
+  },
+  "resource_usage": {
+    "running_container_count": 12,
+    "running_network_count": 17
+  },
+  "stage_timings_s": {
+    "initial_cleanup_s": 0.869,
+    "create_subnets_s": 0.755,
+    "prepare_host_routing_s": 1.765,
+    "start_nodes_s": 4.066,
+    "configure_routes_s": 8.101,
+    "verify_routes_s": 8.004,
+    "apply_impairments_s": 0.0,
+    "apply_bandwidth_s": 0.0,
+    "setup_total_s": 22.691,
+    "ping_s": 4.192,
+    "iperf_s": 2.263
+  },
+  "cleanup_time_s": 5.659
+}

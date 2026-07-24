@@ -1,0 +1,14 @@
+{
+  "provider": "openai_compatible",
+  "model": "qwen3.7-plus",
+  "status": "success",
+  "node_count": 6,
+  "selected_path_hops": 4,
+  "rtt_ms": 82.194,
+  "throughput_mbps": 18.3,
+  "packet_loss_percent": 0.0,
+  "scenario_path": "runs/openai-compatible-live-validation-20260714-064525/scenario.json",
+  "metrics_path": "runs/openai-compatible-live-validation-20260714-064525/metrics.json",
+  "topology_figure": "runs/openai-compatible-live-validation-20260714-064525/topology.svg",
+  "sanitization": "The retained scenario and metrics are topology/measurement artifacts only; provider request metadata, prompt text, response IDs, and credentials remain local-only."
+}

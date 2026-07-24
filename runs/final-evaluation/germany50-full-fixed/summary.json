@@ -1,0 +1,100 @@
+{
+  "scope": "one full SNDlib Germany50 deployment; 50 containers / 88 networks / 4224 routes",
+  "preflight": {
+    "node_count": 50,
+    "network_count": 88,
+    "route_count": 4224
+  },
+  "paths": {
+    "shortest": {
+      "pair": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1,
+      "runs": [
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        }
+      ]
+    },
+    "median": {
+      "pair": [
+        "erfurt",
+        "passau"
+      ],
+      "hop_count": 4,
+      "runs": [
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        }
+      ]
+    },
+    "longest": {
+      "pair": [
+        "oldenburg",
+        "passau"
+      ],
+      "hop_count": 9,
+      "runs": [
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        },
+        {
+          "ping_success": false,
+          "rtt_ms": null,
+          "loss_percent": 100.0,
+          "throughput_mbps": null
+        }
+      ]
+    }
+  },
+  "status": "success",
+  "host_forwarding": {
+    "returncode": 0,
+    "stdout_tail": "069_wuerzburg_fulda\": \"br-543ecd5acae9\",\n  \"net_070_karlsruhe_saarbruecken\": \"br-55eed8f05d41\",\n  \"net_071_karlsruhe_stuttgart\": \"br-f8545bea37a6\",\n  \"net_072_ulm_stuttgart\": \"br-069cba937c9d\",\n  \"net_073_konstanz_stuttgart\": \"br-ebb34c9fec8f\",\n  \"net_074_wuerzburg_stuttgart\": \"br-6690e078a2eb\",\n  \"net_075_freiburg_karlsruhe\": \"br-83ce41e523e1\",\n  \"net_076_augsburg_ulm\": \"br-3bd123426f79\",\n  \"net_077_freiburg_konstanz\": \"br-e26d76c3f1e5\",\n  \"net_078_kempten_konstanz\": \"br-8764f43efae4\",\n  \"net_079_augsburg_muenchen\": \"br-f7f02d69c888\",\n  \"net_080_kempten_muenchen\": \"br-09537ab36db9\",\n  \"net_081_passau_muenchen\": \"br-085be81077aa\",\n  \"net_082_nuernberg_muenchen\": \"br-ac87dd82430c\",\n  \"net_083_regensburg_muenchen\": \"br-d091fe26ac7b\",\n  \"net_084_wuerzburg_augsburg\": \"br-a5591e26485a\",\n  \"net_085_regensburg_passau\": \"br-e94b839c259f\",\n  \"net_086_bayreuth_nuernberg\": \"br-e37b7a5dcff5\",\n  \"net_087_wuerzburg_nuernberg\": \"br-406c3b30c702\",\n  \"net_088_regensburg_nuernberg\": \"br-d57f8215e8ce\"\n}\n",
+    "stderr_tail": ""
+  },
+  "setup_time_s": 1171.23,
+  "route_verification": true,
+  "cleanup_time_s": 49.707
+}

@@ -1,0 +1,18 @@
+{
+  "scope": "one full SNDlib Germany50 deployment; 50 containers / 88 networks / 4224 routes",
+  "preflight": {
+    "node_count": 50,
+    "network_count": 88,
+    "route_count": 4224
+  },
+  "paths": {},
+  "status": "failed",
+  "host_forwarding": {
+    "returncode": -15,
+    "stdout_tail": "1.144/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.152/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.160/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.168/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.176/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.184/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.192/29 -m comment --comment project70-wsl-routing -j ACCEPT\nAdded rule: iptables -t raw -I PREROUTING 1 -i br-ca60f55362c1 -d 10.64.1.200/29 -m comment --comment project70-wsl-routing -j ACCEPT\n",
+    "stderr_tail": ""
+  },
+  "failure_stage": "deployment",
+  "error": "WSL forwarding preparation failed",
+  "cleanup_time_s": 21.898
+}

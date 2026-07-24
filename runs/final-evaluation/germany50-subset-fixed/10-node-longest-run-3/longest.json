@@ -1,0 +1,1425 @@
+{
+  "topology_name": "sndlib-germany50-subset-10",
+  "source_metadata": {
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
+  },
+  "addressing": {
+    "base_cidr": "10.64.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "aachen",
+      "type": "router",
+      "original_id": 1,
+      "original_label": "Aachen",
+      "country": "Germany",
+      "latitude": 50.76,
+      "longitude": 6.04,
+      "interfaces": [
+        {
+          "subnet": "net_004_aachen_koeln",
+          "ip": "10.64.0.26"
+        },
+        {
+          "subnet": "net_006_wesel_aachen",
+          "ip": "10.64.0.43"
+        },
+        {
+          "subnet": "net_007_trier_aachen",
+          "ip": "10.64.0.51"
+        }
+      ]
+    },
+    {
+      "id": "koeln",
+      "type": "router",
+      "original_id": 30,
+      "original_label": "Koeln",
+      "country": "Germany",
+      "latitude": 50.94,
+      "longitude": 6.87,
+      "interfaces": [
+        {
+          "subnet": "net_003_koeln_duesseldorf",
+          "ip": "10.64.0.18"
+        },
+        {
+          "subnet": "net_004_aachen_koeln",
+          "ip": "10.64.0.27"
+        },
+        {
+          "subnet": "net_005_koblenz_koeln",
+          "ip": "10.64.0.35"
+        }
+      ]
+    },
+    {
+      "id": "trier",
+      "type": "router",
+      "original_id": 47,
+      "original_label": "Trier",
+      "country": "Germany",
+      "latitude": 49.75,
+      "longitude": 6.68,
+      "interfaces": [
+        {
+          "subnet": "net_007_trier_aachen",
+          "ip": "10.64.0.50"
+        },
+        {
+          "subnet": "net_008_trier_koblenz",
+          "ip": "10.64.0.58"
+        },
+        {
+          "subnet": "net_012_saarbruecken_trier",
+          "ip": "10.64.0.91"
+        }
+      ]
+    },
+    {
+      "id": "wesel",
+      "type": "router",
+      "original_id": 49,
+      "original_label": "Wesel",
+      "country": "Germany",
+      "latitude": 51.39,
+      "longitude": 6.37,
+      "interfaces": [
+        {
+          "subnet": "net_002_wesel_essen",
+          "ip": "10.64.0.10"
+        },
+        {
+          "subnet": "net_006_wesel_aachen",
+          "ip": "10.64.0.42"
+        },
+        {
+          "subnet": "net_009_oldenburg_wesel",
+          "ip": "10.64.0.67"
+        },
+        {
+          "subnet": "net_010_norden_wesel",
+          "ip": "10.64.0.75"
+        }
+      ]
+    },
+    {
+      "id": "duesseldorf",
+      "type": "router",
+      "original_id": 13,
+      "original_label": "Duesseldorf",
+      "country": "Germany",
+      "latitude": 51.25,
+      "longitude": 6.77,
+      "interfaces": [
+        {
+          "subnet": "net_001_duesseldorf_essen",
+          "ip": "10.64.0.2"
+        },
+        {
+          "subnet": "net_003_koeln_duesseldorf",
+          "ip": "10.64.0.19"
+        }
+      ]
+    },
+    {
+      "id": "koblenz",
+      "type": "router",
+      "original_id": 29,
+      "original_label": "Koblenz",
+      "country": "Germany",
+      "latitude": 50.4,
+      "longitude": 7.52,
+      "interfaces": [
+        {
+          "subnet": "net_005_koblenz_koeln",
+          "ip": "10.64.0.34"
+        },
+        {
+          "subnet": "net_008_trier_koblenz",
+          "ip": "10.64.0.59"
+        }
+      ]
+    },
+    {
+      "id": "saarbruecken",
+      "type": "server",
+      "original_id": 43,
+      "original_label": "Saarbruecken",
+      "country": "Germany",
+      "latitude": 49.23,
+      "longitude": 7.03,
+      "interfaces": [
+        {
+          "subnet": "net_012_saarbruecken_trier",
+          "ip": "10.64.0.90"
+        }
+      ]
+    },
+    {
+      "id": "essen",
+      "type": "router",
+      "original_id": 15,
+      "original_label": "Essen",
+      "country": "Germany",
+      "latitude": 51.46,
+      "longitude": 7.02,
+      "interfaces": [
+        {
+          "subnet": "net_001_duesseldorf_essen",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_wesel_essen",
+          "ip": "10.64.0.11"
+        }
+      ]
+    },
+    {
+      "id": "norden",
+      "type": "router",
+      "original_id": 37,
+      "original_label": "Norden",
+      "country": "Germany",
+      "latitude": 53.6,
+      "longitude": 7.21,
+      "interfaces": [
+        {
+          "subnet": "net_010_norden_wesel",
+          "ip": "10.64.0.74"
+        },
+        {
+          "subnet": "net_011_norden_oldenburg",
+          "ip": "10.64.0.82"
+        }
+      ]
+    },
+    {
+      "id": "oldenburg",
+      "type": "client",
+      "original_id": 39,
+      "original_label": "Oldenburg",
+      "country": "Germany",
+      "latitude": 53.11,
+      "longitude": 8.21,
+      "interfaces": [
+        {
+          "subnet": "net_009_oldenburg_wesel",
+          "ip": "10.64.0.66"
+        },
+        {
+          "subnet": "net_011_norden_oldenburg",
+          "ip": "10.64.0.83"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "duesseldorf",
+      "target": "essen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_duesseldorf_essen"
+    },
+    {
+      "source": "wesel",
+      "target": "essen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_wesel_essen"
+    },
+    {
+      "source": "koeln",
+      "target": "duesseldorf",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_koeln_duesseldorf"
+    },
+    {
+      "source": "aachen",
+      "target": "koeln",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_004_aachen_koeln"
+    },
+    {
+      "source": "koblenz",
+      "target": "koeln",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_005_koblenz_koeln"
+    },
+    {
+      "source": "wesel",
+      "target": "aachen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_006_wesel_aachen"
+    },
+    {
+      "source": "trier",
+      "target": "aachen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_007_trier_aachen"
+    },
+    {
+      "source": "trier",
+      "target": "koblenz",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_008_trier_koblenz"
+    },
+    {
+      "source": "oldenburg",
+      "target": "wesel",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_009_oldenburg_wesel"
+    },
+    {
+      "source": "norden",
+      "target": "wesel",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_010_norden_wesel"
+    },
+    {
+      "source": "norden",
+      "target": "oldenburg",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_011_norden_oldenburg"
+    },
+    {
+      "source": "saarbruecken",
+      "target": "trier",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_012_saarbruecken_trier"
+    }
+  ],
+  "traffic": {
+    "source": "oldenburg",
+    "destination": "saarbruecken",
+    "protocol": "tcp",
+    "duration_s": 2,
+    "ping_count": 5,
+    "reverse": true
+  },
+  "subnets": [
+    {
+      "name": "net_001_duesseldorf_essen",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_wesel_essen",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_koeln_duesseldorf",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_aachen_koeln",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_koblenz_koeln",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_wesel_aachen",
+      "cidr": "10.64.0.40/29"
+    },
+    {
+      "name": "net_007_trier_aachen",
+      "cidr": "10.64.0.48/29"
+    },
+    {
+      "name": "net_008_trier_koblenz",
+      "cidr": "10.64.0.56/29"
+    },
+    {
+      "name": "net_009_oldenburg_wesel",
+      "cidr": "10.64.0.64/29"
+    },
+    {
+      "name": "net_010_norden_wesel",
+      "cidr": "10.64.0.72/29"
+    },
+    {
+      "name": "net_011_norden_oldenburg",
+      "cidr": "10.64.0.80/29"
+    },
+    {
+      "name": "net_012_saarbruecken_trier",
+      "cidr": "10.64.0.88/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "aachen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.50",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.42",
+      "path": [
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.50",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.19",
+      "path": [
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.26",
+      "path": [
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.59",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.51",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.11",
+      "path": [
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.74",
+      "path": [
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.43",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.18",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.58",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.35",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.58",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.91",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.83",
+      "path": [
+        "norden",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.75",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.82",
+      "path": [
+        "oldenburg",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.67",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 10,
+    "router_count": 10,
+    "link_count": 12,
+    "network_count": 12,
+    "route_count": 96,
+    "impairment_applications": 0,
+    "bandwidth_controls": 0
+  }
+}

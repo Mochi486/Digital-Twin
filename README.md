@@ -288,17 +288,18 @@ python scripts/minimal_rl_path_control.py --docker --episodes 20 --seed 20260722
   --output-dir runs/minimal-rl-path-control-v1
 ```
 
-The lightweight UI reuses the existing Python validation, dry-run, topology SVG,
-and simulator APIs:
+The final verified lightweight UI is the zero-dependency fallback server, which
+reuses the existing Python validation, dry-run, topology SVG, and simulator
+APIs:
 
 ```bash
-streamlit run dashboard/app.py
+python dashboard/static_server.py
 ```
 
-It displays representative metrics, Germany50 path-extracted evidence, minimal
-RL evidence and baselines, validates existing scenarios, and supports guarded
-mock AI scenario generation. API keys are only read from environment variables;
-the page does not save or display key values.
+It exposes `/healthz` and Scenario, AI, Metrics, Germany50, and RL sections.
+It does not accept, save, or display API keys. Streamlit remains an optional
+source implementation; its dependency installation was not the final validated
+runtime path.
 
 ## Representative Results
 

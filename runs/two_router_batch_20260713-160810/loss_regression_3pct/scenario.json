@@ -1,0 +1,132 @@
+{
+  "topology_name": "client-router1-router2-server",
+  "nodes": [
+    {
+      "id": "client1",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_client_router1",
+          "ip": "10.10.1.2"
+        }
+      ]
+    },
+    {
+      "id": "router1",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_client_router1",
+          "ip": "10.10.1.254"
+        },
+        {
+          "subnet": "net_router1_router2",
+          "ip": "10.10.2.254"
+        }
+      ]
+    },
+    {
+      "id": "router2",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_router1_router2",
+          "ip": "10.10.2.253"
+        },
+        {
+          "subnet": "net_router2_server",
+          "ip": "10.10.3.254"
+        }
+      ]
+    },
+    {
+      "id": "server1",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_router2_server",
+          "ip": "10.10.3.2"
+        }
+      ]
+    }
+  ],
+  "subnets": [
+    {
+      "name": "net_client_router1",
+      "cidr": "10.10.1.0/24"
+    },
+    {
+      "name": "net_router1_router2",
+      "cidr": "10.10.2.0/24"
+    },
+    {
+      "name": "net_router2_server",
+      "cidr": "10.10.3.0/24"
+    }
+  ],
+  "links": [
+    {
+      "source": "client1",
+      "target": "router1",
+      "subnet": "net_client_router1",
+      "delay_ms": 0,
+      "packet_loss_percent": 3
+    },
+    {
+      "source": "router1",
+      "target": "router2",
+      "subnet": "net_router1_router2",
+      "delay_ms": 0,
+      "packet_loss_percent": 0
+    },
+    {
+      "source": "router2",
+      "target": "server1",
+      "subnet": "net_router2_server",
+      "bandwidth_mbps": 20,
+      "delay_ms": 0,
+      "packet_loss_percent": 3
+    }
+  ],
+  "routes": [
+    {
+      "node": "client1",
+      "destination": "10.10.2.0/24",
+      "via": "10.10.1.254"
+    },
+    {
+      "node": "client1",
+      "destination": "10.10.3.0/24",
+      "via": "10.10.1.254"
+    },
+    {
+      "node": "router1",
+      "destination": "10.10.3.0/24",
+      "via": "10.10.2.253"
+    },
+    {
+      "node": "router2",
+      "destination": "10.10.1.0/24",
+      "via": "10.10.2.254"
+    },
+    {
+      "node": "server1",
+      "destination": "10.10.1.0/24",
+      "via": "10.10.3.254"
+    },
+    {
+      "node": "server1",
+      "destination": "10.10.2.0/24",
+      "via": "10.10.3.254"
+    }
+  ],
+  "traffic": {
+    "source": "client1",
+    "destination": "server1",
+    "protocol": "tcp",
+    "duration_s": 5,
+    "ping_count": 100,
+    "reverse": true,
+    "ping_interval_s": 0.05
+  }
+}

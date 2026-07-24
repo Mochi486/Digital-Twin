@@ -1,0 +1,43 @@
+{
+  "topology": "client-router-server",
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20,
+  "configured_delay_ms": 30,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress for both routed subnets; ping RTT is measured end-to-end and reported separately.",
+  "delay_interfaces": [
+    {
+      "container": "router1",
+      "network": "net_client_router",
+      "ip": "10.0.1.254",
+      "interface": "eth0",
+      "direction": "egress"
+    },
+    {
+      "container": "router1",
+      "network": "net_router_server",
+      "ip": "10.0.2.254",
+      "interface": "eth1",
+      "direction": "egress"
+    }
+  ],
+  "qdisc_state": {
+    "router_delay": {
+      "eth0": "qdisc netem 801c: root refcnt 9 limit 1000 delay 30ms",
+      "eth1": "qdisc netem 801d: root refcnt 9 limit 1000 delay 30ms"
+    },
+    "server_bandwidth": {
+      "interface": "eth0",
+      "qdisc": "qdisc tbf 801e: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+    }
+  },
+  "ping_packets_transmitted": 3,
+  "ping_packets_received": 3,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 60.267,
+  "ping_rtt_avg_ms": 80.28,
+  "ping_rtt_max_ms": 120.288,
+  "ping_rtt_mdev_ms": 28.289,
+  "throughput_mbps": 18.6,
+  "bandwidth_qdisc_interface": "eth0",
+  "bandwidth_qdisc_state": "qdisc tbf 801e: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+}

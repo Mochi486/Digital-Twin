@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="300">
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="30" font-size="18">Configured delay versus measured RTT (ms)</text>
+<line x1="55" y1="245" x2="670" y2="245" stroke="black"/>
+<rect x="80" y="244.9" width="70" height="0.1" fill="#2563eb"/>
+<text x="80" y="265" font-size="12">0</text><text x="80" y="238.9" font-size="12">0.105</text>
+<rect x="220" y="206.6" width="70" height="38.4" fill="#2563eb"/>
+<text x="220" y="265" font-size="12">10</text><text x="220" y="200.6" font-size="12">27.008</text>
+<rect x="360" y="130.9" width="70" height="114.1" fill="#2563eb"/>
+<text x="360" y="265" font-size="12">30</text><text x="360" y="124.9" font-size="12">80.303</text>
+<rect x="500" y="55.0" width="70" height="190.0" fill="#2563eb"/>
+<text x="500" y="265" font-size="12">50</text><text x="500" y="49.0" font-size="12">133.686</text>
+</svg>

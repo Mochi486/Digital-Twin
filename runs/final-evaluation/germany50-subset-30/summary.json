@@ -1,0 +1,36 @@
+{
+  "size": 30,
+  "real": false,
+  "rows": [
+    {
+      "class": "shortest",
+      "pair": [
+        "aachen",
+        "koeln"
+      ],
+      "hops": 1,
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-30/shortest-metrics.json"
+    },
+    {
+      "class": "median",
+      "pair": [
+        "kassel",
+        "koblenz"
+      ],
+      "hops": 3,
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-30/median-metrics.json"
+    },
+    {
+      "class": "longest",
+      "pair": [
+        "bremerhaven",
+        "mannheim"
+      ],
+      "hops": 8,
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-30/longest-metrics.json"
+    }
+  ]
+}

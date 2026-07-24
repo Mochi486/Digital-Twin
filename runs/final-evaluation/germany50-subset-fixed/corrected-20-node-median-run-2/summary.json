@@ -1,0 +1,18 @@
+{
+  "size": 20,
+  "real": true,
+  "rows": [
+    {
+      "class": "median",
+      "pair": [
+        "duesseldorf",
+        "trier"
+      ],
+      "hops": 3,
+      "status": "SUCCESS",
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-fixed/corrected-20-node-median-run-2/median-metrics.json",
+      "evidence": "runs/final-evaluation/germany50-subset-fixed/corrected-20-node-median-run-2/median.log"
+    }
+  ]
+}

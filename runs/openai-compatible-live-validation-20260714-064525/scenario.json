@@ -1,0 +1,439 @@
+{
+  "topology_name": "ai-scenario-992f8bf179",
+  "nodes": [
+    {
+      "id": "client-1",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_client-1_router-a",
+          "ip": "10.64.0.2"
+        }
+      ]
+    },
+    {
+      "id": "router-a",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_client-1_router-a",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_router-a_router-b",
+          "ip": "10.64.0.10"
+        },
+        {
+          "subnet": "net_003_router-a_router-c",
+          "ip": "10.64.0.18"
+        }
+      ]
+    },
+    {
+      "id": "router-b",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_router-a_router-b",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_004_router-b_router-d",
+          "ip": "10.64.0.26"
+        }
+      ]
+    },
+    {
+      "id": "router-c",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_003_router-a_router-c",
+          "ip": "10.64.0.19"
+        },
+        {
+          "subnet": "net_005_router-c_router-d",
+          "ip": "10.64.0.34"
+        }
+      ]
+    },
+    {
+      "id": "router-d",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_004_router-b_router-d",
+          "ip": "10.64.0.27"
+        },
+        {
+          "subnet": "net_005_router-c_router-d",
+          "ip": "10.64.0.35"
+        },
+        {
+          "subnet": "net_006_router-d_server-1",
+          "ip": "10.64.0.42"
+        }
+      ]
+    },
+    {
+      "id": "server-1",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_006_router-d_server-1",
+          "ip": "10.64.0.43"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "client-1",
+      "target": "router-a",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_001_client-1_router-a"
+    },
+    {
+      "source": "router-a",
+      "target": "router-b",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_002_router-a_router-b"
+    },
+    {
+      "source": "router-a",
+      "target": "router-c",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_003_router-a_router-c"
+    },
+    {
+      "source": "router-b",
+      "target": "router-d",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_004_router-b_router-d"
+    },
+    {
+      "source": "router-c",
+      "target": "router-d",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_005_router-c_router-d"
+    },
+    {
+      "source": "router-d",
+      "target": "server-1",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_006_router-d_server-1"
+    }
+  ],
+  "traffic": {
+    "source": "client-1",
+    "destination": "server-1",
+    "protocol": "tcp",
+    "duration_s": 6,
+    "ping_count": 3,
+    "reverse": false
+  },
+  "generation_metadata": {
+    "origin": "ai-generated",
+    "prompt_sha256": "992f8bf1798641070dfdb2dd4d2f3ba0f243fe72326eb4d36ad2231021c66edf"
+  },
+  "subnets": [
+    {
+      "name": "net_001_client-1_router-a",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_router-a_router-b",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_router-a_router-c",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_router-b_router-d",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_router-c_router-d",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_router-d_server-1",
+      "cidr": "10.64.0.40/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "client-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-c"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "router-a",
+        "router-b"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "path": [
+        "router-a",
+        "router-c"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "path": [
+        "router-a",
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.10",
+      "path": [
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "path": [
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "router-c",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "router-c",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "path": [
+        "router-c",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "router-c",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "router-d",
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "router-d",
+        "router-b"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "router-d",
+        "router-c"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-b"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-c"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 6,
+    "router_count": 4,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 24,
+    "impairment_applications": 10,
+    "bandwidth_controls": 3
+  }
+}

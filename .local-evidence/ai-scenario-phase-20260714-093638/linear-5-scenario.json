@@ -1,0 +1,271 @@
+{
+  "topology_name": "ai-scenario-b66fb15b5b",
+  "nodes": [
+    {
+      "id": "node-1",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_node-1_node-2",
+          "ip": "10.64.0.2"
+        }
+      ]
+    },
+    {
+      "id": "node-2",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_node-1_node-2",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_node-2_node-3",
+          "ip": "10.64.0.10"
+        }
+      ]
+    },
+    {
+      "id": "node-3",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_node-2_node-3",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_003_node-3_node-4",
+          "ip": "10.64.0.18"
+        }
+      ]
+    },
+    {
+      "id": "node-4",
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_003_node-3_node-4",
+          "ip": "10.64.0.19"
+        },
+        {
+          "subnet": "net_004_node-4_node-5",
+          "ip": "10.64.0.26"
+        }
+      ]
+    },
+    {
+      "id": "node-5",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_004_node-4_node-5",
+          "ip": "10.64.0.27"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "node-1",
+      "target": "node-2",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_001_node-1_node-2"
+    },
+    {
+      "source": "node-2",
+      "target": "node-3",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_002_node-2_node-3"
+    },
+    {
+      "source": "node-3",
+      "target": "node-4",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_003_node-3_node-4"
+    },
+    {
+      "source": "node-4",
+      "target": "node-5",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "bandwidth_mbps": 20.0,
+      "subnet": "net_004_node-4_node-5"
+    }
+  ],
+  "traffic": {
+    "source": "node-1",
+    "destination": "node-5",
+    "protocol": "tcp",
+    "duration_s": 2,
+    "ping_count": 4,
+    "reverse": true
+  },
+  "generation_metadata": {
+    "origin": "ai-generated",
+    "prompt_sha256": "b66fb15b5bde38bc9ce173005ce076d0497aafc0aac6f831d48d4982fb4e564c"
+  },
+  "subnets": [
+    {
+      "name": "net_001_node-1_node-2",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_node-2_node-3",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_node-3_node-4",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_node-4_node-5",
+      "cidr": "10.64.0.24/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "node-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "node-1",
+        "node-2"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "node-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "node-1",
+        "node-2",
+        "node-3"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "node-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "node-1",
+        "node-2",
+        "node-3",
+        "node-4"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "node-2",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "node-2",
+        "node-3"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "node-2",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "node-2",
+        "node-3",
+        "node-4"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "node-3",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "node-3",
+        "node-2"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "node-3",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.19",
+      "path": [
+        "node-3",
+        "node-4"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "node-4",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "node-4",
+        "node-3",
+        "node-2"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "node-4",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "node-4",
+        "node-3"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "node-5",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "node-5",
+        "node-4",
+        "node-3",
+        "node-2"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "node-5",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "node-5",
+        "node-4",
+        "node-3"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "node-5",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.26",
+      "path": [
+        "node-5",
+        "node-4"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 5,
+    "router_count": 3,
+    "link_count": 4,
+    "network_count": 4,
+    "route_count": 12,
+    "impairment_applications": 6,
+    "bandwidth_controls": 4
+  }
+}
