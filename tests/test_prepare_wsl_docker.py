@@ -64,6 +64,28 @@ class PrepareWslDockerTests(unittest.TestCase):
                  ("destination", "10.0.0.16/29"), ("destination", "10.0.0.8/29")],
             )
 
+    def test_runtime_path_selection_covers_all_real_edges_not_network_mesh(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text(
+                '{"networks":[{"name":"a","subnet":"10.0.0.0/29"},'
+                '{"name":"b","subnet":"10.0.0.8/29"},{"name":"c","subnet":"10.0.0.16/29"},'
+                '{"name":"d","subnet":"10.0.0.24/29"}],'
+                '"traffic":{"source":"client","destination":"server","runtime_path_selection":true},'
+                '"nodes":[{"id":"client","interfaces":[{"subnet":"a"}]},'
+                '{"id":"r1","interfaces":[{"subnet":"a"},{"subnet":"b"},{"subnet":"c"}]},'
+                '{"id":"r2","interfaces":[{"subnet":"b"},{"subnet":"d"}]},'
+                '{"id":"r3","interfaces":[{"subnet":"c"},{"subnet":"d"}]},'
+                '{"id":"server","interfaces":[{"subnet":"d"}]}],'
+                '"links":[{"source":"client","target":"r1","subnet":"a"},'
+                '{"source":"r1","target":"r2","subnet":"b"},'
+                '{"source":"r1","target":"r3","subnet":"c"},'
+                '{"source":"r2","target":"server","subnet":"d"}]}'
+            )
+            plan = build_rule_plan(path, load_networks(path))
+            self.assertEqual(len(plan), 8)  # 4 physical links x 2 endpoint subnets.
+            self.assertNotIn(("b", "10.0.0.16/29"), plan)
+
 
 if __name__ == "__main__":
     unittest.main()

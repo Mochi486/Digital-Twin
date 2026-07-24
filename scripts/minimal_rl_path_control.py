@@ -102,6 +102,10 @@ class DockerDualPathBackend:
         self.route_switches = []
 
     def start(self) -> None:
+        # The controller can switch between paths A and B without rebuilding
+        # the topology.  Tell the scoped WSL helper to protect topology edges
+        # for both endpoint directions; it still creates O(E), not N×N, rules.
+        self.scenario.setdefault("traffic", {})["runtime_path_selection"] = True
         cleanup(self.scenario)
         create_subnets(self.scenario)
         self.runtime_scenario_path.write_text(json.dumps(self.scenario, indent=2) + "\n", encoding="utf-8")

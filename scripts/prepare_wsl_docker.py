@@ -71,7 +71,11 @@ def build_rule_plan(path: Path, networks: list[dict]) -> list[tuple[str, str]]:
     # For a traffic-specific topology, raw PREROUTING sees the *final*
     # destination IP, not the next hop.  Build a bounded plan over only the
     # selected forward/reverse graph paths, with each traversed bridge allowing
-    # the final endpoint subnet.
+    # the final endpoint subnet.  Some controllers (the minimal RL controller
+    # is one) select between pre-computed paths at runtime.  In that case every
+    # *physical topology edge* may be selected, so cover every real link for
+    # the two endpoint subnets.  This remains O(E), never the former O(N²)
+    # network mesh.
     traffic = scenario.get("traffic", {})
     if traffic.get("source") and traffic.get("destination") and scenario.get("links"):
         from topology_utils import build_graph_adjacency, shortest_path
@@ -103,12 +107,18 @@ def build_rule_plan(path: Path, networks: list[dict]) -> list[tuple[str, str]]:
             # egress-link subnet.  Using the endpoint primary subnet here silently
             # drops replies for multi-interface sources such as Essen.
             source_egress_subnet = by_pair[frozenset((forward[0], forward[1]))]["subnet"]
-            for path_nodes, final_subnet in (
-                (forward, primary_subnet(traffic["destination"])),
-                (reverse, source_egress_subnet),
+            selected_edges = {
+                by_pair[frozenset((left, right))]["subnet"]
+                for left, right in zip(forward, forward[1:])
+            }
+            if traffic.get("runtime_path_selection"):
+                selected_edges = {link["subnet"] for link in links if link.get("subnet")}
+            for final_subnet in (
+                primary_subnet(traffic["destination"]),
+                source_egress_subnet,
             ):
-                for left, right in zip(path_nodes, path_nodes[1:]):
-                    plan.add((by_pair[frozenset((left, right))]["subnet"], subnet_by_name[final_subnet]))
+                for edge_subnet in selected_edges:
+                    plan.add((edge_subnet, subnet_by_name[final_subnet]))
             return sorted(plan)
     if "nodes" not in scenario or "links" not in scenario:
         return [(source["name"], target["subnet"]) for source in networks for target in networks if source != target]
