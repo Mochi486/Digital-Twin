@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
-from prepare_wsl_docker import RULE_COMMENT, load_networks
+from prepare_wsl_docker import RULE_COMMENT, build_rule_plan, load_networks
 from routed_delay_utils import is_tagged_project70_rule
 
 
@@ -31,6 +31,60 @@ class PrepareWslDockerTests(unittest.TestCase):
                 load_networks(scenario_path),
                 [{"name": "net_a", "subnet": "10.0.1.0/24"}],
             )
+
+    def test_rule_plan_is_router_adjacent_not_full_mesh(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text('{"subnets":[{"name":"a","cidr":"10.0.0.0/29"},{"name":"b","cidr":"10.0.0.8/29"},{"name":"c","cidr":"10.0.0.16/29"}],"nodes":[{"id":"r","type":"router"}],"links":[{"source":"r","target":"x","subnet":"a"},{"source":"r","target":"y","subnet":"b"},{"source":"r","target":"z","subnet":"c"}]}')
+            self.assertEqual(len(build_rule_plan(path, load_networks(path))), 6)
+
+    def test_rule_plan_includes_multi_interface_endpoint_access(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text('{"subnets":[{"name":"access","cidr":"10.0.0.0/29"},{"name":"primary","cidr":"10.0.0.8/29"}],"nodes":[{"id":"client","type":"client"}],"links":[{"source":"client","target":"x","subnet":"access"},{"source":"client","target":"y","subnet":"primary"}]}')
+            self.assertEqual(len(build_rule_plan(path, load_networks(path))), 2)
+
+    def test_traffic_plan_targets_source_egress_subnet_on_reverse_path(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text(
+                '{"networks":[{"name":"primary","subnet":"10.0.0.0/29"},'
+                '{"name":"access","subnet":"10.0.0.8/29"},'
+                '{"name":"destination","subnet":"10.0.0.16/29"}],'
+                '"traffic":{"source":"client","destination":"server"},'
+                '"nodes":[{"id":"client","interfaces":[{"subnet":"primary"},{"subnet":"access"}]},'
+                '{"id":"router","interfaces":[{"subnet":"access"},{"subnet":"destination"}]},'
+                '{"id":"server","interfaces":[{"subnet":"destination"}]}],'
+                '"links":[{"source":"client","target":"router","subnet":"access"},'
+                '{"source":"router","target":"server","subnet":"destination"}]}'
+            )
+            self.assertEqual(
+                build_rule_plan(path, load_networks(path)),
+                [("access", "10.0.0.16/29"), ("access", "10.0.0.8/29"),
+                 ("destination", "10.0.0.16/29"), ("destination", "10.0.0.8/29")],
+            )
+
+    def test_runtime_path_selection_covers_all_real_edges_not_network_mesh(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            path = Path(temp_dir) / "scenario.json"
+            path.write_text(
+                '{"networks":[{"name":"a","subnet":"10.0.0.0/29"},'
+                '{"name":"b","subnet":"10.0.0.8/29"},{"name":"c","subnet":"10.0.0.16/29"},'
+                '{"name":"d","subnet":"10.0.0.24/29"}],'
+                '"traffic":{"source":"client","destination":"server","runtime_path_selection":true},'
+                '"nodes":[{"id":"client","interfaces":[{"subnet":"a"}]},'
+                '{"id":"r1","interfaces":[{"subnet":"a"},{"subnet":"b"},{"subnet":"c"}]},'
+                '{"id":"r2","interfaces":[{"subnet":"b"},{"subnet":"d"}]},'
+                '{"id":"r3","interfaces":[{"subnet":"c"},{"subnet":"d"}]},'
+                '{"id":"server","interfaces":[{"subnet":"d"}]}],'
+                '"links":[{"source":"client","target":"r1","subnet":"a"},'
+                '{"source":"r1","target":"r2","subnet":"b"},'
+                '{"source":"r1","target":"r3","subnet":"c"},'
+                '{"source":"r2","target":"server","subnet":"d"}]}'
+            )
+            plan = build_rule_plan(path, load_networks(path))
+            self.assertEqual(len(plan), 8)  # 4 physical links x 2 endpoint subnets.
+            self.assertNotIn(("b", "10.0.0.16/29"), plan)
 
 
 if __name__ == "__main__":

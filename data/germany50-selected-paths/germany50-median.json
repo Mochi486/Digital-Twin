@@ -1,0 +1,587 @@
+{
+  "topology_name": "sndlib-germany50-selected-median",
+  "experiment_scope": "Germany50 path-extracted experiment; not a full 50-node run",
+  "source_metadata": {
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
+  },
+  "addressing": {
+    "base_cidr": "10.64.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "g50-median-client",
+      "type": "client",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-median-client_erfurt",
+          "ip": "10.64.0.2"
+        }
+      ]
+    },
+    {
+      "id": "erfurt",
+      "original_id": 14,
+      "original_label": "Erfurt",
+      "country": "Germany",
+      "latitude": 50.98,
+      "longitude": 11.04,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_001_g50-median-client_erfurt",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_erfurt_wuerzburg",
+          "ip": "10.64.0.10"
+        }
+      ]
+    },
+    {
+      "id": "wuerzburg",
+      "original_id": 50,
+      "original_label": "Wuerzburg",
+      "country": "Germany",
+      "latitude": 49.78,
+      "longitude": 9.97,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_002_erfurt_wuerzburg",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_003_wuerzburg_augsburg",
+          "ip": "10.64.0.18"
+        }
+      ]
+    },
+    {
+      "id": "augsburg",
+      "original_id": 2,
+      "original_label": "Augsburg",
+      "country": "Germany",
+      "latitude": 48.33,
+      "longitude": 10.9,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_003_wuerzburg_augsburg",
+          "ip": "10.64.0.19"
+        },
+        {
+          "subnet": "net_004_augsburg_muenchen",
+          "ip": "10.64.0.26"
+        }
+      ]
+    },
+    {
+      "id": "muenchen",
+      "original_id": 35,
+      "original_label": "Muenchen",
+      "country": "Germany",
+      "latitude": 48.15,
+      "longitude": 11.57,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_004_augsburg_muenchen",
+          "ip": "10.64.0.27"
+        },
+        {
+          "subnet": "net_005_muenchen_passau",
+          "ip": "10.64.0.34"
+        }
+      ]
+    },
+    {
+      "id": "passau",
+      "original_id": 41,
+      "original_label": "Passau",
+      "country": "Germany",
+      "latitude": 48.57,
+      "longitude": 13.46,
+      "type": "router",
+      "interfaces": [
+        {
+          "subnet": "net_005_muenchen_passau",
+          "ip": "10.64.0.35"
+        },
+        {
+          "subnet": "net_006_passau_g50-median-server",
+          "ip": "10.64.0.42"
+        }
+      ]
+    },
+    {
+      "id": "g50-median-server",
+      "type": "server",
+      "interfaces": [
+        {
+          "subnet": "net_006_passau_g50-median-server",
+          "ip": "10.64.0.43"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "g50-median-client",
+      "target": "erfurt",
+      "role": "access-source",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_g50-median-client_erfurt"
+    },
+    {
+      "source": "erfurt",
+      "target": "wuerzburg",
+      "original_id": "L35",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_erfurt_wuerzburg"
+    },
+    {
+      "source": "wuerzburg",
+      "target": "augsburg",
+      "original_id": "L84",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_wuerzburg_augsburg"
+    },
+    {
+      "source": "augsburg",
+      "target": "muenchen",
+      "original_id": "L79",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_004_augsburg_muenchen"
+    },
+    {
+      "source": "muenchen",
+      "target": "passau",
+      "original_id": "L81",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_005_muenchen_passau"
+    },
+    {
+      "source": "passau",
+      "target": "g50-median-server",
+      "role": "access-destination",
+      "bandwidth_mbps": 20,
+      "delay_ms": 10,
+      "packet_loss_percent": 0,
+      "subnet": "net_006_passau_g50-median-server"
+    }
+  ],
+  "traffic": {
+    "source": "g50-median-client",
+    "destination": "g50-median-server",
+    "protocol": "tcp",
+    "duration_s": 5,
+    "ping_count": 100,
+    "ping_flood": true,
+    "reverse": true
+  },
+  "experiment_metadata": {
+    "path_class": "median",
+    "backbone_path": [
+      "erfurt",
+      "wuerzburg",
+      "augsburg",
+      "muenchen",
+      "passau"
+    ],
+    "backbone_hop_count": 4,
+    "path_definition": "fixed SNDlib Germany50 selected path"
+  },
+  "subnets": [
+    {
+      "name": "net_001_g50-median-client_erfurt",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_erfurt_wuerzburg",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_wuerzburg_augsburg",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_augsburg_muenchen",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_muenchen_passau",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_passau_g50-median-server",
+      "cidr": "10.64.0.40/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "path": [
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 7,
+    "router_count": 5,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 30,
+    "impairment_applications": 10,
+    "bandwidth_controls": 5
+  }
+}

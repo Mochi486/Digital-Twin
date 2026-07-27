@@ -1,0 +1,873 @@
+{
+  "topology": "sndlib-germany50-selected-median",
+  "smoke_mode": false,
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20.0,
+  "configured_delay_ms": 10.0,
+  "configured_packet_loss_percent": 0.0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress interfaces selected by link definitions. Measured ping RTT is reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress interfaces selected by link definitions. Measured ping packet loss is reported separately.",
+  "subnets": [
+    {
+      "name": "net_001_g50-median-client_erfurt",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_erfurt_wuerzburg",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_wuerzburg_augsburg",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_augsburg_muenchen",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_muenchen_passau",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_passau_g50-median-server",
+      "cidr": "10.64.0.40/29"
+    }
+  ],
+  "static_routes": [
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "g50-median-client",
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "path": [
+        "erfurt",
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wuerzburg",
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "augsburg",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "path": [
+        "augsburg",
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.26",
+      "path": [
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "muenchen",
+        "passau"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.34",
+      "path": [
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "path": [
+        "g50-median-server",
+        "passau"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "route_verification": [
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "g50-median-client",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "erfurt",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.10 dev eth0"
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.19",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.19 dev eth1"
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.19 dev eth1"
+    },
+    {
+      "node": "wuerzburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.19",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.19 dev eth1"
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.18 dev eth0"
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.18 dev eth0"
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.27 dev eth1"
+    },
+    {
+      "node": "augsburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.27 dev eth1"
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.26 dev eth0"
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.26 dev eth0"
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.26 dev eth0"
+    },
+    {
+      "node": "muenchen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.35 dev eth1"
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.34 dev eth0"
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.34 dev eth0"
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.34 dev eth0"
+    },
+    {
+      "node": "passau",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.34 dev eth0"
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "g50-median-server",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.42 dev eth0"
+    }
+  ],
+  "delay_loss_applications": [
+    {
+      "link": "g50-median-client->erfurt",
+      "subnet": "net_001_g50-median-client_erfurt",
+      "node": "erfurt",
+      "interface_ip": "10.64.0.3",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8023: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "erfurt->wuerzburg",
+      "subnet": "net_002_erfurt_wuerzburg",
+      "node": "erfurt",
+      "interface_ip": "10.64.0.10",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8024: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "erfurt->wuerzburg",
+      "subnet": "net_002_erfurt_wuerzburg",
+      "node": "wuerzburg",
+      "interface_ip": "10.64.0.11",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8025: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "wuerzburg->augsburg",
+      "subnet": "net_003_wuerzburg_augsburg",
+      "node": "wuerzburg",
+      "interface_ip": "10.64.0.18",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8026: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "wuerzburg->augsburg",
+      "subnet": "net_003_wuerzburg_augsburg",
+      "node": "augsburg",
+      "interface_ip": "10.64.0.19",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8027: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "augsburg->muenchen",
+      "subnet": "net_004_augsburg_muenchen",
+      "node": "augsburg",
+      "interface_ip": "10.64.0.26",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8028: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "augsburg->muenchen",
+      "subnet": "net_004_augsburg_muenchen",
+      "node": "muenchen",
+      "interface_ip": "10.64.0.27",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8029: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "muenchen->passau",
+      "subnet": "net_005_muenchen_passau",
+      "node": "muenchen",
+      "interface_ip": "10.64.0.34",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 802a: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "muenchen->passau",
+      "subnet": "net_005_muenchen_passau",
+      "node": "passau",
+      "interface_ip": "10.64.0.35",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 802b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "passau->g50-median-server",
+      "subnet": "net_006_passau_g50-median-server",
+      "node": "passau",
+      "interface_ip": "10.64.0.42",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 802c: root refcnt 9 limit 1000 delay 10ms"
+    }
+  ],
+  "bandwidth_controls": [
+    {
+      "link": "passau->muenchen",
+      "subnet": "net_005_muenchen_passau",
+      "node": "passau",
+      "interface_ip": "10.64.0.35",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "g50-median-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 802b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "muenchen->augsburg",
+      "subnet": "net_004_augsburg_muenchen",
+      "node": "muenchen",
+      "interface_ip": "10.64.0.27",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "g50-median-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8029: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "augsburg->wuerzburg",
+      "subnet": "net_003_wuerzburg_augsburg",
+      "node": "augsburg",
+      "interface_ip": "10.64.0.19",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "g50-median-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8027: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "wuerzburg->erfurt",
+      "subnet": "net_002_erfurt_wuerzburg",
+      "node": "wuerzburg",
+      "interface_ip": "10.64.0.11",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "g50-median-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8025: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "erfurt->g50-median-client",
+      "subnet": "net_001_g50-median-client_erfurt",
+      "node": "erfurt",
+      "interface_ip": "10.64.0.3",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "g50-median-server",
+        "passau",
+        "muenchen",
+        "augsburg",
+        "wuerzburg",
+        "erfurt",
+        "g50-median-client"
+      ],
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8023: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    }
+  ],
+  "all_node_route_tables": {
+    "g50-median-client": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.2 \n10.64.0.8/29 via 10.64.0.3 dev eth0 \n10.64.0.16/29 via 10.64.0.3 dev eth0 \n10.64.0.24/29 via 10.64.0.3 dev eth0 \n10.64.0.32/29 via 10.64.0.3 dev eth0 \n10.64.0.40/29 via 10.64.0.3 dev eth0",
+    "erfurt": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.11 dev eth1 \n10.64.0.24/29 via 10.64.0.11 dev eth1 \n10.64.0.32/29 via 10.64.0.11 dev eth1 \n10.64.0.40/29 via 10.64.0.11 dev eth1",
+    "wuerzburg": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.18 \n10.64.0.24/29 via 10.64.0.19 dev eth1 \n10.64.0.32/29 via 10.64.0.19 dev eth1 \n10.64.0.40/29 via 10.64.0.19 dev eth1",
+    "augsburg": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.18 dev eth0 \n10.64.0.8/29 via 10.64.0.18 dev eth0 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 dev eth1 proto kernel scope link src 10.64.0.26 \n10.64.0.32/29 via 10.64.0.27 dev eth1 \n10.64.0.40/29 via 10.64.0.27 dev eth1",
+    "muenchen": "default via 10.64.0.25 dev eth0 \n10.64.0.0/29 via 10.64.0.26 dev eth0 \n10.64.0.8/29 via 10.64.0.26 dev eth0 \n10.64.0.16/29 via 10.64.0.26 dev eth0 \n10.64.0.24/29 dev eth0 proto kernel scope link src 10.64.0.27 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth1",
+    "passau": "default via 10.64.0.33 dev eth0 \n10.64.0.0/29 via 10.64.0.34 dev eth0 \n10.64.0.8/29 via 10.64.0.34 dev eth0 \n10.64.0.16/29 via 10.64.0.34 dev eth0 \n10.64.0.24/29 via 10.64.0.34 dev eth0 \n10.64.0.32/29 dev eth0 proto kernel scope link src 10.64.0.35 \n10.64.0.40/29 dev eth1 proto kernel scope link src 10.64.0.42",
+    "g50-median-server": "default via 10.64.0.41 dev eth0 \n10.64.0.0/29 via 10.64.0.42 dev eth0 \n10.64.0.8/29 via 10.64.0.42 dev eth0 \n10.64.0.16/29 via 10.64.0.42 dev eth0 \n10.64.0.24/29 via 10.64.0.42 dev eth0 \n10.64.0.32/29 via 10.64.0.42 dev eth0 \n10.64.0.40/29 dev eth0 proto kernel scope link src 10.64.0.43"
+  },
+  "router_route_tables": {
+    "erfurt": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 via 10.64.0.11 dev eth1 \n10.64.0.24/29 via 10.64.0.11 dev eth1 \n10.64.0.32/29 via 10.64.0.11 dev eth1 \n10.64.0.40/29 via 10.64.0.11 dev eth1",
+    "wuerzburg": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 dev eth1 proto kernel scope link src 10.64.0.18 \n10.64.0.24/29 via 10.64.0.19 dev eth1 \n10.64.0.32/29 via 10.64.0.19 dev eth1 \n10.64.0.40/29 via 10.64.0.19 dev eth1",
+    "augsburg": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.18 dev eth0 \n10.64.0.8/29 via 10.64.0.18 dev eth0 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 dev eth1 proto kernel scope link src 10.64.0.26 \n10.64.0.32/29 via 10.64.0.27 dev eth1 \n10.64.0.40/29 via 10.64.0.27 dev eth1",
+    "muenchen": "default via 10.64.0.25 dev eth0 \n10.64.0.0/29 via 10.64.0.26 dev eth0 \n10.64.0.8/29 via 10.64.0.26 dev eth0 \n10.64.0.16/29 via 10.64.0.26 dev eth0 \n10.64.0.24/29 dev eth0 proto kernel scope link src 10.64.0.27 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth1",
+    "passau": "default via 10.64.0.33 dev eth0 \n10.64.0.0/29 via 10.64.0.34 dev eth0 \n10.64.0.8/29 via 10.64.0.34 dev eth0 \n10.64.0.16/29 via 10.64.0.34 dev eth0 \n10.64.0.24/29 via 10.64.0.34 dev eth0 \n10.64.0.32/29 dev eth0 proto kernel scope link src 10.64.0.35 \n10.64.0.40/29 dev eth1 proto kernel scope link src 10.64.0.42"
+  },
+  "router_qdisc_state": {
+    "erfurt": {
+      "eth0": "qdisc netem 8023: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 8024: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "wuerzburg": {
+      "eth0": "qdisc netem 8025: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 8026: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "augsburg": {
+      "eth0": "qdisc netem 8027: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 8028: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "muenchen": {
+      "eth0": "qdisc netem 8029: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 802a: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "passau": {
+      "eth0": "qdisc netem 802b: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth1": "qdisc netem 802c: root refcnt 9 limit 1000 delay 10ms"
+    }
+  },
+  "ping_packets_transmitted": 100,
+  "ping_packets_received": 100,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 100.533,
+  "ping_rtt_avg_ms": 105.563,
+  "ping_rtt_max_ms": 203.259,
+  "ping_rtt_mdev_ms": 16.626,
+  "throughput_mbps": 17.8,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "resource_estimate": {
+    "node_count": 7,
+    "router_count": 5,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 30,
+    "impairment_applications": 10,
+    "bandwidth_controls": 5
+  },
+  "resource_usage": {
+    "running_container_count": 9,
+    "running_network_count": 11
+  },
+  "stage_timings_s": {
+    "initial_cleanup_s": 0.496,
+    "create_subnets_s": 0.371,
+    "prepare_host_routing_s": 16.399,
+    "start_nodes_s": 2.843,
+    "configure_routes_s": 2.516,
+    "verify_routes_s": 2.476,
+    "apply_impairments_s": 5.131,
+    "apply_bandwidth_s": 0.0,
+    "setup_total_s": 29.736,
+    "ping_s": 1.82,
+    "iperf_s": 7.032
+  },
+  "cleanup_time_s": 3.22
+}

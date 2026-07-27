@@ -1,0 +1,18 @@
+{
+  "size": 10,
+  "real": true,
+  "rows": [
+    {
+      "class": "shortest",
+      "pair": [
+        "aachen",
+        "koeln"
+      ],
+      "hops": 1,
+      "status": "SUCCESS",
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-fixed/10-node-shortest-run-3/shortest-metrics.json",
+      "evidence": "runs/final-evaluation/germany50-subset-fixed/10-node-shortest-run-3/shortest.log"
+    }
+  ]
+}

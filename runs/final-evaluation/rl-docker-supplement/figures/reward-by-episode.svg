@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="28" font-family="sans-serif" font-size="18">Reward by episode</text>
+<text x="40" y="348" font-family="sans-serif" font-size="12">min=-36.975, max=17.472</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="2" points="55.0,63.3 97.1,61.1 139.2,60.6 181.3,60.6 223.4,62.9 265.5,60.0 307.6,60.5 349.7,60.5 391.8,63.3 433.9,60.5 476.1,159.1 518.2,168.5 560.3,178.9 602.4,166.4 644.5,315.0 686.6,166.7 728.7,169.2 770.8,162.1 812.9,182.5 855.0,166.9"/>
+<text x="55" y="50" fill="#2563eb" font-family="sans-serif" font-size="12">q_learning</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="2" points="55.0,62.9 97.1,60.5 139.2,60.5 181.3,60.5 223.4,63.3 265.5,60.0 307.6,60.5 349.7,60.5 391.8,63.3 433.9,60.0 476.1,62.9 518.2,63.5 560.3,61.1 602.4,63.3 644.5,60.0 686.6,62.9 728.7,60.5 770.8,63.3 812.9,60.0 855.0,64.0"/>
+<text x="205" y="50" fill="#dc2626" font-family="sans-serif" font-size="12">heuristic</text>
+<polyline fill="none" stroke="#16a34a" stroke-width="2" points="55.0,63.3 97.1,60.5 139.2,62.8 181.3,61.1 223.4,63.5 265.5,60.5 307.6,63.3 349.7,60.5 391.8,63.3 433.9,61.2 476.1,313.9 518.2,164.1 560.3,291.1 602.4,298.2 644.5,182.7 686.6,166.5 728.7,182.5 770.8,283.1 812.9,180.9 855.0,286.5"/>
+<text x="355" y="50" fill="#16a34a" font-family="sans-serif" font-size="12">fixed_a</text>
+<polyline fill="none" stroke="#9333ea" stroke-width="2" points="55.0,180.4 97.1,168.7 139.2,180.9 181.3,167.7 223.4,182.6 265.5,285.3 307.6,277.7 349.7,163.5 391.8,311.8 433.9,286.6 476.1,63.3 518.2,60.5 560.3,60.5 602.4,60.5 644.5,60.5 686.6,60.5 728.7,60.0 770.8,60.5 812.9,60.5 855.0,60.5"/>
+<text x="505" y="50" fill="#9333ea" font-family="sans-serif" font-size="12">fixed_b</text>
+</svg>

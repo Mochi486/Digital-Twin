@@ -1,0 +1,182 @@
+[
+  {
+    "episode": 1,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.987,
+    "rtt_ms": 33.505,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.662
+  },
+  {
+    "episode": 2,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.775,
+    "rtt_ms": 33.992,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.475
+  },
+  {
+    "episode": 3,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.978,
+    "rtt_ms": 34.572,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.707
+  },
+  {
+    "episode": 4,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.904,
+    "rtt_ms": 33.533,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.581
+  },
+  {
+    "episode": 5,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.889,
+    "rtt_ms": 33.508,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.564
+  },
+  {
+    "episode": 6,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.933,
+    "rtt_ms": 33.969,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.631
+  },
+  {
+    "episode": 7,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.984,
+    "rtt_ms": 33.712,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.67
+  },
+  {
+    "episode": 8,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.84,
+    "rtt_ms": 33.542,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.517
+  },
+  {
+    "episode": 9,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.811,
+    "rtt_ms": 33.961,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.509
+  },
+  {
+    "episode": 10,
+    "phase": "phase-1-a-preferred",
+    "path": "A",
+    "reward": 16.843,
+    "rtt_ms": 34.163,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.551
+  },
+  {
+    "episode": 11,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": -0.12,
+    "rtt_ms": 134.371,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.599
+  },
+  {
+    "episode": 12,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": 0.049,
+    "rtt_ms": 134.225,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.76
+  },
+  {
+    "episode": 13,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": -0.147,
+    "rtt_ms": 133.814,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.544
+  },
+  {
+    "episode": 14,
+    "phase": "phase-2-b-preferred",
+    "path": "B",
+    "reward": 16.818,
+    "rtt_ms": 33.675,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.502
+  },
+  {
+    "episode": 15,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": 0.061,
+    "rtt_ms": 134.428,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.782
+  },
+  {
+    "episode": 16,
+    "phase": "phase-2-b-preferred",
+    "path": "B",
+    "reward": 16.981,
+    "rtt_ms": 33.555,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.659
+  },
+  {
+    "episode": 17,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": -0.159,
+    "rtt_ms": 134.132,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.548
+  },
+  {
+    "episode": 18,
+    "phase": "phase-2-b-preferred",
+    "path": "B",
+    "reward": 16.991,
+    "rtt_ms": 33.767,
+    "loss_percent": 0.0,
+    "throughput_mbps": 18.679
+  },
+  {
+    "episode": 19,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": -0.087,
+    "rtt_ms": 134.234,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.625
+  },
+  {
+    "episode": 20,
+    "phase": "phase-2-b-preferred",
+    "path": "A",
+    "reward": 0.026,
+    "rtt_ms": 133.464,
+    "loss_percent": 4.0,
+    "throughput_mbps": 8.699
+  }
+]

@@ -1,0 +1,6683 @@
+{
+  "topology_name": "sndlib-germany50-subset-20",
+  "source_metadata": {
+    "source_url": "https://sndlib.put.poznan.pl/download/sndlib-networks-native/germany50.txt",
+    "original_file": "/mnt/d/home/fanys23/project_70/data/external/germany50/native/germany50.txt",
+    "format": "SNDlib native network 1.0",
+    "license_name": "ZIB Academic License",
+    "license_url": "https://sndlib.put.poznan.pl/LICENSE.txt"
+  },
+  "addressing": {
+    "base_cidr": "10.64.0.0/16",
+    "subnet_prefixlen": 29
+  },
+  "nodes": [
+    {
+      "id": "aachen",
+      "type": "client",
+      "original_id": 1,
+      "original_label": "Aachen",
+      "country": "Germany",
+      "latitude": 50.76,
+      "longitude": 6.04,
+      "interfaces": [
+        {
+          "subnet": "net_005_aachen_koeln",
+          "ip": "10.64.0.34"
+        },
+        {
+          "subnet": "net_008_wesel_aachen",
+          "ip": "10.64.0.59"
+        },
+        {
+          "subnet": "net_009_trier_aachen",
+          "ip": "10.64.0.67"
+        }
+      ]
+    },
+    {
+      "id": "koeln",
+      "type": "server",
+      "original_id": 30,
+      "original_label": "Koeln",
+      "country": "Germany",
+      "latitude": 50.94,
+      "longitude": 6.87,
+      "interfaces": [
+        {
+          "subnet": "net_004_koeln_duesseldorf",
+          "ip": "10.64.0.26"
+        },
+        {
+          "subnet": "net_005_aachen_koeln",
+          "ip": "10.64.0.35"
+        },
+        {
+          "subnet": "net_006_koblenz_koeln",
+          "ip": "10.64.0.43"
+        }
+      ]
+    },
+    {
+      "id": "trier",
+      "type": "router",
+      "original_id": 47,
+      "original_label": "Trier",
+      "country": "Germany",
+      "latitude": 49.75,
+      "longitude": 6.68,
+      "interfaces": [
+        {
+          "subnet": "net_009_trier_aachen",
+          "ip": "10.64.0.66"
+        },
+        {
+          "subnet": "net_013_trier_koblenz",
+          "ip": "10.64.0.98"
+        },
+        {
+          "subnet": "net_027_saarbruecken_trier",
+          "ip": "10.64.0.211"
+        }
+      ]
+    },
+    {
+      "id": "wesel",
+      "type": "router",
+      "original_id": 49,
+      "original_label": "Wesel",
+      "country": "Germany",
+      "latitude": 51.39,
+      "longitude": 6.37,
+      "interfaces": [
+        {
+          "subnet": "net_003_wesel_essen",
+          "ip": "10.64.0.18"
+        },
+        {
+          "subnet": "net_008_wesel_aachen",
+          "ip": "10.64.0.58"
+        },
+        {
+          "subnet": "net_015_oldenburg_wesel",
+          "ip": "10.64.0.115"
+        },
+        {
+          "subnet": "net_016_norden_wesel",
+          "ip": "10.64.0.123"
+        }
+      ]
+    },
+    {
+      "id": "duesseldorf",
+      "type": "router",
+      "original_id": 13,
+      "original_label": "Duesseldorf",
+      "country": "Germany",
+      "latitude": 51.25,
+      "longitude": 6.77,
+      "interfaces": [
+        {
+          "subnet": "net_001_duesseldorf_essen",
+          "ip": "10.64.0.2"
+        },
+        {
+          "subnet": "net_004_koeln_duesseldorf",
+          "ip": "10.64.0.27"
+        }
+      ]
+    },
+    {
+      "id": "koblenz",
+      "type": "router",
+      "original_id": 29,
+      "original_label": "Koblenz",
+      "country": "Germany",
+      "latitude": 50.4,
+      "longitude": 7.52,
+      "interfaces": [
+        {
+          "subnet": "net_006_koblenz_koeln",
+          "ip": "10.64.0.42"
+        },
+        {
+          "subnet": "net_010_siegen_koblenz",
+          "ip": "10.64.0.75"
+        },
+        {
+          "subnet": "net_011_frankfurt_koblenz",
+          "ip": "10.64.0.83"
+        },
+        {
+          "subnet": "net_012_kaiserslautern_koblenz",
+          "ip": "10.64.0.91"
+        },
+        {
+          "subnet": "net_013_trier_koblenz",
+          "ip": "10.64.0.99"
+        }
+      ]
+    },
+    {
+      "id": "saarbruecken",
+      "type": "router",
+      "original_id": 43,
+      "original_label": "Saarbruecken",
+      "country": "Germany",
+      "latitude": 49.23,
+      "longitude": 7.03,
+      "interfaces": [
+        {
+          "subnet": "net_024_saarbruecken_kaiserslautern",
+          "ip": "10.64.0.186"
+        },
+        {
+          "subnet": "net_027_saarbruecken_trier",
+          "ip": "10.64.0.210"
+        },
+        {
+          "subnet": "net_028_karlsruhe_saarbruecken",
+          "ip": "10.64.0.219"
+        }
+      ]
+    },
+    {
+      "id": "essen",
+      "type": "router",
+      "original_id": 15,
+      "original_label": "Essen",
+      "country": "Germany",
+      "latitude": 51.46,
+      "longitude": 7.02,
+      "interfaces": [
+        {
+          "subnet": "net_001_duesseldorf_essen",
+          "ip": "10.64.0.3"
+        },
+        {
+          "subnet": "net_002_dortmund_essen",
+          "ip": "10.64.0.11"
+        },
+        {
+          "subnet": "net_003_wesel_essen",
+          "ip": "10.64.0.19"
+        }
+      ]
+    },
+    {
+      "id": "norden",
+      "type": "router",
+      "original_id": 37,
+      "original_label": "Norden",
+      "country": "Germany",
+      "latitude": 53.6,
+      "longitude": 7.21,
+      "interfaces": [
+        {
+          "subnet": "net_016_norden_wesel",
+          "ip": "10.64.0.122"
+        },
+        {
+          "subnet": "net_018_norden_oldenburg",
+          "ip": "10.64.0.138"
+        }
+      ]
+    },
+    {
+      "id": "oldenburg",
+      "type": "router",
+      "original_id": 39,
+      "original_label": "Oldenburg",
+      "country": "Germany",
+      "latitude": 53.11,
+      "longitude": 8.21,
+      "interfaces": [
+        {
+          "subnet": "net_015_oldenburg_wesel",
+          "ip": "10.64.0.114"
+        },
+        {
+          "subnet": "net_017_oldenburg_bremen",
+          "ip": "10.64.0.130"
+        },
+        {
+          "subnet": "net_018_norden_oldenburg",
+          "ip": "10.64.0.139"
+        },
+        {
+          "subnet": "net_019_osnabrueck_oldenburg",
+          "ip": "10.64.0.147"
+        }
+      ]
+    },
+    {
+      "id": "frankfurt",
+      "type": "router",
+      "original_id": 17,
+      "original_label": "Frankfurt",
+      "country": "Germany",
+      "latitude": 50.12,
+      "longitude": 8.71,
+      "interfaces": [
+        {
+          "subnet": "net_011_frankfurt_koblenz",
+          "ip": "10.64.0.82"
+        },
+        {
+          "subnet": "net_020_darmstadt_frankfurt",
+          "ip": "10.64.0.155"
+        },
+        {
+          "subnet": "net_021_giessen_frankfurt",
+          "ip": "10.64.0.163"
+        },
+        {
+          "subnet": "net_022_fulda_frankfurt",
+          "ip": "10.64.0.171"
+        }
+      ]
+    },
+    {
+      "id": "kaiserslautern",
+      "type": "router",
+      "original_id": 24,
+      "original_label": "Kaiserslautern",
+      "country": "Germany",
+      "latitude": 49.43,
+      "longitude": 7.75,
+      "interfaces": [
+        {
+          "subnet": "net_012_kaiserslautern_koblenz",
+          "ip": "10.64.0.90"
+        },
+        {
+          "subnet": "net_023_kaiserslautern_darmstadt",
+          "ip": "10.64.0.178"
+        },
+        {
+          "subnet": "net_024_saarbruecken_kaiserslautern",
+          "ip": "10.64.0.187"
+        },
+        {
+          "subnet": "net_025_karlsruhe_kaiserslautern",
+          "ip": "10.64.0.195"
+        }
+      ]
+    },
+    {
+      "id": "siegen",
+      "type": "router",
+      "original_id": 45,
+      "original_label": "Siegen",
+      "country": "Germany",
+      "latitude": 50.91,
+      "longitude": 8.03,
+      "interfaces": [
+        {
+          "subnet": "net_007_siegen_dortmund",
+          "ip": "10.64.0.50"
+        },
+        {
+          "subnet": "net_010_siegen_koblenz",
+          "ip": "10.64.0.74"
+        },
+        {
+          "subnet": "net_014_giessen_siegen",
+          "ip": "10.64.0.107"
+        }
+      ]
+    },
+    {
+      "id": "karlsruhe",
+      "type": "router",
+      "original_id": 25,
+      "original_label": "Karlsruhe",
+      "country": "Germany",
+      "latitude": 49.01,
+      "longitude": 8.41,
+      "interfaces": [
+        {
+          "subnet": "net_025_karlsruhe_kaiserslautern",
+          "ip": "10.64.0.194"
+        },
+        {
+          "subnet": "net_028_karlsruhe_saarbruecken",
+          "ip": "10.64.0.218"
+        }
+      ]
+    },
+    {
+      "id": "dortmund",
+      "type": "router",
+      "original_id": 11,
+      "original_label": "Dortmund",
+      "country": "Germany",
+      "latitude": 51.51,
+      "longitude": 7.45,
+      "interfaces": [
+        {
+          "subnet": "net_002_dortmund_essen",
+          "ip": "10.64.0.10"
+        },
+        {
+          "subnet": "net_007_siegen_dortmund",
+          "ip": "10.64.0.51"
+        }
+      ]
+    },
+    {
+      "id": "bremen",
+      "type": "router",
+      "original_id": 7,
+      "original_label": "Bremen",
+      "country": "Germany",
+      "latitude": 53.11,
+      "longitude": 8.85,
+      "interfaces": [
+        {
+          "subnet": "net_017_oldenburg_bremen",
+          "ip": "10.64.0.131"
+        }
+      ]
+    },
+    {
+      "id": "osnabrueck",
+      "type": "router",
+      "original_id": 40,
+      "original_label": "Osnabrueck",
+      "country": "Germany",
+      "latitude": 52.28,
+      "longitude": 8.03,
+      "interfaces": [
+        {
+          "subnet": "net_019_osnabrueck_oldenburg",
+          "ip": "10.64.0.146"
+        }
+      ]
+    },
+    {
+      "id": "darmstadt",
+      "type": "router",
+      "original_id": 10,
+      "original_label": "Darmstadt",
+      "country": "Germany",
+      "latitude": 49.89,
+      "longitude": 8.65,
+      "interfaces": [
+        {
+          "subnet": "net_020_darmstadt_frankfurt",
+          "ip": "10.64.0.154"
+        },
+        {
+          "subnet": "net_023_kaiserslautern_darmstadt",
+          "ip": "10.64.0.179"
+        }
+      ]
+    },
+    {
+      "id": "fulda",
+      "type": "router",
+      "original_id": 19,
+      "original_label": "Fulda",
+      "country": "Germany",
+      "latitude": 50.56,
+      "longitude": 9.69,
+      "interfaces": [
+        {
+          "subnet": "net_022_fulda_frankfurt",
+          "ip": "10.64.0.170"
+        },
+        {
+          "subnet": "net_026_fulda_giessen",
+          "ip": "10.64.0.202"
+        }
+      ]
+    },
+    {
+      "id": "giessen",
+      "type": "router",
+      "original_id": 20,
+      "original_label": "Giessen",
+      "country": "Germany",
+      "latitude": 50.57,
+      "longitude": 8.67,
+      "interfaces": [
+        {
+          "subnet": "net_014_giessen_siegen",
+          "ip": "10.64.0.106"
+        },
+        {
+          "subnet": "net_021_giessen_frankfurt",
+          "ip": "10.64.0.162"
+        },
+        {
+          "subnet": "net_026_fulda_giessen",
+          "ip": "10.64.0.203"
+        }
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "duesseldorf",
+      "target": "essen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_001_duesseldorf_essen"
+    },
+    {
+      "source": "dortmund",
+      "target": "essen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_002_dortmund_essen"
+    },
+    {
+      "source": "wesel",
+      "target": "essen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_003_wesel_essen"
+    },
+    {
+      "source": "koeln",
+      "target": "duesseldorf",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_004_koeln_duesseldorf"
+    },
+    {
+      "source": "aachen",
+      "target": "koeln",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_005_aachen_koeln"
+    },
+    {
+      "source": "koblenz",
+      "target": "koeln",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_006_koblenz_koeln"
+    },
+    {
+      "source": "siegen",
+      "target": "dortmund",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_007_siegen_dortmund"
+    },
+    {
+      "source": "wesel",
+      "target": "aachen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_008_wesel_aachen"
+    },
+    {
+      "source": "trier",
+      "target": "aachen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_009_trier_aachen"
+    },
+    {
+      "source": "siegen",
+      "target": "koblenz",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_010_siegen_koblenz"
+    },
+    {
+      "source": "frankfurt",
+      "target": "koblenz",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_011_frankfurt_koblenz"
+    },
+    {
+      "source": "kaiserslautern",
+      "target": "koblenz",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_012_kaiserslautern_koblenz"
+    },
+    {
+      "source": "trier",
+      "target": "koblenz",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_013_trier_koblenz"
+    },
+    {
+      "source": "giessen",
+      "target": "siegen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_014_giessen_siegen"
+    },
+    {
+      "source": "oldenburg",
+      "target": "wesel",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_015_oldenburg_wesel"
+    },
+    {
+      "source": "norden",
+      "target": "wesel",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_016_norden_wesel"
+    },
+    {
+      "source": "oldenburg",
+      "target": "bremen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_017_oldenburg_bremen"
+    },
+    {
+      "source": "norden",
+      "target": "oldenburg",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_018_norden_oldenburg"
+    },
+    {
+      "source": "osnabrueck",
+      "target": "oldenburg",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_019_osnabrueck_oldenburg"
+    },
+    {
+      "source": "darmstadt",
+      "target": "frankfurt",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_020_darmstadt_frankfurt"
+    },
+    {
+      "source": "giessen",
+      "target": "frankfurt",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_021_giessen_frankfurt"
+    },
+    {
+      "source": "fulda",
+      "target": "frankfurt",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_022_fulda_frankfurt"
+    },
+    {
+      "source": "kaiserslautern",
+      "target": "darmstadt",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_023_kaiserslautern_darmstadt"
+    },
+    {
+      "source": "saarbruecken",
+      "target": "kaiserslautern",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_024_saarbruecken_kaiserslautern"
+    },
+    {
+      "source": "karlsruhe",
+      "target": "kaiserslautern",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_025_karlsruhe_kaiserslautern"
+    },
+    {
+      "source": "fulda",
+      "target": "giessen",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_026_fulda_giessen"
+    },
+    {
+      "source": "saarbruecken",
+      "target": "trier",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_027_saarbruecken_trier"
+    },
+    {
+      "source": "karlsruhe",
+      "target": "saarbruecken",
+      "delay_ms": 0,
+      "packet_loss_percent": 0,
+      "subnet": "net_028_karlsruhe_saarbruecken"
+    }
+  ],
+  "traffic": {
+    "source": "aachen",
+    "destination": "koeln",
+    "protocol": "tcp",
+    "duration_s": 2,
+    "ping_count": 5,
+    "reverse": true
+  },
+  "subnets": [
+    {
+      "name": "net_001_duesseldorf_essen",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_dortmund_essen",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_wesel_essen",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_koeln_duesseldorf",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_aachen_koeln",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_koblenz_koeln",
+      "cidr": "10.64.0.40/29"
+    },
+    {
+      "name": "net_007_siegen_dortmund",
+      "cidr": "10.64.0.48/29"
+    },
+    {
+      "name": "net_008_wesel_aachen",
+      "cidr": "10.64.0.56/29"
+    },
+    {
+      "name": "net_009_trier_aachen",
+      "cidr": "10.64.0.64/29"
+    },
+    {
+      "name": "net_010_siegen_koblenz",
+      "cidr": "10.64.0.72/29"
+    },
+    {
+      "name": "net_011_frankfurt_koblenz",
+      "cidr": "10.64.0.80/29"
+    },
+    {
+      "name": "net_012_kaiserslautern_koblenz",
+      "cidr": "10.64.0.88/29"
+    },
+    {
+      "name": "net_013_trier_koblenz",
+      "cidr": "10.64.0.96/29"
+    },
+    {
+      "name": "net_014_giessen_siegen",
+      "cidr": "10.64.0.104/29"
+    },
+    {
+      "name": "net_015_oldenburg_wesel",
+      "cidr": "10.64.0.112/29"
+    },
+    {
+      "name": "net_016_norden_wesel",
+      "cidr": "10.64.0.120/29"
+    },
+    {
+      "name": "net_017_oldenburg_bremen",
+      "cidr": "10.64.0.128/29"
+    },
+    {
+      "name": "net_018_norden_oldenburg",
+      "cidr": "10.64.0.136/29"
+    },
+    {
+      "name": "net_019_osnabrueck_oldenburg",
+      "cidr": "10.64.0.144/29"
+    },
+    {
+      "name": "net_020_darmstadt_frankfurt",
+      "cidr": "10.64.0.152/29"
+    },
+    {
+      "name": "net_021_giessen_frankfurt",
+      "cidr": "10.64.0.160/29"
+    },
+    {
+      "name": "net_022_fulda_frankfurt",
+      "cidr": "10.64.0.168/29"
+    },
+    {
+      "name": "net_023_kaiserslautern_darmstadt",
+      "cidr": "10.64.0.176/29"
+    },
+    {
+      "name": "net_024_saarbruecken_kaiserslautern",
+      "cidr": "10.64.0.184/29"
+    },
+    {
+      "name": "net_025_karlsruhe_kaiserslautern",
+      "cidr": "10.64.0.192/29"
+    },
+    {
+      "name": "net_026_fulda_giessen",
+      "cidr": "10.64.0.200/29"
+    },
+    {
+      "name": "net_027_saarbruecken_trier",
+      "cidr": "10.64.0.208/29"
+    },
+    {
+      "name": "net_028_karlsruhe_saarbruecken",
+      "cidr": "10.64.0.216/29"
+    }
+  ],
+  "routes": [
+    {
+      "node": "aachen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.66",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.58",
+      "path": [
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.66",
+      "path": [
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.35",
+      "path": [
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.66",
+      "path": [
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "aachen",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.66",
+      "path": [
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.27",
+      "path": [
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.27",
+      "path": [
+        "koeln",
+        "duesseldorf",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.42",
+      "path": [
+        "koeln",
+        "koblenz",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koeln",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.34",
+      "path": [
+        "koeln",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.67",
+      "path": [
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.210",
+      "path": [
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.99",
+      "path": [
+        "trier",
+        "koblenz",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "trier",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.210",
+      "path": [
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wesel",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.114",
+      "path": [
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.122",
+      "path": [
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.114",
+      "path": [
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.19",
+      "path": [
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "wesel",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.59",
+      "path": [
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.3",
+      "path": [
+        "duesseldorf",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "duesseldorf",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.26",
+      "path": [
+        "duesseldorf",
+        "koeln",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.74",
+      "path": [
+        "koblenz",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.74",
+      "path": [
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.98",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.74",
+      "path": [
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.43",
+      "path": [
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.82",
+      "path": [
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.82",
+      "path": [
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.82",
+      "path": [
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.90",
+      "path": [
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.90",
+      "path": [
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.90",
+      "path": [
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.82",
+      "path": [
+        "koblenz",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.98",
+      "path": [
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "koblenz",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.90",
+      "path": [
+        "koblenz",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.211",
+      "path": [
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "darmstadt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "saarbruecken",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.187",
+      "path": [
+        "saarbruecken",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.2",
+      "path": [
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.10",
+      "path": [
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "essen",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.18",
+      "path": [
+        "essen",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.139",
+      "path": [
+        "norden",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.139",
+      "path": [
+        "norden",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.139",
+      "path": [
+        "norden",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "norden",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.123",
+      "path": [
+        "norden",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.138",
+      "path": [
+        "oldenburg",
+        "norden"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "oldenburg",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.115",
+      "path": [
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.162",
+      "path": [
+        "frankfurt",
+        "giessen",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.162",
+      "path": [
+        "frankfurt",
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.162",
+      "path": [
+        "frankfurt",
+        "giessen",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.162",
+      "path": [
+        "frankfurt",
+        "giessen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.154",
+      "path": [
+        "frankfurt",
+        "darmstadt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.154",
+      "path": [
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.154",
+      "path": [
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.170",
+      "path": [
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.83",
+      "path": [
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "frankfurt",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.154",
+      "path": [
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.91",
+      "path": [
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.179",
+      "path": [
+        "kaiserslautern",
+        "darmstadt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.179",
+      "path": [
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.179",
+      "path": [
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.179",
+      "path": [
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.186",
+      "path": [
+        "kaiserslautern",
+        "saarbruecken"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "kaiserslautern",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.194",
+      "path": [
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.51",
+      "path": [
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.106",
+      "path": [
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.106",
+      "path": [
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.106",
+      "path": [
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.106",
+      "path": [
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "siegen",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.75",
+      "path": [
+        "siegen",
+        "koblenz",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "koblenz",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken",
+        "trier",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "darmstadt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.195",
+      "path": [
+        "karlsruhe",
+        "kaiserslautern",
+        "darmstadt",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "karlsruhe",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.219",
+      "path": [
+        "karlsruhe",
+        "saarbruecken"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "duesseldorf"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "duesseldorf",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.11",
+      "path": [
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "dortmund",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.50",
+      "path": [
+        "dortmund",
+        "siegen",
+        "koblenz",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "bremen",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.130",
+      "path": [
+        "bremen",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "norden"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "frankfurt"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "koeln",
+        "koblenz",
+        "kaiserslautern"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "essen",
+        "dortmund",
+        "siegen",
+        "giessen"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "osnabrueck",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.147",
+      "path": [
+        "osnabrueck",
+        "oldenburg",
+        "wesel",
+        "aachen",
+        "trier",
+        "saarbruecken"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "giessen",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "giessen",
+        "siegen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.178",
+      "path": [
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "giessen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.178",
+      "path": [
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.178",
+      "path": [
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.200/29",
+      "via": "10.64.0.155",
+      "path": [
+        "darmstadt",
+        "frankfurt",
+        "fulda"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.178",
+      "path": [
+        "darmstadt",
+        "kaiserslautern",
+        "saarbruecken"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "darmstadt",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.178",
+      "path": [
+        "darmstadt",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "duesseldorf"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.203",
+      "path": [
+        "fulda",
+        "giessen",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.203",
+      "path": [
+        "fulda",
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.203",
+      "path": [
+        "fulda",
+        "giessen",
+        "siegen"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.104/29",
+      "via": "10.64.0.203",
+      "path": [
+        "fulda",
+        "giessen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 6
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.160/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "darmstadt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "fulda",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.171",
+      "path": [
+        "fulda",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz",
+        "koeln"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.48/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.56/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz",
+        "koeln",
+        "aachen"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.64/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.72/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.80/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.88/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.96/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.112/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.120/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel"
+      ],
+      "hop_count": 4
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.128/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.136/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "norden"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.144/29",
+      "via": "10.64.0.107",
+      "path": [
+        "giessen",
+        "siegen",
+        "dortmund",
+        "essen",
+        "wesel",
+        "oldenburg"
+      ],
+      "hop_count": 5
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.152/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.168/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.176/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "darmstadt"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.184/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.192/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.208/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "koblenz",
+        "trier"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "giessen",
+      "destination": "10.64.0.216/29",
+      "via": "10.64.0.163",
+      "path": [
+        "giessen",
+        "frankfurt",
+        "darmstadt",
+        "kaiserslautern",
+        "karlsruhe"
+      ],
+      "hop_count": 4
+    }
+  ],
+  "generated_routes": true,
+  "resource_estimate": {
+    "node_count": 20,
+    "router_count": 20,
+    "link_count": 28,
+    "network_count": 28,
+    "route_count": 504,
+    "impairment_applications": 0,
+    "bandwidth_controls": 0
+  }
+}

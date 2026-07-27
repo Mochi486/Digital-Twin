@@ -1,0 +1,11 @@
+{
+  "status": "dry_run_success",
+  "route_mode": "full",
+  "preflight": {
+    "node_count": 50,
+    "network_count": 88,
+    "theoretical_route_count": 4224
+  },
+  "selected_route_count": 20,
+  "route_reduction_percent": 99.53
+}

@@ -1,0 +1,10 @@
+{
+  "provider": "openai",
+  "model": "gpt-5.6",
+  "status": "blocked",
+  "http_status": 429,
+  "error_code": "insufficient_quota",
+  "interpretation": "The official OpenAI request was not successful and no generated scenario or traffic result is claimed.",
+  "source_evidence": ".local-evidence/openai-live-validation-20260714-030746/openai-live-summary.json",
+  "sanitization": "No API key, key metadata, prompt, raw response, or credential-bearing log is retained in this repository evidence record."
+}

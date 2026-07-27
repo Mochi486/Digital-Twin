@@ -1,0 +1,2142 @@
+{
+  "version": 1,
+  "current_stage": "summary_complete",
+  "completed_stages": [
+    "policy_execution",
+    "summary"
+  ],
+  "policy_progress": {
+    "q_learning": [
+      {
+        "episode": 1,
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.76,
+        "rtt_ms": 36.805,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ],
+        "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+      },
+      {
+        "episode": 2,
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.24,
+        "rtt_ms": 25.207,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ],
+        "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+      },
+      {
+        "episode": 3,
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.345,
+        "rtt_ms": 25.096,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ],
+        "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+      },
+      {
+        "episode": 4,
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.341,
+        "rtt_ms": 25.172,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ],
+        "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+      },
+      {
+        "episode": 5,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.863,
+        "elapsed_s": 5.16,
+        "rtt_ms": 36.745,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 6,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.472,
+        "elapsed_s": 5.275,
+        "rtt_ms": 24.558,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 7,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.37,
+        "elapsed_s": 5.497,
+        "rtt_ms": 24.595,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 8,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.37,
+        "elapsed_s": 5.364,
+        "rtt_ms": 24.597,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 9,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.764,
+        "elapsed_s": 5.114,
+        "rtt_ms": 36.723,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 10,
+        "policy": "q_learning",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.372,
+        "elapsed_s": 5.192,
+        "rtt_ms": 24.551,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 11,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -3.687,
+        "elapsed_s": 6.923,
+        "rtt_ms": 124.732,
+        "loss_percent": 0.0,
+        "throughput_mbps": 2.55,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 12,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.701,
+        "elapsed_s": 8.871,
+        "rtt_ms": 125.417,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.57,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 13,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -7.907,
+        "elapsed_s": 9.251,
+        "rtt_ms": 186.93,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.44,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 14,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.246,
+        "elapsed_s": 10.327,
+        "rtt_ms": 124.721,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.99,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 15,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -36.975,
+        "elapsed_s": 10.952,
+        "rtt_ms": 250.894,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.57,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 16,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.321,
+        "elapsed_s": 8.686,
+        "rtt_ms": 125.222,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.94,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 17,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.837,
+        "elapsed_s": 9.297,
+        "rtt_ms": 125.347,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.43,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 18,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -4.335,
+        "elapsed_s": 7.538,
+        "rtt_ms": 125.502,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.94,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 19,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -8.678,
+        "elapsed_s": 10.722,
+        "rtt_ms": 186.963,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.67,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 20,
+        "policy": "q_learning",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.346,
+        "elapsed_s": 9.658,
+        "rtt_ms": 124.723,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.89,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      }
+    ],
+    "heuristic": [
+      {
+        "episode": 1,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.861,
+        "elapsed_s": 5.288,
+        "rtt_ms": 36.789,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 2,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.371,
+        "elapsed_s": 5.239,
+        "rtt_ms": 24.574,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 3,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.369,
+        "elapsed_s": 5.358,
+        "rtt_ms": 24.613,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 4,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.369,
+        "elapsed_s": 5.301,
+        "rtt_ms": 24.628,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 5,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.761,
+        "elapsed_s": 4.838,
+        "rtt_ms": 36.777,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 6,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.471,
+        "elapsed_s": 5.112,
+        "rtt_ms": 24.573,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 7,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.372,
+        "elapsed_s": 5.047,
+        "rtt_ms": 24.559,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 8,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.374,
+        "elapsed_s": 5.07,
+        "rtt_ms": 24.519,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 9,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.76,
+        "elapsed_s": 5.335,
+        "rtt_ms": 36.796,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 10,
+        "policy": "heuristic",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.471,
+        "elapsed_s": 5.303,
+        "rtt_ms": 24.589,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 11,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.863,
+        "elapsed_s": 5.262,
+        "rtt_ms": 36.733,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 12,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.728,
+        "elapsed_s": 4.836,
+        "rtt_ms": 37.447,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 13,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.23,
+        "elapsed_s": 4.864,
+        "rtt_ms": 25.402,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 14,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.763,
+        "elapsed_s": 5.158,
+        "rtt_ms": 36.75,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 15,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.47,
+        "elapsed_s": 5.166,
+        "rtt_ms": 24.593,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 16,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.858,
+        "elapsed_s": 5.356,
+        "rtt_ms": 36.841,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 17,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.369,
+        "elapsed_s": 5.372,
+        "rtt_ms": 24.623,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 18,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.766,
+        "elapsed_s": 5.33,
+        "rtt_ms": 36.673,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 19,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.47,
+        "elapsed_s": 5.185,
+        "rtt_ms": 24.594,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 20,
+        "policy": "heuristic",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.615,
+        "elapsed_s": 4.784,
+        "rtt_ms": 37.708,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      }
+    ],
+    "fixed_a": [
+      {
+        "episode": 1,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.759,
+        "elapsed_s": 5.328,
+        "rtt_ms": 36.825,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 2,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.367,
+        "elapsed_s": 5.315,
+        "rtt_ms": 24.664,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 3,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.865,
+        "elapsed_s": 5.215,
+        "rtt_ms": 36.703,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 4,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.234,
+        "elapsed_s": 4.784,
+        "rtt_ms": 25.327,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 5,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.715,
+        "elapsed_s": 4.694,
+        "rtt_ms": 37.695,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 6,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.37,
+        "elapsed_s": 5.137,
+        "rtt_ms": 24.606,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 7,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.761,
+        "elapsed_s": 5.313,
+        "rtt_ms": 36.776,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 8,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.371,
+        "elapsed_s": 5.692,
+        "rtt_ms": 24.584,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 9,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 16.761,
+        "elapsed_s": 5.099,
+        "rtt_ms": 36.776,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 10,
+        "policy": "fixed_a",
+        "phase": "phase-1-a-preferred",
+        "path": "A",
+        "reward": 17.226,
+        "elapsed_s": 4.872,
+        "rtt_ms": 25.483,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 11,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -36.733,
+        "elapsed_s": 13.482,
+        "rtt_ms": 249.067,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.72,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 12,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -4.758,
+        "elapsed_s": 8.755,
+        "rtt_ms": 124.75,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.48,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 13,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -31.879,
+        "elapsed_s": 25.071,
+        "rtt_ms": 186.974,
+        "loss_percent": 50.0,
+        "throughput_mbps": 2.47,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 14,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -33.378,
+        "elapsed_s": 20.334,
+        "rtt_ms": 186.959,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.97,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 15,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -8.728,
+        "elapsed_s": 10.533,
+        "rtt_ms": 186.958,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.62,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 16,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -5.257,
+        "elapsed_s": 9.081,
+        "rtt_ms": 124.74,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.98,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 17,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -8.677,
+        "elapsed_s": 7.723,
+        "rtt_ms": 186.947,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.67,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 18,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -30.165,
+        "elapsed_s": 20.163,
+        "rtt_ms": 124.709,
+        "loss_percent": 50.0,
+        "throughput_mbps": 1.07,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 19,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -8.347,
+        "elapsed_s": 8.832,
+        "rtt_ms": 186.932,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.0,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 20,
+        "policy": "fixed_a",
+        "phase": "phase-2-b-preferred",
+        "path": "A",
+        "reward": -30.886,
+        "elapsed_s": 10.903,
+        "rtt_ms": 124.71,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.35,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.11",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.18",
+            "matched": true
+          }
+        ]
+      }
+    ],
+    "fixed_b": [
+      {
+        "episode": 1,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -8.237,
+        "elapsed_s": 10.496,
+        "rtt_ms": 186.948,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.11,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 2,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -5.736,
+        "elapsed_s": 8.492,
+        "rtt_ms": 124.724,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.5,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 3,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -8.337,
+        "elapsed_s": 7.205,
+        "rtt_ms": 186.948,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.01,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 4,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -5.526,
+        "elapsed_s": 11.287,
+        "rtt_ms": 124.727,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.71,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 5,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -8.7,
+        "elapsed_s": 10.083,
+        "rtt_ms": 187.396,
+        "loss_percent": 0.0,
+        "throughput_mbps": 0.67,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 6,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -30.64,
+        "elapsed_s": 14.128,
+        "rtt_ms": 124.79,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 7,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -29.003,
+        "elapsed_s": 22.074,
+        "rtt_ms": 126.855,
+        "loss_percent": 50.0,
+        "throughput_mbps": 2.34,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 8,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -4.633,
+        "elapsed_s": 12.434,
+        "rtt_ms": 124.867,
+        "loss_percent": 0.0,
+        "throughput_mbps": 1.61,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 9,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -36.295,
+        "elapsed_s": 15.638,
+        "rtt_ms": 249.305,
+        "loss_percent": 50.0,
+        "throughput_mbps": 1.17,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 10,
+        "policy": "fixed_b",
+        "phase": "phase-1-a-preferred",
+        "path": "B",
+        "reward": -30.907,
+        "elapsed_s": 13.569,
+        "rtt_ms": 124.931,
+        "loss_percent": 50.0,
+        "throughput_mbps": 0.34,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 11,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 16.761,
+        "elapsed_s": 6.193,
+        "rtt_ms": 36.772,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 12,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.366,
+        "elapsed_s": 6.464,
+        "rtt_ms": 24.681,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 13,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.361,
+        "elapsed_s": 6.38,
+        "rtt_ms": 24.771,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 14,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.365,
+        "elapsed_s": 6.095,
+        "rtt_ms": 24.705,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 15,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.364,
+        "elapsed_s": 6.561,
+        "rtt_ms": 24.727,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 16,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.366,
+        "elapsed_s": 6.139,
+        "rtt_ms": 24.688,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 17,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.465,
+        "elapsed_s": 6.255,
+        "rtt_ms": 24.709,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.7,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 18,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.362,
+        "elapsed_s": 6.066,
+        "rtt_ms": 24.755,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 19,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.369,
+        "elapsed_s": 5.959,
+        "rtt_ms": 24.616,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      },
+      {
+        "episode": 20,
+        "policy": "fixed_b",
+        "phase": "phase-2-b-preferred",
+        "path": "B",
+        "reward": 17.369,
+        "elapsed_s": 5.95,
+        "rtt_ms": 24.616,
+        "loss_percent": 0.0,
+        "throughput_mbps": 18.6,
+        "route_checks": [
+          {
+            "node": "r1",
+            "destination": "10.74.0.40/29",
+            "via": "10.74.0.27",
+            "matched": true
+          },
+          {
+            "node": "r4",
+            "destination": "10.74.0.0/29",
+            "via": "10.74.0.34",
+            "matched": true
+          }
+        ]
+      }
+    ]
+  },
+  "valid_existing_episodes": [
+    {
+      "episode": 1,
+      "phase": "phase-1-a-preferred",
+      "path": "A",
+      "reward": 16.76,
+      "rtt_ms": 36.805,
+      "loss_percent": 0.0,
+      "throughput_mbps": 18.6,
+      "route_checks": [
+        {
+          "node": "r1",
+          "destination": "10.74.0.40/29",
+          "via": "10.74.0.11",
+          "matched": true
+        },
+        {
+          "node": "r4",
+          "destination": "10.74.0.0/29",
+          "via": "10.74.0.18",
+          "matched": true
+        }
+      ],
+      "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+    },
+    {
+      "episode": 2,
+      "phase": "phase-1-a-preferred",
+      "path": "A",
+      "reward": 17.24,
+      "rtt_ms": 25.207,
+      "loss_percent": 0.0,
+      "throughput_mbps": 18.5,
+      "route_checks": [
+        {
+          "node": "r1",
+          "destination": "10.74.0.40/29",
+          "via": "10.74.0.11",
+          "matched": true
+        },
+        {
+          "node": "r4",
+          "destination": "10.74.0.0/29",
+          "via": "10.74.0.18",
+          "matched": true
+        }
+      ],
+      "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+    },
+    {
+      "episode": 3,
+      "phase": "phase-1-a-preferred",
+      "path": "A",
+      "reward": 17.345,
+      "rtt_ms": 25.096,
+      "loss_percent": 0.0,
+      "throughput_mbps": 18.6,
+      "route_checks": [
+        {
+          "node": "r1",
+          "destination": "10.74.0.40/29",
+          "via": "10.74.0.11",
+          "matched": true
+        },
+        {
+          "node": "r4",
+          "destination": "10.74.0.0/29",
+          "via": "10.74.0.18",
+          "matched": true
+        }
+      ],
+      "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+    },
+    {
+      "episode": 4,
+      "phase": "phase-1-a-preferred",
+      "path": "A",
+      "reward": 17.341,
+      "rtt_ms": 25.172,
+      "loss_percent": 0.0,
+      "throughput_mbps": 18.6,
+      "route_checks": [
+        {
+          "node": "r1",
+          "destination": "10.74.0.40/29",
+          "via": "10.74.0.11",
+          "matched": true
+        },
+        {
+          "node": "r4",
+          "destination": "10.74.0.0/29",
+          "via": "10.74.0.18",
+          "matched": true
+        }
+      ],
+      "evidence": "/mnt/d/home/fanys23/project_70/runs/final-evaluation/rl-final/docker-evaluation/episodes-progress.json"
+    }
+  ],
+  "invalid_existing_episodes": [],
+  "next_action": "Run requested policy episodes.",
+  "attempts": {
+    "heuristic": [
+      {
+        "episode": 11,
+        "status": "FAILED_RETRIED",
+        "evidence": ".local-evidence/rl-docker-supplement-heuristic-11-12.log",
+        "reason": "pre-multipath-forwarding path-B zero-reply ping",
+        "recorded_at": "2026-07-24T01:21:41.813369+00:00"
+      }
+    ],
+    "fixed_a": [
+      {
+        "episode": 14,
+        "status": "FAILED_RETRIED",
+        "evidence": ".local-evidence/rl-docker-supplement-fixed-a-13-14.log",
+        "reason": "impaired-phase transient zero-reply ping",
+        "recorded_at": "2026-07-24T01:21:42.030394+00:00"
+      }
+    ]
+  },
+  "artifacts": {
+    "summary": "runs/final-evaluation/rl-docker-supplement/summary.json",
+    "per_episode_csv": "runs/final-evaluation/rl-docker-supplement/per-episode-results.csv",
+    "policy_summary_csv": "runs/final-evaluation/rl-docker-supplement/policy-summary.csv"
+  },
+  "updated_at": "2026-07-24T01:21:42.030456+00:00",
+  "cleanup_time_s": 3.574,
+  "last_successful_episode": 20
+}

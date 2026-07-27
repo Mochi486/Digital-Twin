@@ -1,0 +1,23 @@
+{
+  "current_stage": "final_matrix",
+  "completed_stages": [
+    "checkpoint_initialized",
+    "route_mode_full_dry_run",
+    "unit_tests",
+    "germany50_full_selected_route_experiment",
+    "rl_evaluation",
+    "dashboard_smoke"
+  ],
+  "failed_stages": [],
+  "in_progress_stage": "final_matrix",
+  "last_successful_action": "RL five-seed results and four real Docker episodes with route/ping/iperf/cleanup evidence accepted; Dashboard HTTP smoke passed.",
+  "next_action": "Create runs/final-evaluation/experiment-manifest.json, final-results.csv, and final-summary.json by aggregating existing selected-path, subset, full-selected, RL, and dashboard evidence.",
+  "artifacts": {
+    "germany50_full_selected": "runs/final-evaluation/germany50-full-fixed/selected-attempt-1/summary.json",
+    "rl_mock": "runs/final-evaluation/rl-final",
+    "rl_docker": "runs/final-evaluation/rl-final/docker-evaluation/docker-terminal-evidence.json",
+    "dashboard_smoke": "in-process localhost /healthz and page smoke PASS"
+  },
+  "attempts": {},
+  "updated_at": "2026-07-23T09:33:48.651623+00:00"
+}

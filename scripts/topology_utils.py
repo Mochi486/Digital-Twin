@@ -448,6 +448,99 @@ def import_topology_zoo_gml(
     return validate_topology_scenario(scenario)
 
 
+def parse_sndlib_native(path: Path) -> tuple[list[dict], list[dict]]:
+    """Parse the node and undirected link sections of an SNDlib native network."""
+    text = path.read_text(encoding="utf-8")
+    node_match = re.search(r"NODES\s*\((.*?)\)\s*# LINK SECTION", text, re.DOTALL)
+    link_match = re.search(r"LINKS\s*\((.*?)\)\s*# DEMAND SECTION", text, re.DOTALL)
+    if not node_match or not link_match:
+        raise ValueError("SNDlib native file must contain NODES and LINKS sections.")
+
+    nodes = []
+    for line in node_match.group(1).splitlines():
+        match = re.match(r"\s*(\S+)\s*\(\s*(-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)\s*\)", line)
+        if match:
+            label, longitude, latitude = match.groups()
+            nodes.append({"label": label, "longitude": float(longitude), "latitude": float(latitude)})
+
+    links = []
+    for line in link_match.group(1).splitlines():
+        match = re.match(r"\s*(\S+)\s*\(\s*(\S+)\s+(\S+)\s*\)", line)
+        if match:
+            link_id, source, target = match.groups()
+            links.append({"id": link_id, "source": source, "target": target})
+
+    if not nodes or not links:
+        raise ValueError("SNDlib native file did not yield nodes and links.")
+    return nodes, links
+
+
+def import_sndlib_native(
+    path: Path,
+    topology_name: str,
+    source_url: str,
+    license_name: str,
+    license_url: str,
+    addressing: dict | None = None,
+) -> dict:
+    native_nodes, native_links = parse_sndlib_native(path)
+    node_id_map = {}
+    nodes = []
+    for index, native_node in enumerate(native_nodes, start=1):
+        base_id = slugify_node_id(native_node["label"])
+        node_id = base_id
+        suffix = 2
+        while node_id in node_id_map.values():
+            node_id = f"{base_id}-{suffix}"
+            suffix += 1
+        node_id_map[native_node["label"]] = node_id
+        nodes.append(
+            {
+                "id": node_id,
+                "type": "router",
+                "original_id": index,
+                "original_label": native_node["label"],
+                "country": "Germany",
+                "latitude": native_node["latitude"],
+                "longitude": native_node["longitude"],
+            }
+        )
+
+    links = [
+        {
+            "source": node_id_map[link["source"]],
+            "target": node_id_map[link["target"]],
+            "original_id": link["id"],
+            "delay_ms": 0,
+            "packet_loss_percent": 0,
+        }
+        for link in native_links
+    ]
+    sorted_nodes = sorted(node["id"] for node in nodes)
+    scenario = {
+        "topology_name": topology_name,
+        "source_metadata": {
+            "source_url": source_url,
+            "original_file": str(path),
+            "format": "SNDlib native network 1.0",
+            "license_name": license_name,
+            "license_url": license_url,
+        },
+        "addressing": addressing or dict(DEFAULT_ADDRESSING),
+        "nodes": nodes,
+        "links": links,
+        "traffic": {
+            "source": sorted_nodes[0],
+            "destination": sorted_nodes[-1],
+            "protocol": "tcp",
+            "duration_s": 2,
+            "ping_count": 3,
+            "reverse": True,
+        },
+    }
+    return validate_topology_scenario(scenario)
+
+
 def get_node(scenario: dict, node_id: str) -> dict:
     for node in scenario["nodes"]:
         if node["id"] == node_id:
@@ -630,9 +723,10 @@ def select_connected_subset(scenario: dict, size: int, seed_node: str | None = N
     if len(visited) < size:
         raise ValueError(f"Could not build connected subset of size {size}.")
 
+    selected_ids = set(visited)
     subset_nodes = [get_node(scenario, node_id) for node_id in visited]
     subset_links = [
-        link for link in scenario["links"] if link["source"] in seen and link["target"] in seen
+        link for link in scenario["links"] if link["source"] in selected_ids and link["target"] in selected_ids
     ]
     subset = {
         "topology_name": f"{scenario['topology_name']}-subset-{size}",
@@ -708,8 +802,10 @@ __all__ = [
     "get_router_nodes",
     "get_subnet",
     "import_topology_zoo_gml",
+    "import_sndlib_native",
     "load_topology_scenario",
     "parse_gml",
+    "parse_sndlib_native",
     "parse_ping_output",
     "parse_throughput",
     "select_connected_subset",

@@ -1,0 +1,693 @@
+{
+  "topology": "ai-scenario-992f8bf179",
+  "smoke_mode": false,
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20.0,
+  "configured_delay_ms": 10.0,
+  "configured_packet_loss_percent": 0.0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress interfaces selected by link definitions. Measured ping RTT is reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress interfaces selected by link definitions. Measured ping packet loss is reported separately.",
+  "subnets": [
+    {
+      "name": "net_001_client-1_router-a",
+      "cidr": "10.64.0.0/29"
+    },
+    {
+      "name": "net_002_router-a_router-b",
+      "cidr": "10.64.0.8/29"
+    },
+    {
+      "name": "net_003_router-a_router-c",
+      "cidr": "10.64.0.16/29"
+    },
+    {
+      "name": "net_004_router-b_router-d",
+      "cidr": "10.64.0.24/29"
+    },
+    {
+      "name": "net_005_router-c_router-d",
+      "cidr": "10.64.0.32/29"
+    },
+    {
+      "name": "net_006_router-d_server-1",
+      "cidr": "10.64.0.40/29"
+    }
+  ],
+  "static_routes": [
+    {
+      "node": "client-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-c"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "path": [
+        "router-a",
+        "router-b"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "path": [
+        "router-a",
+        "router-c"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "path": [
+        "router-a",
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "path": [
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.10",
+      "path": [
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "path": [
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "path": [
+        "router-b",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "path": [
+        "router-c",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "path": [
+        "router-c",
+        "router-a"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "path": [
+        "router-c",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "path": [
+        "router-c",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "path": [
+        "router-d",
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "path": [
+        "router-d",
+        "router-b"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "path": [
+        "router-d",
+        "router-c"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-b",
+        "router-a"
+      ],
+      "hop_count": 3
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-b"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d",
+        "router-c"
+      ],
+      "hop_count": 2
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d"
+      ],
+      "hop_count": 1
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "path": [
+        "server-1",
+        "router-d"
+      ],
+      "hop_count": 1
+    }
+  ],
+  "route_verification": [
+    {
+      "node": "client-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "client-1",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.3",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.3 dev eth0"
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.19",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.19 dev eth2"
+    },
+    {
+      "node": "router-a",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.11",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.11 dev eth1"
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.10 dev eth0"
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.10",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.10 dev eth0"
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.27 dev eth1"
+    },
+    {
+      "node": "router-b",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.27",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.27 dev eth1"
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.18 dev eth0"
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.18",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.18 dev eth0"
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.35 dev eth1"
+    },
+    {
+      "node": "router-c",
+      "destination": "10.64.0.40/29",
+      "via": "10.64.0.35",
+      "matched": true,
+      "route_output": "10.64.0.40/29 via 10.64.0.35 dev eth1"
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.26 dev eth0"
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.26",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.26 dev eth0"
+    },
+    {
+      "node": "router-d",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.34",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.34 dev eth1"
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.0/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.0/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.8/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.8/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.16/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.16/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.24/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.24/29 via 10.64.0.42 dev eth0"
+    },
+    {
+      "node": "server-1",
+      "destination": "10.64.0.32/29",
+      "via": "10.64.0.42",
+      "matched": true,
+      "route_output": "10.64.0.32/29 via 10.64.0.42 dev eth0"
+    }
+  ],
+  "delay_loss_applications": [
+    {
+      "link": "client-1->router-a",
+      "subnet": "net_001_client-1_router-a",
+      "node": "router-a",
+      "interface_ip": "10.64.0.3",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8047: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-a->router-b",
+      "subnet": "net_002_router-a_router-b",
+      "node": "router-a",
+      "interface_ip": "10.64.0.10",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8048: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "router-a->router-b",
+      "subnet": "net_002_router-a_router-b",
+      "node": "router-b",
+      "interface_ip": "10.64.0.11",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8049: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-a->router-c",
+      "subnet": "net_003_router-a_router-c",
+      "node": "router-a",
+      "interface_ip": "10.64.0.18",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth2",
+      "qdisc": "qdisc netem 804a: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-a->router-c",
+      "subnet": "net_003_router-a_router-c",
+      "node": "router-c",
+      "interface_ip": "10.64.0.19",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 804b: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-b->router-d",
+      "subnet": "net_004_router-b_router-d",
+      "node": "router-b",
+      "interface_ip": "10.64.0.26",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 804c: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "router-b->router-d",
+      "subnet": "net_004_router-b_router-d",
+      "node": "router-d",
+      "interface_ip": "10.64.0.27",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 804d: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-c->router-d",
+      "subnet": "net_005_router-c_router-d",
+      "node": "router-c",
+      "interface_ip": "10.64.0.34",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 804e: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-c->router-d",
+      "subnet": "net_005_router-c_router-d",
+      "node": "router-d",
+      "interface_ip": "10.64.0.35",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 804f: root refcnt 9 limit 1000 delay 10ms"
+    },
+    {
+      "link": "router-d->server-1",
+      "subnet": "net_006_router-d_server-1",
+      "node": "router-d",
+      "interface_ip": "10.64.0.42",
+      "delay_ms": 10.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth2",
+      "qdisc": "qdisc netem 8050: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    }
+  ],
+  "bandwidth_controls": [
+    {
+      "link": "router-a->router-b",
+      "subnet": "net_002_router-a_router-b",
+      "node": "router-a",
+      "interface_ip": "10.64.0.10",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b",
+        "router-d",
+        "server-1"
+      ],
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8048: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "router-b->router-d",
+      "subnet": "net_004_router-b_router-d",
+      "node": "router-b",
+      "interface_ip": "10.64.0.26",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b",
+        "router-d",
+        "server-1"
+      ],
+      "interface": "eth1",
+      "qdisc": "qdisc netem 804c: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    {
+      "link": "router-d->server-1",
+      "subnet": "net_006_router-d_server-1",
+      "node": "router-d",
+      "interface_ip": "10.64.0.42",
+      "bandwidth_mbps": 20.0,
+      "direction": "egress",
+      "path": [
+        "client-1",
+        "router-a",
+        "router-b",
+        "router-d",
+        "server-1"
+      ],
+      "interface": "eth2",
+      "qdisc": "qdisc netem 8050: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    }
+  ],
+  "all_node_route_tables": {
+    "client-1": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.2 \n10.64.0.8/29 via 10.64.0.3 dev eth0 \n10.64.0.16/29 via 10.64.0.3 dev eth0 \n10.64.0.24/29 via 10.64.0.3 dev eth0 \n10.64.0.32/29 via 10.64.0.3 dev eth0 \n10.64.0.40/29 via 10.64.0.3 dev eth0",
+    "router-a": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 dev eth2 proto kernel scope link src 10.64.0.18 \n10.64.0.24/29 via 10.64.0.11 dev eth1 \n10.64.0.32/29 via 10.64.0.19 dev eth2 \n10.64.0.40/29 via 10.64.0.11 dev eth1",
+    "router-b": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 via 10.64.0.10 dev eth0 \n10.64.0.24/29 dev eth1 proto kernel scope link src 10.64.0.26 \n10.64.0.32/29 via 10.64.0.27 dev eth1 \n10.64.0.40/29 via 10.64.0.27 dev eth1",
+    "router-c": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.18 dev eth0 \n10.64.0.8/29 via 10.64.0.18 dev eth0 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 via 10.64.0.35 dev eth1 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth1",
+    "router-d": "default via 10.64.0.25 dev eth0 \n10.64.0.0/29 via 10.64.0.26 dev eth0 \n10.64.0.8/29 via 10.64.0.26 dev eth0 \n10.64.0.16/29 via 10.64.0.34 dev eth1 \n10.64.0.24/29 dev eth0 proto kernel scope link src 10.64.0.27 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.35 \n10.64.0.40/29 dev eth2 proto kernel scope link src 10.64.0.42",
+    "server-1": "default via 10.64.0.41 dev eth0 \n10.64.0.0/29 via 10.64.0.42 dev eth0 \n10.64.0.8/29 via 10.64.0.42 dev eth0 \n10.64.0.16/29 via 10.64.0.42 dev eth0 \n10.64.0.24/29 via 10.64.0.42 dev eth0 \n10.64.0.32/29 via 10.64.0.42 dev eth0 \n10.64.0.40/29 dev eth0 proto kernel scope link src 10.64.0.43"
+  },
+  "router_route_tables": {
+    "router-a": "default via 10.64.0.1 dev eth0 \n10.64.0.0/29 dev eth0 proto kernel scope link src 10.64.0.3 \n10.64.0.8/29 dev eth1 proto kernel scope link src 10.64.0.10 \n10.64.0.16/29 dev eth2 proto kernel scope link src 10.64.0.18 \n10.64.0.24/29 via 10.64.0.11 dev eth1 \n10.64.0.32/29 via 10.64.0.19 dev eth2 \n10.64.0.40/29 via 10.64.0.11 dev eth1",
+    "router-b": "default via 10.64.0.9 dev eth0 \n10.64.0.0/29 via 10.64.0.10 dev eth0 \n10.64.0.8/29 dev eth0 proto kernel scope link src 10.64.0.11 \n10.64.0.16/29 via 10.64.0.10 dev eth0 \n10.64.0.24/29 dev eth1 proto kernel scope link src 10.64.0.26 \n10.64.0.32/29 via 10.64.0.27 dev eth1 \n10.64.0.40/29 via 10.64.0.27 dev eth1",
+    "router-c": "default via 10.64.0.17 dev eth0 \n10.64.0.0/29 via 10.64.0.18 dev eth0 \n10.64.0.8/29 via 10.64.0.18 dev eth0 \n10.64.0.16/29 dev eth0 proto kernel scope link src 10.64.0.19 \n10.64.0.24/29 via 10.64.0.35 dev eth1 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.34 \n10.64.0.40/29 via 10.64.0.35 dev eth1",
+    "router-d": "default via 10.64.0.25 dev eth0 \n10.64.0.0/29 via 10.64.0.26 dev eth0 \n10.64.0.8/29 via 10.64.0.26 dev eth0 \n10.64.0.16/29 via 10.64.0.34 dev eth1 \n10.64.0.24/29 dev eth0 proto kernel scope link src 10.64.0.27 \n10.64.0.32/29 dev eth1 proto kernel scope link src 10.64.0.35 \n10.64.0.40/29 dev eth2 proto kernel scope link src 10.64.0.42"
+  },
+  "router_qdisc_state": {
+    "router-a": {
+      "eth0": "qdisc netem 8047: root refcnt 9 limit 1000 delay 10ms",
+      "eth1": "qdisc netem 8048: root refcnt 9 limit 1000 delay 10ms rate 20Mbit",
+      "eth2": "qdisc netem 804a: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "router-b": {
+      "eth0": "qdisc netem 8049: root refcnt 9 limit 1000 delay 10ms",
+      "eth1": "qdisc netem 804c: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    },
+    "router-c": {
+      "eth0": "qdisc netem 804b: root refcnt 9 limit 1000 delay 10ms",
+      "eth1": "qdisc netem 804e: root refcnt 9 limit 1000 delay 10ms"
+    },
+    "router-d": {
+      "eth0": "qdisc netem 804d: root refcnt 9 limit 1000 delay 10ms",
+      "eth1": "qdisc netem 804f: root refcnt 9 limit 1000 delay 10ms",
+      "eth2": "qdisc netem 8050: root refcnt 9 limit 1000 delay 10ms rate 20Mbit"
+    }
+  },
+  "ping_packets_transmitted": 3,
+  "ping_packets_received": 3,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 61.127,
+  "ping_rtt_avg_ms": 82.194,
+  "ping_rtt_max_ms": 122.359,
+  "ping_rtt_mdev_ms": 28.411,
+  "throughput_mbps": 18.3,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "resource_estimate": {
+    "node_count": 6,
+    "router_count": 4,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 24,
+    "impairment_applications": 10,
+    "bandwidth_controls": 3
+  },
+  "resource_usage": {
+    "running_container_count": 8,
+    "running_network_count": 11
+  },
+  "stage_timings_s": {
+    "initial_cleanup_s": 0.603,
+    "create_subnets_s": 0.451,
+    "prepare_host_routing_s": 25.195,
+    "start_nodes_s": 2.906,
+    "configure_routes_s": 2.324,
+    "verify_routes_s": 2.328,
+    "apply_impairments_s": 5.418,
+    "apply_bandwidth_s": 0.0,
+    "setup_total_s": 38.622,
+    "ping_s": 2.182,
+    "iperf_s": 7.401
+  },
+  "cleanup_time_s": 3.204
+}

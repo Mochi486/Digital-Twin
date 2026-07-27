@@ -1,3 +1,4 @@
+import json
 import sys
 import tempfile
 import unittest
@@ -12,10 +13,12 @@ from topology_utils import (
     get_bandwidth_plan,
     get_link_impairment_plan,
     import_topology_zoo_gml,
+    import_sndlib_native,
     select_connected_subset,
     shortest_path,
     validate_topology_scenario,
 )
+from germany50_selected_paths import PATHS, build_selected_path_scenario
 
 
 def make_scenario():
@@ -205,6 +208,47 @@ class TopologyUtilsTests(unittest.TestCase):
             self.assertEqual(len(scenario["nodes"]), 2)
             self.assertEqual(len(scenario["links"]), 1)
             self.assertEqual(scenario["source_metadata"]["geo_location"], "Germany")
+
+    def test_import_sndlib_native_allocates_routes_for_real_format(self):
+        native_text = """?SNDlib native format; type: network; version: 1.0
+# NODE SECTION
+NODES (
+  Alpha ( 1.0 2.0 )
+  Beta ( 2.0 3.0 )
+  Gamma ( 3.0 4.0 )
+)
+# LINK SECTION
+LINKS (
+  L1 ( Alpha Beta ) 0.00 0.00 0.00 0.00 ( 40.00 1.00 )
+  L2 ( Beta Gamma ) 0.00 0.00 0.00 0.00 ( 40.00 1.00 )
+)
+# DEMAND SECTION
+DEMANDS (
+)
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            native_path = Path(temp_dir) / "mini.txt"
+            native_path.write_text(native_text, encoding="utf-8")
+            scenario = import_sndlib_native(
+                native_path,
+                topology_name="mini-sndlib",
+                source_url="https://example.test/mini.txt",
+                license_name="Example License",
+                license_url="https://example.test/license",
+            )
+        self.assertEqual(len(scenario["nodes"]), 3)
+        self.assertEqual(len(scenario["links"]), 2)
+        self.assertEqual(len(scenario["subnets"]), 2)
+        self.assertEqual(scenario["source_metadata"]["format"], "SNDlib native network 1.0")
+
+    def test_selected_germany50_path_scenarios_are_bounded_and_deterministic(self):
+        base = json.loads((Path(__file__).resolve().parent.parent / "data" / "scenario_germany50.json").read_text())
+        scenario = build_selected_path_scenario(base, "longest")
+        self.assertEqual(scenario["experiment_metadata"]["backbone_path"], PATHS["longest"])
+        self.assertEqual(scenario["experiment_metadata"]["backbone_hop_count"], 9)
+        self.assertEqual(len(scenario["nodes"]), 12)
+        self.assertEqual(len(scenario["links"]), 11)
+        self.assertEqual(scenario["traffic"]["ping_count"], 100)
 
 
 if __name__ == "__main__":

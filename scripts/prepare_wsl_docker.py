@@ -14,6 +14,7 @@ DEFAULT_SCENARIO = PROJECT_ROOT / "data" / "scenario_routed.json"
 RULE_COMMENT = "project70-wsl-routing"
 HOST_ROOT_MOUNT = "/host"
 PRIVILEGED_HELPER_IMAGE = "my-iperf-tc"
+DEFAULT_RULE_LIMIT = 512
 
 
 def run(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -62,6 +63,84 @@ def load_networks(path: Path) -> list[dict]:
             for subnet in scenario["subnets"]
         ]
     raise KeyError("Scenario must define either 'networks' or 'subnets'.")
+
+
+def build_rule_plan(path: Path, networks: list[dict]) -> list[tuple[str, str]]:
+    """Return only forwarding pairs joined by a router, never an N×N network mesh."""
+    scenario = json.loads(path.read_text(encoding="utf-8"))
+    # For a traffic-specific topology, raw PREROUTING sees the *final*
+    # destination IP, not the next hop.  Build a bounded plan over only the
+    # selected forward/reverse graph paths, with each traversed bridge allowing
+    # the final endpoint subnet.  Some controllers (the minimal RL controller
+    # is one) select between pre-computed paths at runtime.  In that case every
+    # *physical topology edge* may be selected, so cover every real link for
+    # the two endpoint subnets.  This remains O(E), never the former O(N²)
+    # network mesh.
+    traffic = scenario.get("traffic", {})
+    if traffic.get("source") and traffic.get("destination") and scenario.get("links"):
+        from topology_utils import build_graph_adjacency, shortest_path
+        nodes = {node["id"]: node for node in scenario.get("nodes", [])}
+        links = scenario["links"]
+        by_pair = {frozenset((link["source"], link["target"])): link for link in links if link.get("subnet")}
+        adjacency = build_graph_adjacency(list(nodes), links)
+        if traffic["source"] not in nodes or traffic["destination"] not in nodes:
+            forward = []
+        else:
+            forward = shortest_path(adjacency, traffic["source"], traffic["destination"])
+        if len(forward) < 2 or any(
+            frozenset((left, right)) not in by_pair
+            for left, right in zip(forward, forward[1:])
+        ):
+            # Legacy scenarios can name logical endpoint IDs that are not
+            # topology-link nodes.  Preserve the bounded adjacency fallback.
+            forward = []
+        if forward:
+            reverse = list(reversed(forward))
+            subnet_by_name = {item["name"]: item["subnet"] for item in networks}
+            def primary_subnet(node_id):
+                interfaces = nodes[node_id].get("interfaces", [])
+                return interfaces[0]["subnet"] if interfaces else next(link["subnet"] for link in links if node_id in (link["source"], link["target"]))
+            plan = set()
+            # The ping source address is chosen by Linux from the interface used
+            # for the first forward hop, not necessarily the endpoint's first
+            # interface.  The reverse flow must therefore target that actual
+            # egress-link subnet.  Using the endpoint primary subnet here silently
+            # drops replies for multi-interface sources such as Essen.
+            source_egress_subnet = by_pair[frozenset((forward[0], forward[1]))]["subnet"]
+            selected_edges = {
+                by_pair[frozenset((left, right))]["subnet"]
+                for left, right in zip(forward, forward[1:])
+            }
+            if traffic.get("runtime_path_selection"):
+                selected_edges = {link["subnet"] for link in links if link.get("subnet")}
+            for final_subnet in (
+                primary_subnet(traffic["destination"]),
+                source_egress_subnet,
+            ):
+                for edge_subnet in selected_edges:
+                    plan.add((edge_subnet, subnet_by_name[final_subnet]))
+            return sorted(plan)
+    if "nodes" not in scenario or "links" not in scenario:
+        return [(source["name"], target["subnet"]) for source in networks for target in networks if source != target]
+    by_node = {node["id"]: [] for node in scenario["nodes"]}
+    for link in scenario["links"]:
+        subnet = link.get("subnet")
+        if subnet:
+            by_node.setdefault(link["source"], []).append(subnet)
+            by_node.setdefault(link["target"], []).append(subnet)
+    subnet_by_name = {item["name"]: item["subnet"] for item in networks}
+    plan = set()
+    for node in scenario["nodes"]:
+        # Endpoints may own multiple attachment networks.  A packet can enter
+        # one of those bridges while targeting the endpoint primary IP on a
+        # different bridge, so access edges need the same scoped protection as
+        # router edges.  Single-interface endpoints add no pairs.
+        attached = sorted(set(by_node[node["id"]]))
+        for source in attached:
+            for target in attached:
+                if source != target:
+                    plan.add((source, subnet_by_name[target]))
+    return sorted(plan)
 
 
 def bridge_name_for_network(network_name: str) -> str | None:
@@ -129,6 +208,8 @@ def wait_and_prepare(
     poll_s: float,
     log,
     ignore_existing: bool,
+    rule_plan: list[tuple[str, str]],
+    rule_limit: int,
 ) -> dict[str, str]:
     deadline = time.time() + timeout_s
     bridge_map: dict[str, str] = {}
@@ -151,16 +232,11 @@ def wait_and_prepare(
                 bridge_map[net["name"]] = bridge_name
 
         if len(bridge_map) == len(networks):
+            if len(rule_plan) > rule_limit:
+                raise ValueError(f"Forwarding rule estimate {len(rule_plan)} exceeds limit {rule_limit}.")
             delete_tagged_rules(log)
-            for source_net in networks:
-                for destination_net in networks:
-                    if source_net["name"] == destination_net["name"]:
-                        continue
-                    ensure_accept_rule(
-                        bridge_map[source_net["name"]],
-                        destination_net["subnet"],
-                        log,
-                    )
+            for source_name, destination_subnet in rule_plan:
+                ensure_accept_rule(bridge_map[source_name], destination_subnet, log)
             return bridge_map
 
         time.sleep(poll_s)
@@ -177,6 +253,8 @@ def main() -> int:
     parser.add_argument("--evidence", default="")
     parser.add_argument("--ignore-existing", action="store_true")
     parser.add_argument("--cleanup", action="store_true")
+    parser.add_argument("--rule-limit", type=int, default=DEFAULT_RULE_LIMIT)
+    parser.add_argument("--estimate-only", action="store_true")
     args = parser.parse_args()
 
     scenario_path = Path(args.scenario)
@@ -195,12 +273,18 @@ def main() -> int:
             delete_tagged_rules(log)
             print("Cleanup complete.", file=log, flush=True)
             return 0
+        rule_plan = build_rule_plan(scenario_path, networks)
+        if args.estimate_only:
+            print(json.dumps({"network_count": len(networks), "rule_count": len(rule_plan), "rule_limit": args.rule_limit}, indent=2), file=log)
+            return 0
         bridge_map = wait_and_prepare(
             networks,
             args.timeout,
             args.poll_interval,
             log,
             args.ignore_existing,
+            rule_plan,
+            args.rule_limit,
         )
         print(json.dumps(bridge_map, indent=2), file=log, flush=True)
     finally:

@@ -8,6 +8,7 @@ venv/
 .venv/
 .venv-win311/
 .venv-wsl311/
+.venv-streamlit/
 env/
 ENV/
 __pycache__/
@@ -40,6 +41,13 @@ desktop.ini
 *.seed
 .local-evidence/
 *.bundle
+.agents/
+
+# Superseded Germany50 selected-path intermediates and a tool-generated package marker.
+# The finalized, tracked evidence is runs/germany50-selected-paths-final/.
+runs/germany50-selected-paths-20260722-093650/
+runs/germany50-selected-paths-20260722-selected/
+scripts/__init__.py
 
 # Local publication and live-validation leftovers
 runs/current/topology_two_router.svg

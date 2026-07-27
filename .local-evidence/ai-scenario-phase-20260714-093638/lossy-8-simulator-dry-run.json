@@ -1,0 +1,17 @@
+{
+  "topology": "ai-scenario-d20fe19592",
+  "resource_estimate": {
+    "node_count": 8,
+    "router_count": 6,
+    "link_count": 7,
+    "network_count": 7,
+    "route_count": 42,
+    "impairment_applications": 12,
+    "bandwidth_controls": 7
+  },
+  "node_count": 8,
+  "link_count": 7,
+  "route_count": 42,
+  "subnet_count": 7,
+  "plot_file": "/mnt/d/home/fanys23/project_70/.local-evidence/ai-scenario-phase-20260714-093638/lossy-8-simulator-dry-run.svg"
+}

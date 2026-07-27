@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420">
+<rect width="100%" height="100%" fill="white"/><text x="360.0" y="30" text-anchor="middle" font-size="18">Germany50 extracted paths: hop count vs throughput</text>
+<line x1="70" y1="350" x2="650" y2="350" stroke="#111"/><line x1="70" y1="70" x2="70" y2="350" stroke="#111"/>
+<text x="14" y="70" font-size="12">21.62 Mbps</text><text x="14" y="350" font-size="12">0</text>
+<polyline points="70.0,146.7 360.0,119.5 650.0,106.5" fill="none" stroke="#2563eb" stroke-width="2"/><circle cx="70.0" cy="146.7" r="5" fill="#2563eb"/><circle cx="360.0" cy="119.5" r="5" fill="#2563eb"/><circle cx="650.0" cy="106.5" r="5" fill="#2563eb"/><text x="70.0" y="382" text-anchor="middle" font-size="12">longest (9)</text><text x="360.0" y="382" text-anchor="middle" font-size="12">median (4)</text><text x="650.0" y="382" text-anchor="middle" font-size="12">shortest (1)</text>
+<text x="360.0" y="408" text-anchor="middle" font-size="12">path class (backbone hops)</text></svg>

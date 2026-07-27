@@ -1,0 +1,139 @@
+{
+  "experiment": "real-docker-rl-policy-supplement",
+  "policies": {
+    "q_learning": {
+      "valid_episodes": 20,
+      "failed_or_retried": 0,
+      "switch_count": 0,
+      "path_selection_counts": {
+        "A": 20,
+        "B": 0
+      },
+      "metrics": {
+        "reward": {
+          "mean": 4.1432,
+          "std": 15.044821,
+          "ci95": 6.593684
+        },
+        "rtt_ms": {
+          "mean": 89.225,
+          "std": 69.408624,
+          "ci95": 30.419671
+        },
+        "loss_percent": {
+          "mean": 2.5,
+          "std": 11.18034,
+          "ci95": 4.9
+        },
+        "throughput_mbps": {
+          "mean": 9.8545,
+          "std": 8.995337,
+          "ci95": 3.94238
+        }
+      }
+    },
+    "heuristic": {
+      "valid_episodes": 20,
+      "failed_or_retried": 1,
+      "switch_count": 1,
+      "path_selection_counts": {
+        "A": 10,
+        "B": 10
+      },
+      "metrics": {
+        "reward": {
+          "mean": 17.11555,
+          "std": 0.324592,
+          "ci95": 0.142259
+        },
+        "rtt_ms": {
+          "mean": 30.18905,
+          "std": 6.27776,
+          "ci95": 2.75135
+        },
+        "loss_percent": {
+          "mean": 0.0,
+          "std": 0.0,
+          "ci95": 0.0
+        },
+        "throughput_mbps": {
+          "mean": 18.625,
+          "std": 0.063867,
+          "ci95": 0.027991
+        }
+      }
+    },
+    "fixed_a": {
+      "valid_episodes": 20,
+      "failed_or_retried": 1,
+      "switch_count": 0,
+      "path_selection_counts": {
+        "A": 20,
+        "B": 0
+      },
+      "metrics": {
+        "reward": {
+          "mean": -1.41895,
+          "std": 21.126271,
+          "ci95": 9.258996
+        },
+        "rtt_ms": {
+          "mean": 99.60925,
+          "std": 76.267842,
+          "ci95": 33.425856
+        },
+        "loss_percent": {
+          "mean": 12.5,
+          "std": 22.213083,
+          "ci95": 9.735313
+        },
+        "throughput_mbps": {
+          "mean": 9.8115,
+          "std": 9.015808,
+          "ci95": 3.951352
+        }
+      }
+    },
+    "fixed_b": {
+      "valid_episodes": 20,
+      "failed_or_retried": 0,
+      "switch_count": 0,
+      "path_selection_counts": {
+        "A": 0,
+        "B": 20
+      },
+      "metrics": {
+        "reward": {
+          "mean": 0.2567,
+          "std": 19.66503,
+          "ci95": 8.618579
+        },
+        "rtt_ms": {
+          "mean": 91.02655,
+          "std": 73.366882,
+          "ci95": 32.154454
+        },
+        "loss_percent": {
+          "mean": 10.0,
+          "std": 20.519567,
+          "ci95": 8.993097
+        },
+        "throughput_mbps": {
+          "mean": 9.808,
+          "std": 9.040145,
+          "ci95": 3.962018
+        }
+      }
+    }
+  },
+  "rows": 80,
+  "checkpoint": "runs/final-evaluation/rl-docker-supplement/checkpoint.json",
+  "figures": [
+    "runs/final-evaluation/rl-docker-supplement/figures/loss_percent-by-episode.svg",
+    "runs/final-evaluation/rl-docker-supplement/figures/path-selection-timeline.svg",
+    "runs/final-evaluation/rl-docker-supplement/figures/policy-mean-comparison.svg",
+    "runs/final-evaluation/rl-docker-supplement/figures/reward-by-episode.svg",
+    "runs/final-evaluation/rl-docker-supplement/figures/rtt_ms-by-episode.svg",
+    "runs/final-evaluation/rl-docker-supplement/figures/throughput_mbps-by-episode.svg"
+  ]
+}

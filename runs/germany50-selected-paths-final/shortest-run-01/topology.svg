@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="320">
+  <rect width="100%" height="100%" fill="white"/>
+  <text x="450.0" y="26" text-anchor="middle" font-size="20">sndlib-germany50-selected-shortest</text>
+  <line x1="300.0" y1="90.0" x2="600.0" y2="90.0" stroke="#1f2933" stroke-width="1.5"/><line x1="600.0" y1="90.0" x2="300.0" y2="180.0" stroke="#1f2933" stroke-width="1.5"/><line x1="300.0" y1="180.0" x2="600.0" y2="180.0" stroke="#1f2933" stroke-width="1.5"/>
+  <circle cx="300.0" cy="90.0" r="24" fill="#f8f4d7" stroke="#1f2933" stroke-width="2"/><circle cx="600.0" cy="90.0" r="24" fill="#dfe9f3" stroke="#1f2933" stroke-width="2"/><circle cx="300.0" cy="180.0" r="24" fill="#dfe9f3" stroke="#1f2933" stroke-width="2"/><circle cx="600.0" cy="180.0" r="24" fill="#f8f4d7" stroke="#1f2933" stroke-width="2"/>
+  <text x="300.0" y="94.0" text-anchor="middle" font-size="11">g50-shortest-client</text><text x="600.0" y="94.0" text-anchor="middle" font-size="11">aachen</text><text x="300.0" y="184.0" text-anchor="middle" font-size="11">koeln</text><text x="600.0" y="184.0" text-anchor="middle" font-size="11">g50-shortest-server</text>
+</svg>

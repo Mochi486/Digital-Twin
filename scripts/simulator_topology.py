@@ -368,6 +368,8 @@ def ping_test(scenario, smoke_mode):
     traffic = effective_traffic(scenario, smoke_mode)
     destination_ip = get_destination_ip(scenario)
     cmd = ["docker", "exec", traffic["source"], "ping", "-c", str(traffic.get("ping_count", 3))]
+    if traffic.get("ping_flood", False):
+        cmd.insert(-2, "-f")
     if "ping_interval_s" in traffic:
         cmd.extend(["-i", str(traffic["ping_interval_s"])])
     cmd.append(destination_ip)
@@ -572,6 +574,11 @@ def parse_args():
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--cleanup-only", action="store_true")
+    parser.add_argument(
+        "--diagnostic-keep-alive",
+        action="store_true",
+        help="Keep a successfully configured topology alive for bounded external diagnostics; cleanup still runs on interruption.",
+    )
     return parser.parse_args()
 
 
@@ -602,6 +609,10 @@ def main():
             )
         else:
             applied_impairments, bandwidth_controls, route_verification, setup_timings = setup_topology(scenario)
+        if args.diagnostic_keep_alive:
+            print("\n=== Diagnostic topology ready; waiting for interruption ===", flush=True)
+            while True:
+                time.sleep(1)
         ping_metrics, throughput_mbps, run_timings = exercise_topology(scenario, args.smoke)
         stage_timings = {
             "initial_cleanup_s": initial_cleanup_time_s,

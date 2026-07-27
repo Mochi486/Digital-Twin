@@ -1,0 +1,104 @@
+{
+  "scope": "Minimal six-node dual-static-path experiment; not Germany50 or DFN full topology.",
+  "seed": 20260722,
+  "episodes": 20,
+  "reward_definition": "throughput_mbps - 0.05 * rtt_ms - 0.50 * packet_loss_percent",
+  "docker_real_run": true,
+  "topology_node_count": 6,
+  "path_definitions": {
+    "A": [
+      "r1",
+      "r2",
+      "r4"
+    ],
+    "B": [
+      "r1",
+      "r3",
+      "r4"
+    ]
+  },
+  "selected_path_counts": {
+    "A": 13,
+    "B": 7
+  },
+  "q_learning": {
+    "mean_reward": {
+      "mean": 5.852,
+      "sample_std": 16.452,
+      "min": -24.945,
+      "max": 17.472
+    },
+    "mean_rtt_ms": {
+      "mean": 61.499,
+      "sample_std": 51.475,
+      "min": 24.56,
+      "max": 154.812
+    },
+    "mean_throughput_mbps": {
+      "mean": 12.428,
+      "sample_std": 8.697,
+      "min": 0.5,
+      "max": 18.7
+    }
+  },
+  "baselines": {
+    "fixed_a": {
+      "mean_reward": {
+        "mean": 8.425,
+        "sample_std": 8.733,
+        "min": -0.179,
+        "max": 17.035
+      },
+      "path_counts": {
+        "A": 20
+      }
+    },
+    "fixed_b": {
+      "mean_reward": {
+        "mean": 8.439,
+        "sample_std": 8.68,
+        "min": -0.208,
+        "max": 17.028
+      },
+      "path_counts": {
+        "B": 20
+      }
+    },
+    "threshold_heuristic": {
+      "mean_reward": {
+        "mean": 16.918,
+        "sample_std": 0.074,
+        "min": 16.803,
+        "max": 17.035
+      },
+      "path_counts": {
+        "A": 10,
+        "B": 10
+      }
+    }
+  },
+  "route_switch_verification": true,
+  "cleanup_time_s": 3.103,
+  "q_table": {
+    "low|none|high|A": {
+      "A": 18.924115,
+      "B": -5.486449
+    },
+    "high|loss|low|B": {
+      "A": 23.902803,
+      "B": 0.0
+    },
+    "high|none|low|A": {
+      "A": -5.453,
+      "B": 0.0
+    },
+    "high|loss|low|A": {
+      "A": -10.938288,
+      "B": 10.06663
+    },
+    "low|none|high|B": {
+      "A": -3.69874,
+      "B": 17.363807
+    }
+  }
+}

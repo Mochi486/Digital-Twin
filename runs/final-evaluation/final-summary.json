@@ -1,0 +1,10 @@
+{
+  "record_count": 23,
+  "families": [
+    "germany50_extracted",
+    "germany50_full_selected",
+    "rl_q_learning"
+  ],
+  "manifest": "runs/final-evaluation/experiment-manifest.json",
+  "note": "Raw measurements are referenced, not modified."
+}

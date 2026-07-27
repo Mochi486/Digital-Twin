@@ -1,0 +1,17 @@
+{
+  "topology": "ai-scenario-a064e470b6",
+  "resource_estimate": {
+    "node_count": 6,
+    "router_count": 4,
+    "link_count": 6,
+    "network_count": 6,
+    "route_count": 24,
+    "impairment_applications": 0,
+    "bandwidth_controls": 6
+  },
+  "node_count": 6,
+  "link_count": 6,
+  "route_count": 24,
+  "subnet_count": 6,
+  "plot_file": "/mnt/d/home/fanys23/project_70/.local-evidence/ai-scenario-phase-20260714-093638/redundant-6-simulator-dry-run.svg"
+}

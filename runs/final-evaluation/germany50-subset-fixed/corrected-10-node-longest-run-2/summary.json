@@ -1,0 +1,18 @@
+{
+  "size": 10,
+  "real": true,
+  "rows": [
+    {
+      "class": "longest",
+      "pair": [
+        "oldenburg",
+        "saarbruecken"
+      ],
+      "hops": 4,
+      "status": "SUCCESS",
+      "returncode": 0,
+      "metrics": "runs/final-evaluation/germany50-subset-fixed/corrected-10-node-longest-run-2/longest-metrics.json",
+      "evidence": "runs/final-evaluation/germany50-subset-fixed/corrected-10-node-longest-run-2/longest.log"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="360">
+<rect width="100%" height="100%" fill="white"/>
+<text x="40" y="28" font-family="sans-serif" font-size="18">Policy mean reward comparison</text>
+<text x="40" y="348" font-family="sans-serif" font-size="12">min=-1.419, max=17.116</text>
+<polyline fill="none" stroke="#2563eb" stroke-width="2" points="55.0,238.5"/>
+<text x="55" y="50" fill="#2563eb" font-family="sans-serif" font-size="12">q_learning</text>
+<polyline fill="none" stroke="#dc2626" stroke-width="2" points="55.0,60.0"/>
+<text x="205" y="50" fill="#dc2626" font-family="sans-serif" font-size="12">heuristic</text>
+<polyline fill="none" stroke="#16a34a" stroke-width="2" points="55.0,315.0"/>
+<text x="355" y="50" fill="#16a34a" font-family="sans-serif" font-size="12">fixed_a</text>
+<polyline fill="none" stroke="#9333ea" stroke-width="2" points="55.0,291.9"/>
+<text x="505" y="50" fill="#9333ea" font-family="sans-serif" font-size="12">fixed_b</text>
+</svg>

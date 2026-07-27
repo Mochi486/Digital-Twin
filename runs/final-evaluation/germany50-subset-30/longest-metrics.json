@@ -1,0 +1,17 @@
+{
+  "topology": "sndlib-germany50-subset-30",
+  "resource_estimate": {
+    "node_count": 30,
+    "router_count": 28,
+    "link_count": 48,
+    "network_count": 48,
+    "route_count": 1344,
+    "impairment_applications": 0,
+    "bandwidth_controls": 0
+  },
+  "node_count": 30,
+  "link_count": 48,
+  "route_count": 1344,
+  "subnet_count": 48,
+  "plot_file": "runs/final-evaluation/germany50-subset-30/longest.svg"
+}

@@ -1,0 +1,114 @@
+{
+  "topology": "client-router1-router2-server",
+  "smoke_mode": false,
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20.0,
+  "configured_delay_ms": 30.0,
+  "configured_packet_loss_percent": 0.0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress interfaces selected by link definitions. Measured ping RTT is reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress interfaces selected by link definitions. Measured ping packet loss is reported separately.",
+  "subnets": [
+    {
+      "name": "net_client_router1",
+      "cidr": "10.10.1.0/24"
+    },
+    {
+      "name": "net_router1_router2",
+      "cidr": "10.10.2.0/24"
+    },
+    {
+      "name": "net_router2_server",
+      "cidr": "10.10.3.0/24"
+    }
+  ],
+  "static_routes": [
+    {
+      "node": "client1",
+      "destination": "10.10.2.0/24",
+      "via": "10.10.1.254"
+    },
+    {
+      "node": "client1",
+      "destination": "10.10.3.0/24",
+      "via": "10.10.1.254"
+    },
+    {
+      "node": "router1",
+      "destination": "10.10.3.0/24",
+      "via": "10.10.2.253"
+    },
+    {
+      "node": "router2",
+      "destination": "10.10.1.0/24",
+      "via": "10.10.2.254"
+    },
+    {
+      "node": "server1",
+      "destination": "10.10.1.0/24",
+      "via": "10.10.3.254"
+    },
+    {
+      "node": "server1",
+      "destination": "10.10.2.0/24",
+      "via": "10.10.3.254"
+    }
+  ],
+  "delay_loss_applications": [
+    {
+      "link": "client1->router1",
+      "subnet": "net_client_router1",
+      "node": "router1",
+      "interface_ip": "10.10.1.254",
+      "delay_ms": 30.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth0",
+      "qdisc": "qdisc netem 8008: root refcnt 9 limit 1000 delay 30ms"
+    },
+    {
+      "link": "router2->server1",
+      "subnet": "net_router2_server",
+      "node": "router2",
+      "interface_ip": "10.10.3.254",
+      "delay_ms": 30.0,
+      "packet_loss_percent": 0.0,
+      "direction": "egress",
+      "interface": "eth1",
+      "qdisc": "qdisc netem 8009: root refcnt 9 limit 1000 delay 30ms"
+    }
+  ],
+  "bandwidth_controls": [
+    {
+      "link": "router2->server1",
+      "subnet": "net_router2_server",
+      "node": "server1",
+      "interface_ip": "10.10.3.2",
+      "bandwidth_mbps": 20.0,
+      "interface": "eth0",
+      "qdisc": "qdisc tbf 800a: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+    }
+  ],
+  "router_route_tables": {
+    "router1": "default via 10.10.1.1 dev eth0 \n10.10.1.0/24 dev eth0 proto kernel scope link src 10.10.1.254 \n10.10.2.0/24 dev eth1 proto kernel scope link src 10.10.2.254 \n10.10.3.0/24 via 10.10.2.253 dev eth1",
+    "router2": "default via 10.10.2.1 dev eth0 \n10.10.1.0/24 via 10.10.2.254 dev eth0 \n10.10.2.0/24 dev eth0 proto kernel scope link src 10.10.2.253 \n10.10.3.0/24 dev eth1 proto kernel scope link src 10.10.3.254"
+  },
+  "router_qdisc_state": {
+    "router1": {
+      "eth0": "qdisc netem 8008: root refcnt 9 limit 1000 delay 30ms",
+      "eth1": "qdisc noqueue 0: root refcnt 2"
+    },
+    "router2": {
+      "eth0": "qdisc noqueue 0: root refcnt 2",
+      "eth1": "qdisc netem 8009: root refcnt 9 limit 1000 delay 30ms"
+    }
+  },
+  "ping_packets_transmitted": 5,
+  "ping_packets_received": 5,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 60.247,
+  "ping_rtt_avg_ms": 72.55,
+  "ping_rtt_max_ms": 121.03,
+  "ping_rtt_mdev_ms": 24.24,
+  "throughput_mbps": 18.6,
+  "theoretical_round_trip_loss_percent": 0.0
+}

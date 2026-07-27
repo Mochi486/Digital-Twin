@@ -11,7 +11,7 @@ The validated scope is intentionally bounded:
 - no Germany50 full experiment execution
 - no DFN full-topology execution
 - no topologies above 10 nodes
-- no RL workflow
+- only a bounded six-node, two-static-path RL control demonstration
 
 ## Architecture
 
@@ -276,6 +276,31 @@ Local-only evidence:
 - ad hoc live-validation run directories under `runs/openai-compatible-live-validation-*`
 - ad hoc regression reruns under `runs/openai-live-regressions-*`
 
+## Minimal RL And Dashboard
+
+The bounded RL extension uses one client, one server, and four routers (six nodes
+total), with two precomputed static paths. It does not use a dynamic routing
+protocol and never runs a Germany50 or DFN full topology. The controller changes
+only the two selected static routes while the topology remains running.
+
+```bash
+python scripts/minimal_rl_path_control.py --docker --episodes 20 --seed 20260722 \
+  --output-dir runs/minimal-rl-path-control-v1
+```
+
+The final verified lightweight UI is the zero-dependency fallback server, which
+reuses the existing Python validation, dry-run, topology SVG, and simulator
+APIs:
+
+```bash
+python dashboard/static_server.py
+```
+
+It exposes `/healthz` and Scenario, AI, Metrics, Germany50, and RL sections.
+It does not accept, save, or display API keys. Streamlit remains an optional
+source implementation; its dependency installation was not the final validated
+runtime path.
+
 ## Representative Results
 
 Tracked representative results include:
@@ -306,10 +331,11 @@ Tracked representative results include:
 - repository-root dependency locking is minimal and currently captured in `requirements.txt`
 - local evidence and repeated live reruns are intentionally excluded from Git
 
-## Germany50, DFN, And RL Deferred Status
+## Germany50, DFN, And RL Scope
 
 - Germany50 import and bounded dry-run support exist, but full experiment execution is deferred
 - DFN import and bounded dry-run support exist, but full experiment execution is deferred
-- RL is not implemented and remains outside the MSc project scope
+- a minimal fixed-seed tabular Q-learning, dual-static-path demonstration is
+  implemented with six Docker nodes; broader RL workflows remain deferred
 
 See the dated reports in `docs/progress/` for the exact boundary between completed work and deferred work.

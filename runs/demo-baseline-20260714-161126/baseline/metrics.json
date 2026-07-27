@@ -1,0 +1,29 @@
+{
+  "topology": "client-router-server",
+  "ping_success": true,
+  "configured_bandwidth_mbps": 20,
+  "configured_delay_ms": 0,
+  "configured_packet_loss_percent": 0,
+  "delay_semantics": "delay_ms is one-way delay applied on router egress for both routed subnets; ping RTT is measured end-to-end and reported separately.",
+  "packet_loss_semantics": "packet_loss_percent is one-way packet loss applied on router egress for both routed subnets; measured ping packet loss is end-to-end round-trip loss and is reported separately.",
+  "delay_interfaces": [],
+  "loss_interfaces": [],
+  "qdisc_state": {
+    "router_delay": {},
+    "server_bandwidth": {
+      "interface": "eth0",
+      "qdisc": "qdisc tbf 8001: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+    }
+  },
+  "ping_packets_transmitted": 5,
+  "ping_packets_received": 5,
+  "ping_packet_loss_percent": 0.0,
+  "ping_rtt_min_ms": 0.08,
+  "ping_rtt_avg_ms": 0.087,
+  "ping_rtt_max_ms": 0.105,
+  "ping_rtt_mdev_ms": 0.009,
+  "theoretical_round_trip_loss_percent": 0.0,
+  "throughput_mbps": 19.2,
+  "bandwidth_qdisc_interface": "eth0",
+  "bandwidth_qdisc_state": "qdisc tbf 8001: root refcnt 9 rate 20Mbit burst 4Kb lat 400ms"
+}
