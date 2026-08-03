@@ -1,0 +1,43 @@
+{
+  "completed_at": "2026-08-03T07:57:19.483241Z",
+  "evidence_mode": "SUPPLEMENTARY_REPLICATION",
+  "failed_runs": [
+    {
+      "cleanup_status": "success",
+      "commit": "f18e13ea28415c22425ca738c2ce967438277cf8",
+      "configured_bandwidth_mbps": 100,
+      "ended_at": "2026-08-03T07:57:19.425500Z",
+      "environment_file": "../environment.json",
+      "error": "iperf3: error - control socket has closed unexpectedly\n",
+      "ratio_to_configured": null,
+      "run_id": "100mbps-run-05",
+      "started_at": "2026-08-03T07:57:14.931923Z",
+      "status": "failure",
+      "throughput_mbps": null
+    }
+  ],
+  "groups": {
+    "100": {
+      "configured_bandwidth_mbps": 100,
+      "mean_ratio_to_configured": 0.7665000000000001,
+      "throughput_ci95_half_width_mbps": null,
+      "throughput_max_mbps": 84.9,
+      "throughput_mean_mbps": 76.65,
+      "throughput_min_mbps": 58.4,
+      "throughput_standard_deviation_mbps": 12.31976731381996,
+      "total_runs": 5,
+      "valid_runs": 4
+    },
+    "50": {
+      "configured_bandwidth_mbps": 50,
+      "mean_ratio_to_configured": 0.83,
+      "throughput_ci95_half_width_mbps": 4.174835544251026,
+      "throughput_max_mbps": 45.8,
+      "throughput_mean_mbps": 41.5,
+      "throughput_min_mbps": 36.9,
+      "throughput_standard_deviation_mbps": 3.3622908856908844,
+      "total_runs": 5,
+      "valid_runs": 5
+    }
+  }
+}
