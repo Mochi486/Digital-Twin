@@ -1,91 +1,82 @@
-# Digital Twin
+# Digital Twin Network Emulation Platform
 
-Docker-based network digital twin with configurable bandwidth, latency, packet loss, multi-router topologies, automated metrics, and AI-generated network scenarios.
+## Project overview
 
-## Project Overview
+This UCL Internet Engineering MSc project is a Docker/WSL network digital twin.
+JSON scenarios drive small direct and routed topologies, Linux `tc`/`netem`
+impairments, ping/iperf3 measurement, static-route verification, and guarded
+AI-assisted topology generation. The repository preserves its final evidence;
+new local Dashboard experiments are isolated from it.
 
-This repository implements a bounded MSc project artifact for repeatable network emulation on Docker and WSL. It covers direct and routed topologies, deterministic JSON-driven multi-hop scenarios, automated metrics capture, and guarded AI-assisted scenario generation.
+## Current final scope
 
-The validated scope is intentionally bounded:
+The complete 50-node and 88-link Germany50 topology was instantiated. Real
+traffic evaluation used selected on-demand routes for three representative
+end-to-end paths. The complete 4,224-entry route plan was validated in dry-run
+mode and was not installed for all-pairs testing.
 
-- no Germany50 full experiment execution
-- no DFN full-topology execution
-- no topologies above 10 nodes
-- only a bounded six-node, two-static-path RL control demonstration
+The real-Docker supplement contains 80 valid episodes. The threshold heuristic
+materially outperformed Q-learning. The result demonstrates a functioning
+learnable closed-loop implementation but does not support RL superiority.
 
 ## Architecture
 
-The platform is split into five layers:
+1. Docker networks and Linux traffic control on WSL.
+2. JSON scenario descriptions under `data/`.
+3. Direct, routed, and generic-topology simulators in `scripts/`.
+4. Batch orchestration and reproducible evidence capture.
+5. AI schema/semantic validation, plus a local interactive Dashboard.
 
-1. Container runtime:
-   Docker networks and Linux traffic control on WSL Docker Engine.
-2. Scenario description:
-   JSON scenarios for direct, routed, and generic multi-hop topologies.
-3. Topology execution:
-   `simulator_real.py`, `simulator_routed.py`, and `simulator_topology.py`.
-4. Experiment orchestration:
-   batch runners, dry-run helpers, and bounded live validation scripts.
-5. AI generation and validation:
-   `generate_scenario_ai.py`, `openai_live_utils.py`, schema gates, semantic gates, forbidden-content rejection, deterministic subnet/IP allocation, and static-route generation.
+## Core digital-twin capabilities
 
-## Implemented Capabilities
+- Direct client/server and multi-router Docker emulation.
+- Bandwidth, one-way delay, and packet-loss controls with qdisc capture.
+- Deterministic subnets, static routes, route verification, topology SVGs, and
+  ping/iperf3 metrics.
+- Guarded mock, OpenAI, and OpenAI-compatible scenario-generation workflows.
 
-- direct client-server bandwidth experiments
-- single-router routed experiments
-- generic multi-router topology simulation
-- per-link bandwidth, delay, and packet-loss control
-- deterministic subnet allocation for compact AI scenarios
-- deterministic static-route generation
-- route verification and qdisc capture
-- dry-run topology validation
-- delay batch runner
-- packet-loss batch runner
-- two-router acceptance runner
-- AI scenario generation with `mock`, `openai`, and `openai_compatible` providers
-- OpenAI-compatible live validation with endpoint fallback
-- WSL Docker compatibility helper for host bridge routing rules
+## Bandwidth, delay, and loss results
 
-## Repository Structure
+The retained final matrix contains 20/20 delay and 20/20 packet-loss raw
+measurements. Audit-derived delay RTT means are 0.105, 27.008, 80.303, and
+133.686 ms for configured 0, 10, 30, and 50 ms one-way delay. Measured loss
+was reported for configured 0, 1, 3, and 5% one-way loss. The retained raw
+bandwidth evidence supports 20 Mbps; original raw 50 Mbps and 100 Mbps files
+were not found and must not be reconstructed or cited as retained evidence.
 
-- `Dockerfile.iperf`: experiment container image
-- `dockerfile`: older legacy prototype file kept for reference
-- `data/`: base scenarios and imported topology sources
-- `scripts/`: simulators, batch runners, AI generator, live validator, and helpers
-- `tests/`: unit tests for validation, topology utilities, and secret handling
-- `docs/progress/`: dated progress and validation reports
-- `runs/`: representative tracked metrics, scenarios, and SVG outputs
-- `.local-evidence/`: local-only evidence and large logs, excluded from Git
+## AI-assisted topology generation
 
-## WSL Docker Prerequisites
+AI output is schema- and semantically validated before projection to an
+executable scenario. Forbidden operational content is rejected. The compatible
+provider path was validated; the official OpenAI path is accurately retained as
+HTTP 429 `insufficient_quota`, not a successful request.
 
-Validated execution was performed on WSL with Docker Engine available inside WSL.
+## Germany50 scope and limitation
 
-Required tools:
+Germany50 is not an all-pairs traffic result. The complete topology was
+instantiated, but real traffic was limited to shortest, median, and longest
+representative paths. The 4,224-entry full route plan was dry-run validated
+only. See [the final evaluation](docs/final/final-evaluation-report.md).
 
-- WSL Ubuntu or equivalent Linux environment
-- Docker CLI and Docker Engine access from WSL
-- Python 3.11
-- `sudo` access for full phase orchestration if you use `run_ai_scenario_phase.py`
+## RL 80-episode evaluation
 
-Validated environment checks:
+The real-Docker supplement compares Q-learning, threshold heuristic, fixed A,
+and fixed B over 20 valid episodes each. The threshold heuristic outperformed
+Q-learning; this is a negative result for RL superiority, not a claim of it.
+See [the RL supplement](docs/final/rl-real-docker-supplement.md).
 
-```bash
-docker version
-docker info
-docker run --rm hello-world
-```
+## Interactive Dashboard
+
+`dashboard/static_server.py` remains the read-only fallback for sealed
+results. `dashboard/interactive_server.py` adds a local-only small-topology
+experiment console: it supports allowlisted direct, routed, and two-router
+templates, dry runs, and an explicitly confirmed direct Docker path.
+Germany50 and formal RL results remain read-only. New runs are written only to
+`runs/dashboard-interactive/<timestamp>-<run-id>/`.
+The local SVG distinguishes the selected source with a solid green outline and
+the selected destination with a dashed red outline.
 
 ## Installation
-
-Windows PowerShell:
-
-```powershell
-Set-Location D:\home\fanys23\project_70
-python -m venv .venv-win311
-.\.venv-win311\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-WSL:
 
 ```bash
 cd /mnt/d/home/fanys23/project_70
@@ -95,247 +86,53 @@ python -m pip install -r requirements.txt
 docker build -f Dockerfile.iperf -t my-iperf-tc .
 ```
 
-## Exact Quick-Start Commands
-
-These commands are the current verified entry points:
-
-WSL:
+## CLI quick start
 
 ```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/run_demo.py baseline
-python scripts/run_demo.py two-router
-python scripts/run_demo.py delay-smoke
-python scripts/run_demo.py loss-smoke
-python scripts/run_demo.py ai-mock
+.venv-wsl311/bin/python -m unittest discover -s tests -v
+.venv-wsl311/bin/python scripts/run_demo.py two-router
+.venv-wsl311/bin/python scripts/run_demo.py ai-mock
 ```
 
-Windows PowerShell for compatible live validation:
+Do not rerun formal matrices, Germany50 selected-path evidence, or the RL
+supplement to reproduce this README.
 
-```powershell
-Set-Location D:\home\fanys23\project_70
-$env:COMPAT_API_KEY="<set-in-session>"
-$env:COMPAT_BASE_URL="https://ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
-$env:COMPAT_MODEL="qwen3.7-plus"
-.\.venv-win311\Scripts\python.exe scripts\run_demo.py ai-live
-```
-
-## Single-Router Example
-
-Direct routed baseline:
+## Dashboard quick start
 
 ```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/simulator_routed.py --scenario data/scenario_routed.json --output runs/current/metrics.json --prepare-host-routing-log .local-evidence/readme-baseline-prepare.log
+python3 dashboard/interactive_server.py --port 8765
 ```
 
-Demo wrapper:
+Open `http://localhost:8765/` from a Windows browser. Start with Dry-run. A
+real Docker run requires selecting the direct template, clearing Dry-run,
+and typing `RUN`. See the [interactive Dashboard guide](docs/final/interactive-dashboard-user-guide.md).
 
-```bash
-python scripts/run_demo.py baseline
-```
+## Repository structure
 
-## Two-Router Example
+- `data/` — immutable base scenarios and topology sources.
+- `scripts/` — simulators, validation, orchestration, and analysis helpers.
+- `dashboard/` — read-only fallback and zero-dependency interactive server.
+- `runs/final-evaluation/`, `runs/germany50-selected-paths-final/` — sealed
+  formal results.
+- `runs/dashboard-interactive/` — new local Dashboard artifacts.
+- `docs/final/` — final reports, evidence index, limitations, and guides.
 
-Validated dry-run:
+## Reproducibility
 
-```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --dry-run
-```
+Use the [reproducibility guide](docs/final/reproducibility-guide.md), evidence
+inventory, and standard-library unit tests. The complete Germany50 route plan
+may be dry-run validated; it must not be represented as all-pairs testing.
 
-Demo wrapper:
+## Known limitations
 
-```bash
-python scripts/run_demo.py two-router
-```
+Docker execution requires a WSL Docker Engine. Dashboard real execution is
+intentionally limited to the small direct template, one job at a time, and
+local loopback. It accepts no credentials, commands, images, or file paths.
+Raw 50/100 Mbps evidence remains missing. Official OpenAI remains HTTP 429.
 
-## Delay Experiment
+## Dissertation status
 
-Full batch runner:
-
-```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/run_delay_batch.py
-```
-
-Bounded smoke:
-
-```bash
-python scripts/run_demo.py delay-smoke
-```
-
-## Packet-Loss Experiment
-
-Full batch runner:
-
-```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/run_packet_loss_batch.py
-```
-
-Bounded smoke:
-
-```bash
-python scripts/run_demo.py loss-smoke
-```
-
-## JSON Topology Run
-
-Generic topology dry-run:
-
-```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --dry-run
-```
-
-Generic topology real run:
-
-```bash
-python scripts/simulator_topology.py --scenario data/scenario_two_router_topology.json --output runs/current/topology_metrics.json --plot runs/current/topology_two_router.svg --prepare-host-routing-log .local-evidence/readme-two-router-prepare.log
-```
-
-## AI Scenario Generation
-
-Mock provider generation with dry-run:
-
-```bash
-cd /mnt/d/home/fanys23/project_70
-. .venv-wsl311/bin/activate
-python scripts/generate_scenario_ai.py --provider mock --prompt "Create a six-node redundant routed topology with two candidate paths and 20 Mbps bandwidth" --output-scenario runs/current/ai_scenario.json --report runs/current/ai_scenario_report.json --dry-run-output runs/current/ai_scenario_dry_run.json --plot runs/current/ai_scenario.svg
-```
-
-Demo wrapper:
-
-```bash
-python scripts/run_demo.py ai-mock
-```
-
-## OpenAI-Compatible Provider Configuration
-
-The repository supports:
-
-- `mock`
-- `openai`
-- `openai_compatible`
-
-Compatible-provider environment variables:
-
-- `COMPAT_API_KEY`
-- `COMPAT_BASE_URL`
-- `COMPAT_MODEL_CANDIDATES`
-
-Validated bounded compatible-provider live run on `2026-07-14`:
-
-- provider type: `openai_compatible`
-- provider host: `ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com`
-- model: `qwen3.7-plus`
-- endpoint: `chat.completions`
-- structured-output mode: `response_format=json_schema`
-
-Bounded live command:
-
-```powershell
-Set-Location D:\home\fanys23\project_70
-$env:COMPAT_API_KEY="<set-in-session>"
-$env:COMPAT_BASE_URL="https://ws-1s2sexxqtqluyr11.cn-beijing.maas.aliyuncs.com/compatible-mode/v1"
-$env:COMPAT_MODEL="qwen3.7-plus"
-.\.venv-win311\Scripts\python.exe scripts\run_openai_live_validation.py --provider openai_compatible --skip-model-list --model qwen3.7-plus --endpoint-order chat_json_schema chat_json_object chat_plain_json
-```
-
-The repository never prints or stores API key values. Only sanitized provider host, selected model, request id, token usage, latency, and redacted non-sensitive payloads are persisted.
-
-## Metrics And Output Locations
-
-Tracked representative outputs:
-
-- `runs/run_001/`
-- `runs/run_002/`
-- `runs/run_003/`
-- `runs/ai-scenario-phase-20260714-093638/`
-- `runs/openai-live-regressions-20260714-110941/`
-
-Tracked reports:
-
-- `docs/progress/ai-scenario-phase-summary-2026-07-13.md`
-- `docs/progress/delay-phase-summary-2026-07-13.md`
-- `docs/progress/packet-loss-phase-summary-2026-07-13.md`
-- `docs/progress/two-router-phase-summary-2026-07-13.md`
-- `docs/progress/openai-live-validation-summary-2026-07-14.md`
-- `docs/progress/openai-compatible-live-validation-summary-2026-07-14.md`
-
-Local-only evidence:
-
-- `.local-evidence/`
-- ad hoc live-validation run directories under `runs/openai-compatible-live-validation-*`
-- ad hoc regression reruns under `runs/openai-live-regressions-*`
-
-## Minimal RL And Dashboard
-
-The bounded RL extension uses one client, one server, and four routers (six nodes
-total), with two precomputed static paths. It does not use a dynamic routing
-protocol and never runs a Germany50 or DFN full topology. The controller changes
-only the two selected static routes while the topology remains running.
-
-```bash
-python scripts/minimal_rl_path_control.py --docker --episodes 20 --seed 20260722 \
-  --output-dir runs/minimal-rl-path-control-v1
-```
-
-The final verified lightweight UI is the zero-dependency fallback server, which
-reuses the existing Python validation, dry-run, topology SVG, and simulator
-APIs:
-
-```bash
-python dashboard/static_server.py
-```
-
-It exposes `/healthz` and Scenario, AI, Metrics, Germany50, and RL sections.
-It does not accept, save, or display API keys. Streamlit remains an optional
-source implementation; its dependency installation was not the final validated
-runtime path.
-
-## Representative Results
-
-Tracked representative results include:
-
-- direct bandwidth runs:
-  - `20 Mbps` configured -> about `19.2 Mbps`
-  - `50 Mbps` configured -> about `47.9 Mbps`
-  - `100 Mbps` configured -> about `95.7 Mbps`
-- routed delay smoke:
-  - configured one-way delay `30 ms`
-  - measured RTT average about `72.615 ms`
-  - throughput `18.6 Mbps`
-- routed packet-loss smoke:
-  - configured one-way loss `3%`
-  - measured ping loss `10.0%`
-  - throughput `13.8 Mbps`
-- compatible-provider live six-node run:
-  - ping loss `0.0%`
-  - RTT average `82.194 ms`
-  - throughput `18.3 Mbps`
-  - selected path `client-1 -> router-a -> router-b -> router-d -> server-1`
-
-## Current Limitations
-
-- validated large-topology execution is intentionally capped below 10 nodes
-- official OpenAI live path is implemented but still blocked by HTTP `429 insufficient_quota` as of `2026-07-14`
-- some orchestration paths assume WSL Docker Engine rather than native Windows Docker CLI
-- repository-root dependency locking is minimal and currently captured in `requirements.txt`
-- local evidence and repeated live reruns are intentionally excluded from Git
-
-## Germany50, DFN, And RL Scope
-
-- Germany50 import and bounded dry-run support exist, but full experiment execution is deferred
-- DFN import and bounded dry-run support exist, but full experiment execution is deferred
-- a minimal fixed-seed tabular Q-learning, dual-static-path demonstration is
-  implemented with six Docker nodes; broader RL workflows remain deferred
-
-See the dated reports in `docs/progress/` for the exact boundary between completed work and deferred work.
+Final formal results and tags are preserved. The Dashboard is an additive,
+local experiment interface and does not alter formal bandwidth/delay/loss,
+Germany50, AI, or RL conclusions. See the
+[supervisor handoff](docs/final/supervisor-handoff-summary.md).
