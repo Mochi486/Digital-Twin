@@ -28,6 +28,8 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+from routed_delay_utils import parse_ping_output, parse_throughput
 WEB = ROOT / "dashboard" / "web"
 RUN_ROOT = ROOT / "runs" / "dashboard-interactive"
 TEMPLATES = {
@@ -104,6 +106,9 @@ def validate_request(payload: dict) -> tuple[dict, dict, list[str]]:
         raise ValueError("scenario_id is required")
     scenario = load_template(template_id)
     source, destination = payload.get("source"), payload.get("destination")
+    if template_id == "direct":
+        source = {"client": "client1"}.get(source, source)
+        destination = {"server": "server1"}.get(destination, destination)
     node_types = {n["id"]: n["type"] for n in scenario["nodes"]}
     if source not in node_types or destination not in node_types:
         raise ValueError("source and destination must be template nodes")
@@ -151,6 +156,44 @@ def derived_topology(scenario: dict, config: dict, prefix: str) -> dict:
     return copy
 
 
+def docker(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
+    result = subprocess.run(["docker", *cmd], capture_output=True, text=True, shell=False)
+    if check and result.returncode:
+        raise RuntimeError(f"Docker command failed ({result.returncode}): {' '.join(cmd[:3])}")
+    return result
+
+
+def run_direct_docker(config: dict, directory: Path, prefix: str) -> tuple[dict, str]:
+    """Run the allowlisted direct template with only run-scoped Docker names."""
+    network, client, server = f"d{prefix}-net", f"d{prefix}-client", f"d{prefix}-server"
+    log: list[str] = []
+    scenario = load_template("direct")
+    scenario["traffic"].update({"source": "client1", "destination": "server1", "ping_count": config["ping_count"], "duration_s": config["iperf_duration_seconds"]})
+    (directory / "scenario.json").write_text(json.dumps(scenario, indent=2) + "\n", encoding="utf-8")
+    try:
+        docker(["network", "create", network]); log.append(f"created network {network}")
+        docker(["run", "-d", "--name", server, "--cap-add=NET_ADMIN", "--network", network, "my-iperf-tc", "iperf3", "-s"])
+        docker(["run", "-d", "--name", client, "--cap-add=NET_ADMIN", "--network", network, "my-iperf-tc", "sleep", "infinity"])
+        qdisc = ["exec", server, "tc", "qdisc", "replace", "dev", "eth0", "root", "netem"]
+        if config["delay_ms"]: qdisc.extend(["delay", f"{config['delay_ms']:g}ms"])
+        if config["loss_percent"]: qdisc.extend(["loss", f"{config['loss_percent']:g}%"])
+        qdisc.extend(["rate", f"{config['bandwidth_mbps']:g}mbit"])
+        docker(qdisc)
+        qdisc_state = docker(["exec", server, "tc", "qdisc", "show", "dev", "eth0"]).stdout.strip()
+        ping = docker(["exec", client, "ping", "-c", str(config["ping_count"]), server])
+        iperf = docker(["exec", client, "iperf3", "-c", server, "-R", "-t", str(config["iperf_duration_seconds"])])
+        ping_metrics, throughput = parse_ping_output(ping.stdout), parse_throughput(iperf.stdout)
+        if ping_metrics["packets_received"] < 1 or throughput is None: raise RuntimeError("Direct measurement parsing failed")
+        log.extend([ping.stdout, iperf.stdout, qdisc_state])
+        return {"route_verification": "PASS: direct Docker network DNS", "qdisc_verification": qdisc_state,
+                "ping_sent": ping_metrics["packets_transmitted"], "ping_received": ping_metrics["packets_received"],
+                "measured_loss_percent": ping_metrics["packet_loss_percent"], "rtt_min_ms": ping_metrics["rtt_min_ms"],
+                "rtt_avg_ms": ping_metrics["rtt_avg_ms"], "rtt_max_ms": ping_metrics["rtt_max_ms"],
+                "throughput_mbps": throughput}, "\n".join(log)
+    finally:
+        docker(["rm", "-f", client], check=False); docker(["rm", "-f", server], check=False); docker(["network", "rm", network], check=False)
+
+
 class Store:
     def __init__(self): self.runs: dict[str, dict] = {}; self.lock = threading.RLock(); self.real_active: str | None = None
     def create(self, config: dict, selected_path: list[str]) -> dict:
@@ -196,27 +239,29 @@ def execute(item: dict) -> None:
                       "qdisc_verification": "NOT_APPLIED", "cleanup_status": "NOT_REQUIRED"}
             item["cleanup_status"] = "NOT_REQUIRED"; write_artifacts(item, result, "Dry-run validation passed.\n")
         else:
-            scoped = derived_topology(scenario, config, item["run_id"][:8])
-            scenario_path, metrics_path, plot_path = directory / "scenario.json", directory / "simulator-metrics.json", directory / "topology.svg"
-            scenario_path.write_text(json.dumps(scoped, indent=2) + "\n", encoding="utf-8")
             item["status"] = "RUNNING"
-            cmd = [sys.executable, str(ROOT / "scripts" / "simulator_topology.py"), "--scenario", str(scenario_path),
-                   "--output", str(metrics_path), "--plot", str(plot_path)]
-            process = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=False)
-            item["process"] = process
-            try: output, _ = process.communicate(timeout=90)
-            except subprocess.TimeoutExpired: process.terminate(); output, _ = process.communicate(timeout=10); raise RuntimeError("Dashboard job timed out")
-            if item["cancel_requested"]: raise RuntimeError("Cancelled by user")
-            if process.returncode != 0: raise RuntimeError(f"Trusted simulator failed ({process.returncode})")
-            metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+            if config["scenario_id"] == "direct":
+                metrics, output = run_direct_docker(config, directory, item["run_id"][:8])
+            else:
+                scoped = derived_topology(scenario, config, item["run_id"][:8])
+                scenario_path, metrics_path, plot_path = directory / "scenario.json", directory / "simulator-metrics.json", directory / "topology.svg"
+                scenario_path.write_text(json.dumps(scoped, indent=2) + "\n", encoding="utf-8")
+                cmd = [sys.executable, str(ROOT / "scripts" / "simulator_topology.py"), "--scenario", str(scenario_path), "--output", str(metrics_path), "--plot", str(plot_path)]
+                process = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=False)
+                item["process"] = process
+                try: output, _ = process.communicate(timeout=90)
+                except subprocess.TimeoutExpired: process.terminate(); output, _ = process.communicate(timeout=10); raise RuntimeError("Dashboard job timed out")
+                if item["cancel_requested"]: raise RuntimeError("Cancelled by user")
+                if process.returncode != 0: raise RuntimeError(f"Trusted simulator failed ({process.returncode})")
+                metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
             item["status"] = "COLLECTING"; item["cleanup_status"] = "PASS"
             result = {"run_id": item["run_id"], "status": "SUCCEEDED", "dry_run": False, "scenario": config["scenario_id"],
                       "source": config["source"], "destination": config["destination"], "selected_path": item["selected_path"],
                       "applied_conditions": {k: config[k] for k in LIMITS}, "route_verification": metrics.get("route_verification"),
-                      "qdisc_verification": metrics.get("router_qdisc_state"), "cleanup_status": "PASS",
-                      "ping_sent": metrics.get("ping_packets_transmitted"), "ping_received": metrics.get("ping_packets_received"),
-                      "measured_loss_percent": metrics.get("ping_packet_loss_percent"), "rtt_min_ms": metrics.get("ping_rtt_min_ms"),
-                      "rtt_avg_ms": metrics.get("ping_rtt_avg_ms"), "rtt_max_ms": metrics.get("ping_rtt_max_ms"),
+                      "qdisc_verification": metrics.get("qdisc_verification", metrics.get("router_qdisc_state")), "cleanup_status": "PASS",
+                      "ping_sent": metrics.get("ping_sent", metrics.get("ping_packets_transmitted")), "ping_received": metrics.get("ping_received", metrics.get("ping_packets_received")),
+                      "measured_loss_percent": metrics.get("measured_loss_percent", metrics.get("ping_packet_loss_percent")), "rtt_min_ms": metrics.get("rtt_min_ms", metrics.get("ping_rtt_min_ms")),
+                      "rtt_avg_ms": metrics.get("rtt_avg_ms", metrics.get("ping_rtt_avg_ms")), "rtt_max_ms": metrics.get("rtt_max_ms", metrics.get("ping_rtt_max_ms")),
                       "throughput_mbps": metrics.get("throughput_mbps")}
             write_artifacts(item, result, output)
         item["status"] = "SUCCEEDED"

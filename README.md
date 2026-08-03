@@ -70,9 +70,11 @@ See [the RL supplement](docs/final/rl-real-docker-supplement.md).
 `dashboard/static_server.py` remains the read-only fallback for sealed
 results. `dashboard/interactive_server.py` adds a local-only small-topology
 experiment console: it supports allowlisted direct, routed, and two-router
-templates, dry runs, and an explicitly confirmed two-router Docker path.
+templates, dry runs, and an explicitly confirmed direct Docker path.
 Germany50 and formal RL results remain read-only. New runs are written only to
 `runs/dashboard-interactive/<timestamp>-<run-id>/`.
+The local SVG distinguishes the selected source with a solid green outline and
+the selected destination with a dashed red outline.
 
 ## Installation
 
@@ -102,7 +104,7 @@ python3 dashboard/interactive_server.py --port 8765
 ```
 
 Open `http://localhost:8765/` from a Windows browser. Start with Dry-run. A
-real Docker run requires selecting the two-router template, clearing Dry-run,
+real Docker run requires selecting the direct template, clearing Dry-run,
 and typing `RUN`. See the [interactive Dashboard guide](docs/final/interactive-dashboard-user-guide.md).
 
 ## Repository structure
@@ -124,7 +126,7 @@ may be dry-run validated; it must not be represented as all-pairs testing.
 ## Known limitations
 
 Docker execution requires a WSL Docker Engine. Dashboard real execution is
-intentionally limited to the small two-router template, one job at a time, and
+intentionally limited to the small direct template, one job at a time, and
 local loopback. It accepts no credentials, commands, images, or file paths.
 Raw 50/100 Mbps evidence remains missing. Official OpenAI remains HTTP 429.
 

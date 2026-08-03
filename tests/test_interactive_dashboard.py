@@ -20,6 +20,11 @@ class DashboardValidationTests(unittest.TestCase):
     def test_allowlisted_templates(self):
         self.assertEqual(set(dashboard.TEMPLATES), {"direct", "routed", "two-router"})
 
+    def test_direct_role_aliases_resolve_to_repository_nodes(self):
+        _, config, selected = dashboard.validate_request(request(scenario_id="direct", source="client", destination="server"))
+        self.assertEqual((config["source"], config["destination"]), ("client1", "server1"))
+        self.assertEqual(selected, ["client1", "server1"])
+
     def test_unknown_scenario_rejected(self):
         with self.assertRaises(ValueError): dashboard.validate_request(request(scenario_id="../../etc/passwd"))
 
