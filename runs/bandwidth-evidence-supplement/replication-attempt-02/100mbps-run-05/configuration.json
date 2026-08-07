@@ -1,0 +1,32 @@
+{
+  "commit": "f18e13ea28415c22425ca738c2ce967438277cf8",
+  "image": "my-iperf-tc",
+  "network": "bandwidth_evidence_supplement_net",
+  "scenario": {
+    "links": [
+      {
+        "bandwidth_mbps": 100,
+        "delay_ms": 0,
+        "source": "server1",
+        "target": "client1"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "client1",
+        "type": "client"
+      },
+      {
+        "id": "server1",
+        "type": "server"
+      }
+    ],
+    "traffic": {
+      "duration_s": 5,
+      "protocol": "tcp",
+      "reverse": true
+    }
+  },
+  "source_method": "simulator_real.py-compatible direct iperf3 reverse TCP flow",
+  "started_at": "2026-08-03T07:57:14.931923Z"
+}

@@ -1,0 +1,123 @@
+{
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "inspect",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 1,
+      "stdout": "[]\n",
+      "stderr": "Error response from daemon: network bandwidth_evidence_supplement_net not found\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "create",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 0,
+      "stdout": "6c8f37594e20f5fbff9309c940f083c56fff5252d6abd7b8d638913dccfa0071\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_server\n"
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "bandwidth_evidence_supplement_server",
+        "--network",
+        "bandwidth_evidence_supplement_net",
+        "--cap-add=NET_ADMIN",
+        "my-iperf-tc",
+        "iperf3",
+        "-s"
+      ],
+      "returncode": 0,
+      "stdout": "9fdf436f6bdfd76bd8eac00ace857b66ffd4c7373c12ca3a675b670b647236d8\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "bandwidth_evidence_supplement_server",
+        "tc",
+        "qdisc",
+        "replace",
+        "dev",
+        "eth0",
+        "root",
+        "tbf",
+        "rate",
+        "50mbit",
+        "burst",
+        "32kbit",
+        "latency",
+        "400ms"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "bandwidth_evidence_supplement_client",
+        "--network",
+        "bandwidth_evidence_supplement_net",
+        "my-iperf-tc",
+        "iperf3",
+        "-c",
+        "bandwidth_evidence_supplement_server",
+        "-R",
+        "-t",
+        "5"
+      ],
+      "returncode": 0,
+      "stdout": "Connecting to host bandwidth_evidence_supplement_server, port 5201\nReverse mode, remote host bandwidth_evidence_supplement_server is sending\n[  5] local 172.21.0.3 port 51368 connected to 172.21.0.2 port 5201\n[ ID] Interval           Transfer     Bitrate\n[  5]   0.00-1.02   sec  5.75 MBytes  47.4 Mbits/sec                  \n[  5]   1.02-2.01   sec  5.62 MBytes  47.4 Mbits/sec                  \n[  5]   2.01-3.01   sec  5.62 MBytes  47.2 Mbits/sec                  \n[  5]   3.01-4.01   sec  5.50 MBytes  46.4 Mbits/sec                  \n[  5]   4.01-5.02   sec  4.88 MBytes  40.4 Mbits/sec                  \n- - - - - - - - - - - - - - - - - - - - - - - - -\n[ ID] Interval           Transfer     Bitrate         Retr\n[  5]   0.00-5.06   sec  28.6 MBytes  47.4 Mbits/sec    0             sender\n[  5]   0.00-5.02   sec  27.4 MBytes  45.8 Mbits/sec                  receiver\n\niperf Done.\n",
+      "stderr": ""
+    }
+  ],
+  "cleanup_commands": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_client"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_client\n"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "bandwidth_evidence_supplement_server\n",
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "completed_at": "2026-08-03T07:58:41.959762Z",
+  "evidence_mode": "SUPPLEMENTARY_REPLICATION",
+  "failed_runs": [],
+  "groups": {
+    "100": {
+      "configured_bandwidth_mbps": 100,
+      "mean_ratio_to_configured": 0.873,
+      "throughput_ci95_half_width_mbps": null,
+      "throughput_max_mbps": 87.3,
+      "throughput_mean_mbps": 87.3,
+      "throughput_min_mbps": 87.3,
+      "throughput_standard_deviation_mbps": null,
+      "total_runs": 1,
+      "valid_runs": 1
+    }
+  }
+}

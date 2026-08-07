@@ -1,0 +1,7 @@
+run_id,status,configured_bandwidth_mbps,throughput_mbps,ratio_to_configured,started_at,ended_at,commit,environment_file,cleanup_status,error
+100mbps-run-01,failure,100,,,2026-08-03T07:57:17.371741Z,2026-08-03T07:57:19.825473Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,"Error response from daemon: container 44607c71f2b2f79025ee6e412621f21df0feea143e8708279b216c156c840989 is not running
+"
+100mbps-run-02,success,100,70.1,0.701,2026-08-03T07:57:19.989404Z,2026-08-03T07:57:29.442905Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,
+100mbps-run-03,success,100,88.7,0.887,2026-08-03T07:57:29.493283Z,2026-08-03T07:57:37.260451Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,
+100mbps-run-04,success,100,88.6,0.8859999999999999,2026-08-03T07:57:37.312248Z,2026-08-03T07:57:45.114462Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,
+100mbps-run-05,success,100,86.7,0.867,2026-08-03T07:57:45.130862Z,2026-08-03T07:57:52.199701Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,

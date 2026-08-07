@@ -1,0 +1,91 @@
+{
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "inspect",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 0,
+      "stdout": "[\n    {\n        \"Name\": \"bandwidth_evidence_supplement_net\",\n        \"Id\": \"6c8f37594e20f5fbff9309c940f083c56fff5252d6abd7b8d638913dccfa0071\",\n        \"Created\": \"2026-08-03T15:55:57.469878445+08:00\",\n        \"Scope\": \"local\",\n        \"Driver\": \"bridge\",\n        \"EnableIPv4\": true,\n        \"EnableIPv6\": false,\n        \"IPAM\": {\n            \"Driver\": \"default\",\n            \"Options\": {},\n            \"Config\": [\n                {\n                    \"Subnet\": \"172.21.0.0/16\",\n                    \"IPRange\": \"\",\n                    \"Gateway\": \"172.21.0.1\"\n                }\n            ]\n        },\n        \"Internal\": false,\n        \"Attachable\": false,\n        \"Ingress\": false,\n        \"ConfigFrom\": {\n            \"Network\": \"\"\n        },\n        \"ConfigOnly\": false,\n        \"Options\": {},\n        \"Labels\": {},\n        \"Containers\": {\n            \"172261276c958626d9e78acce1ec53b9a92759d1fae9df118ed4d0f68d105682\": {\n                \"Name\": \"bandwidth_evidence_supplement_client\",\n                \"EndpointID\": \"c4c4f174ae8a09547b00ca471c8db1145fcd453c7faf1ebbec78bac22070a55a\",\n                \"MacAddress\": \"32:84:6f:a6:84:48\",\n                \"IPv4Address\": \"172.21.0.3/16\",\n                \"IPv6Address\": \"\"\n            },\n            \"3967008f0d7c2c25d54f48b0f336917217bfd68c3355da3f85737765456092c8\": {\n                \"Name\": \"bandwidth_evidence_supplement_server\",\n                \"EndpointID\": \"e25b07b4526ed0ac7eb7d9116037703a53970e7d443c0e4aba8c082c4a62e2bf\",\n                \"MacAddress\": \"82:3c:d5:4b:e9:94\",\n                \"IPv4Address\": \"172.21.0.2/16\",\n                \"IPv6Address\": \"\"\n            }\n        },\n        \"Status\": {\n            \"IPAM\": {\n                \"Subnets\": {\n                    \"172.21.0.0/16\": {\n                        \"IPsInUse\": 5,\n                        \"DynamicIPsAvailable\": 65531\n                    }\n                }\n            }\n        }\n    }\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "bandwidth_evidence_supplement_server\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "bandwidth_evidence_supplement_server",
+        "--network",
+        "bandwidth_evidence_supplement_net",
+        "--cap-add=NET_ADMIN",
+        "my-iperf-tc",
+        "iperf3",
+        "-s"
+      ],
+      "returncode": 0,
+      "stdout": "44607c71f2b2f79025ee6e412621f21df0feea143e8708279b216c156c840989\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "bandwidth_evidence_supplement_server",
+        "tc",
+        "qdisc",
+        "replace",
+        "dev",
+        "eth0",
+        "root",
+        "tbf",
+        "rate",
+        "100mbit",
+        "burst",
+        "32kbit",
+        "latency",
+        "400ms"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "Error response from daemon: container 44607c71f2b2f79025ee6e412621f21df0feea143e8708279b216c156c840989 is not running\n"
+    }
+  ],
+  "cleanup_commands": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_client"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_client\n"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_server\n"
+    }
+  ]
+}

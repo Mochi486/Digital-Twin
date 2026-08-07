@@ -1,0 +1,49 @@
+{
+  "evidence_mode": "SUPPLEMENTARY_REPLICATION",
+  "original_evidence_search": {
+    "conclusion": "The historical metrics are single-value summaries only; no parseable raw iperf3 output, per-run logs, or batch manifest was recovered. They are not treated as recovered original evidence.",
+    "historical_summary_only": [
+      {
+        "commit": "11fc2c81f724ecfeb73085cb05f5ec5a63b9fe21",
+        "configured_bandwidth_mbps": 50,
+        "path": "runs/run_002/metrics.json",
+        "throughput_mbps": 47.9
+      },
+      {
+        "commit": "11fc2c81f724ecfeb73085cb05f5ec5a63b9fe21",
+        "configured_bandwidth_mbps": 100,
+        "path": "runs/run_003/metrics.json",
+        "throughput_mbps": 95.7
+      }
+    ],
+    "search_terms": [
+      "50 Mbps",
+      "100 Mbps",
+      "47.9 Mbps",
+      "95.7 Mbps",
+      "iperf3",
+      "batch manifest"
+    ],
+    "searched_scopes": [
+      "runs/",
+      "results/",
+      "outputs/",
+      ".local-evidence/",
+      "docs/",
+      "figures/",
+      "Git reachable history"
+    ],
+    "status": "RAW_EVIDENCE_NOT_RECOVERED"
+  },
+  "supplementary_replication": {
+    "attempt_directories": [
+      "replication-attempt-02",
+      "replication-attempt-03-100mbps",
+      "replication-attempt-04-100mbps-retry"
+    ],
+    "failed_initial_sandbox_attempt": "Top-level run directories preserve ten Docker-socket-permission failures before escalated Docker execution. The primary Docker attempt contained one 100 Mbps iperf3 failure; an explicit retry was run. The additional 100 Mbps attempt made during diagnosis is also retained, but not mixed into the planned cohort.",
+    "preserved_records": 26,
+    "primary_cohort": "replication-attempt-02 plus replication-attempt-04 run-06 retry",
+    "raw_evidence_directory": "runs/bandwidth-evidence-supplement"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "evidence_mode": "SUPPLEMENTARY_REPLICATION",
+  "execution_commit": "f18e13ea28415c22425ca738c2ce967438277cf8",
+  "planned_runs": {
+    "100": 1
+  },
+  "protocol": "two-node direct simulator_real.py-compatible reverse TCP iperf3, 5 seconds, TBF on server eth0",
+  "retry": true,
+  "source_baseline_commit": "f18e13ea28415c22425ca738c2ce967438277cf8",
+  "started_at": "2026-08-03T07:58:34.590057Z"
+}

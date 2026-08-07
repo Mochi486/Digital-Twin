@@ -1,0 +1,39 @@
+run_id,status,configured_bandwidth_mbps,throughput_mbps,ratio_to_configured,started_at,ended_at,commit,environment_file,cleanup_status,error,cohort,evidence_path
+100mbps-run-01,failure,100,,,2026-08-03T07:55:20.258383Z,2026-08-03T07:55:21.185963Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,100mbps-run-01/metrics.json
+100mbps-run-02,failure,100,,,2026-08-03T07:55:21.241666Z,2026-08-03T07:55:22.264788Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,100mbps-run-02/metrics.json
+100mbps-run-03,failure,100,,,2026-08-03T07:55:22.291268Z,2026-08-03T07:55:23.065131Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,100mbps-run-03/metrics.json
+100mbps-run-04,failure,100,,,2026-08-03T07:55:23.078722Z,2026-08-03T07:55:23.684309Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,100mbps-run-04/metrics.json
+100mbps-run-05,failure,100,,,2026-08-03T07:55:23.723449Z,2026-08-03T07:55:24.260023Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,100mbps-run-05/metrics.json
+50mbps-run-01,failure,50,,,2026-08-03T07:55:15.998808Z,2026-08-03T07:55:16.929139Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,50mbps-run-01/metrics.json
+50mbps-run-02,failure,50,,,2026-08-03T07:55:16.942065Z,2026-08-03T07:55:17.813281Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,50mbps-run-02/metrics.json
+50mbps-run-03,failure,50,,,2026-08-03T07:55:17.841056Z,2026-08-03T07:55:18.553679Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,50mbps-run-03/metrics.json
+50mbps-run-04,failure,50,,,2026-08-03T07:55:18.583714Z,2026-08-03T07:55:19.283440Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,50mbps-run-04/metrics.json
+50mbps-run-05,failure,50,,,2026-08-03T07:55:19.340064Z,2026-08-03T07:55:20.231597Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,failure,"permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+",additional_recorded_attempt,50mbps-run-05/metrics.json
+100mbps-run-01,success,100,58.4,0.584,2026-08-03T07:56:38.806339Z,2026-08-03T07:56:47.987020Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/100mbps-run-01/metrics.json
+100mbps-run-02,success,100,84.9,0.8490000000000001,2026-08-03T07:56:48.058113Z,2026-08-03T07:56:57.093483Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/100mbps-run-02/metrics.json
+100mbps-run-03,success,100,80.2,0.802,2026-08-03T07:56:57.123197Z,2026-08-03T07:57:05.351437Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/100mbps-run-03/metrics.json
+100mbps-run-04,success,100,83.1,0.831,2026-08-03T07:57:05.374292Z,2026-08-03T07:57:14.915043Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/100mbps-run-04/metrics.json
+100mbps-run-05,failure,100,,,2026-08-03T07:57:14.931923Z,2026-08-03T07:57:19.425500Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,"iperf3: error - control socket has closed unexpectedly
+",primary_replication_with_preserved_retry,replication-attempt-02/100mbps-run-05/metrics.json
+50mbps-run-01,success,50,45.8,0.9159999999999999,2026-08-03T07:55:57.272901Z,2026-08-03T07:56:05.490552Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/50mbps-run-01/metrics.json
+50mbps-run-02,success,50,42.8,0.856,2026-08-03T07:56:05.532456Z,2026-08-03T07:56:13.118430Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/50mbps-run-02/metrics.json
+50mbps-run-03,success,50,42.3,0.846,2026-08-03T07:56:13.172366Z,2026-08-03T07:56:21.022694Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/50mbps-run-03/metrics.json
+50mbps-run-04,success,50,39.7,0.794,2026-08-03T07:56:21.047199Z,2026-08-03T07:56:29.243154Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/50mbps-run-04/metrics.json
+50mbps-run-05,success,50,36.9,0.738,2026-08-03T07:56:29.276126Z,2026-08-03T07:56:38.780062Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-02/50mbps-run-05/metrics.json
+100mbps-run-01,failure,100,,,2026-08-03T07:57:17.371741Z,2026-08-03T07:57:19.825473Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,"Error response from daemon: container 44607c71f2b2f79025ee6e412621f21df0feea143e8708279b216c156c840989 is not running
+",additional_recorded_attempt,replication-attempt-03-100mbps/100mbps-run-01/metrics.json
+100mbps-run-02,success,100,70.1,0.701,2026-08-03T07:57:19.989404Z,2026-08-03T07:57:29.442905Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,additional_recorded_attempt,replication-attempt-03-100mbps/100mbps-run-02/metrics.json
+100mbps-run-03,success,100,88.7,0.887,2026-08-03T07:57:29.493283Z,2026-08-03T07:57:37.260451Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,additional_recorded_attempt,replication-attempt-03-100mbps/100mbps-run-03/metrics.json
+100mbps-run-04,success,100,88.6,0.8859999999999999,2026-08-03T07:57:37.312248Z,2026-08-03T07:57:45.114462Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,additional_recorded_attempt,replication-attempt-03-100mbps/100mbps-run-04/metrics.json
+100mbps-run-05,success,100,86.7,0.867,2026-08-03T07:57:45.130862Z,2026-08-03T07:57:52.199701Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,additional_recorded_attempt,replication-attempt-03-100mbps/100mbps-run-05/metrics.json
+100mbps-run-06,success,100,87.3,0.873,2026-08-03T07:58:34.598487Z,2026-08-03T07:58:41.935178Z,f18e13ea28415c22425ca738c2ce967438277cf8,../environment.json,success,,primary_replication_with_preserved_retry,replication-attempt-04-100mbps-retry/100mbps-run-06/metrics.json

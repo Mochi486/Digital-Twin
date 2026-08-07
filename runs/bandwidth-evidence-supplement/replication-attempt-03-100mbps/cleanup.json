@@ -1,0 +1,14 @@
+{
+  "network_cleanup": {
+    "command": [
+      "docker",
+      "network",
+      "rm",
+      "bandwidth_evidence_supplement_net"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "bandwidth_evidence_supplement_net\n"
+  },
+  "status": "success"
+}

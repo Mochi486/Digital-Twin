@@ -1,0 +1,50 @@
+{
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "inspect",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 1,
+      "stdout": "[]\n",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n"
+    },
+    {
+      "command": [
+        "docker",
+        "network",
+        "create",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n"
+    }
+  ],
+  "cleanup_commands": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_client"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "permission denied while trying to connect to the docker API at unix:///var/run/docker.sock\n"
+    }
+  ]
+}

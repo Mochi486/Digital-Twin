@@ -1,0 +1,112 @@
+{
+  "commands": [
+    {
+      "command": [
+        "docker",
+        "network",
+        "inspect",
+        "bandwidth_evidence_supplement_net"
+      ],
+      "returncode": 0,
+      "stdout": "[\n    {\n        \"Name\": \"bandwidth_evidence_supplement_net\",\n        \"Id\": \"6c8f37594e20f5fbff9309c940f083c56fff5252d6abd7b8d638913dccfa0071\",\n        \"Created\": \"2026-08-03T15:55:57.469878445+08:00\",\n        \"Scope\": \"local\",\n        \"Driver\": \"bridge\",\n        \"EnableIPv4\": true,\n        \"EnableIPv6\": false,\n        \"IPAM\": {\n            \"Driver\": \"default\",\n            \"Options\": {},\n            \"Config\": [\n                {\n                    \"Subnet\": \"172.21.0.0/16\",\n                    \"IPRange\": \"\",\n                    \"Gateway\": \"172.21.0.1\"\n                }\n            ]\n        },\n        \"Internal\": false,\n        \"Attachable\": false,\n        \"Ingress\": false,\n        \"ConfigFrom\": {\n            \"Network\": \"\"\n        },\n        \"ConfigOnly\": false,\n        \"Options\": {},\n        \"Labels\": {},\n        \"Containers\": {},\n        \"Status\": {\n            \"IPAM\": {\n                \"Subnets\": {\n                    \"172.21.0.0/16\": {\n                        \"IPsInUse\": 3,\n                        \"DynamicIPsAvailable\": 65533\n                    }\n                }\n            }\n        }\n    }\n]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_server\n"
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "bandwidth_evidence_supplement_server",
+        "--network",
+        "bandwidth_evidence_supplement_net",
+        "--cap-add=NET_ADMIN",
+        "my-iperf-tc",
+        "iperf3",
+        "-s"
+      ],
+      "returncode": 0,
+      "stdout": "33e8419fb40c31787845442810cf948da5d3a97d74bfbec132836c079bf05b94\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "exec",
+        "bandwidth_evidence_supplement_server",
+        "tc",
+        "qdisc",
+        "replace",
+        "dev",
+        "eth0",
+        "root",
+        "tbf",
+        "rate",
+        "100mbit",
+        "burst",
+        "32kbit",
+        "latency",
+        "400ms"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "bandwidth_evidence_supplement_client",
+        "--network",
+        "bandwidth_evidence_supplement_net",
+        "my-iperf-tc",
+        "iperf3",
+        "-c",
+        "bandwidth_evidence_supplement_server",
+        "-R",
+        "-t",
+        "5"
+      ],
+      "returncode": 0,
+      "stdout": "Connecting to host bandwidth_evidence_supplement_server, port 5201\nReverse mode, remote host bandwidth_evidence_supplement_server is sending\n[  5] local 172.21.0.3 port 43218 connected to 172.21.0.2 port 5201\n[ ID] Interval           Transfer     Bitrate\n[  5]   0.00-1.01   sec  10.2 MBytes  85.1 Mbits/sec                  \n[  5]   1.01-2.01   sec  10.6 MBytes  89.1 Mbits/sec                  \n[  5]   2.01-3.01   sec  10.6 MBytes  89.3 Mbits/sec                  \n[  5]   3.01-4.01   sec  9.50 MBytes  79.5 Mbits/sec                  \n[  5]   4.01-5.01   sec  9.75 MBytes  81.5 Mbits/sec                  \n- - - - - - - - - - - - - - - - - - - - - - - - -\n[ ID] Interval           Transfer     Bitrate         Retr\n[  5]   0.00-5.06   sec  51.7 MBytes  85.7 Mbits/sec    0             sender\n[  5]   0.00-5.01   sec  50.8 MBytes  84.9 Mbits/sec                  receiver\n\niperf Done.\n",
+      "stderr": ""
+    }
+  ],
+  "cleanup_commands": [
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_client"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "Error response from daemon: No such container: bandwidth_evidence_supplement_client\n"
+    },
+    {
+      "command": [
+        "docker",
+        "rm",
+        "-f",
+        "bandwidth_evidence_supplement_server"
+      ],
+      "returncode": 0,
+      "stdout": "bandwidth_evidence_supplement_server\n",
+      "stderr": ""
+    }
+  ]
+}

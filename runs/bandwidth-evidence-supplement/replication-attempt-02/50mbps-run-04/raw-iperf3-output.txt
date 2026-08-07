@@ -1,0 +1,15 @@
+Connecting to host bandwidth_evidence_supplement_server, port 5201
+Reverse mode, remote host bandwidth_evidence_supplement_server is sending
+[  5] local 172.21.0.3 port 43052 connected to 172.21.0.2 port 5201
+[ ID] Interval           Transfer     Bitrate
+[  5]   0.00-1.02   sec  4.62 MBytes  37.9 Mbits/sec                  
+[  5]   1.02-2.01   sec  3.75 MBytes  31.7 Mbits/sec                  
+[  5]   2.01-3.00   sec  5.38 MBytes  45.6 Mbits/sec                  
+[  5]   3.00-4.02   sec  5.25 MBytes  43.3 Mbits/sec                  
+[  5]   4.02-5.02   sec  4.75 MBytes  40.1 Mbits/sec                  
+- - - - - - - - - - - - - - - - - - - - - - - - -
+[ ID] Interval           Transfer     Bitrate         Retr
+[  5]   0.00-5.06   sec  24.7 MBytes  41.0 Mbits/sec    0             sender
+[  5]   0.00-5.02   sec  23.8 MBytes  39.7 Mbits/sec                  receiver
+
+iperf Done.
