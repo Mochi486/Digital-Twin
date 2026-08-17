@@ -1,0 +1,91 @@
+\section{Appendix}
+\label{sec:appendix}
+
+\subsection{Detailed experiment and provenance notes}
+
+Table~\ref{tab:appendix-inventory} expands the main experimental matrix with evidence locations. Paths are relative to the read-only evidence repository unless prefixed by \texttt{derived/}, which denotes a dissertation-side audit derivative.
+
+\begin{table}[h]
+\caption{Detailed evidence index for the principal experiments.}
+\label{tab:appendix-inventory}
+\centering
+\scriptsize
+\begin{tabular}{p{0.18\linewidth}p{0.36\linewidth}p{0.38\linewidth}}
+\hline
+Experiment & Raw or primary evidence & Summary / reproduction \\
+\hline
+Historical BW 20 & \path{runs/current/metrics.json} & \path{scripts/simulator_routed.py} \\
+BW 50/100 & \path{runs/bandwidth-evidence-supplement/replication-attempt-*} & \path{summary.json}, \path{per-run-results.csv}, \path{scripts/run_bandwidth_evidence_supplement.py} \\
+Latency & \path{runs/delay_batch_20260713-135915/delay_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_delay_batch.py} \\
+Packet loss & \path{runs/packet_loss_batch_20260713-153303/loss_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_packet_loss_batch.py} \\
+Dual-router & \path{runs/two_router_batch_20260713-160810/baseline_run_*/metrics.json} & \path{scripts/run_two_router_batch.py} \\
+Germany50 paths & \path{runs/germany50-selected-paths-final/*-run-*/metrics.json} & \path{summary.json}, \path{summary.csv}, \path{scripts/run_germany50_selected_path_tests.py} \\
+Germany50 full & \path{runs/final-evaluation/germany50-full-fixed/selected-attempt-1/} & \path{route-plan-dry-run/summary.json}, \path{scripts/run_germany50_full_evaluation.py} \\
+Official OpenAI & Sanitized source reference only & \path{runs/final-evaluation/ai-openai-429-evidence.json} \\
+Qwen-compatible & \path{runs/openai-compatible-live-validation-}\newline\path{20260714-064525/} & \path{runs/final-evaluation/ai-qwen-live-summary.json} \\
+RL & \path{runs/final-evaluation/rl-docker-supplement/per-episode-results.csv} & \path{summary.json}, \path{policy-summary.csv}, \path{scripts/run_rl_docker_supplement.py} \\
+Dashboard & Raw validation logs not retained & \path{docs/final/interactive-dashboard-validation.md} \\
+\hline
+\end{tabular}
+\end{table}
+
+The dissertation-side consolidated inventory is \texttt{notes/experiment\_inventory.md}. Its machine-readable counterpart is \texttt{derived/audit\_computed\_statistics/experiment\_summary.csv}. RR values reproduce repository summaries; AC values were computed from retained per-run data without changing the evidence repository.
+
+\subsection{Configuration and measurement details}
+
+The direct supplementary bandwidth cohorts used reverse TCP iperf3 for five seconds with server-side TBF. The 50-Mbps cohort has five valid attempts. The 100-Mbps result uses five valid measurements from six planned attempts; the failed record and run-06 retry are retained. The historical routed 20-Mbps value is one record only.
+
+Latency used configured one-way delays of 0/10/30/50 ms with five runs and three ping packets per run. Packet loss used configured one-way probabilities of 0/1/3/5\% with five runs and 100 packets per run. For both experiments, measured end-to-end quantities are reported separately from configured one-way impairments.
+
+\subsection{Germany50 selected paths}
+
+\begin{table}[h]
+\caption{Germany50 extracted-path configurations and audit statistics.}
+\label{tab:appendix-germany50}
+\centering
+\footnotesize
+\begin{tabular}{p{0.13\linewidth}p{0.41\linewidth}rrrr}
+\hline
+Class & Backbone nodes & Hops & RTT mean & RTT SD & Rate mean \\
+\hline
+Shortest & Aachen--Koeln & 1 & 41.196 & 0.259 & 18.8 \\
+Median & Erfurt--Wuerzburg--Augsburg--Muenchen--Passau & 4 & 104.623 & 0.845 & 17.8 \\
+Longest & Oldenburg--Bremen--Hannover--Braunschweig--Kassel--Erfurt--Wuerzburg--Augsburg--Muenchen--Passau & 9 & 214.425 & 0.441 & 15.7 \\
+\hline
+\end{tabular}
+\end{table}
+
+Each extracted link used 20 Mbps, 10-ms configured one-way delay, and 0\% configured loss. These are path-extracted experiments, not full-topology deployments. The separate full-topology selected-mode run installed 20 routes for the three endpoint pairs. The 4,224-entry plan was dry-run validated only.
+
+\subsection{RL policy settings and complete policy summary}
+
+The Q-learning run recorded seed 20260722, $\alpha=0.35$, $\gamma=0.85$, and $\epsilon=0.18$. Each policy has 20 valid episodes under the same ordered two-phase conditions. Failed/retried checkpoints remain in the evidence and are excluded from valid-row statistics.
+
+\begin{table}[h]
+\caption{Repository-reported real-Docker policy summary.}
+\label{tab:appendix-rl}
+\centering
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\hline
+Policy & $n$ & Reward mean & Reward SD & RTT (ms) & Loss (\%) & Rate (Mbps) \\
+\hline
+Q-learning & 20 & 4.143 & 15.045 & 89.225 & 2.500 & 9.855 \\
+Threshold heuristic & 20 & 17.116 & 0.325 & 30.189 & 0.000 & 18.625 \\
+Fixed A & 20 & $-1.419$ & 21.126 & 99.609 & 12.500 & 9.812 \\
+Fixed B & 20 & 0.257 & 19.665 & 91.027 & 10.000 & 9.808 \\
+\hline
+\end{tabular}
+\end{table}
+
+The reward CI half-widths were 6.594, 0.142, 9.259, and 8.619 in the row order above. The result supports a functioning measured control loop and heuristic superiority in this setup; it does not establish universal RL inferiority.
+
+\subsection{AI and Dashboard boundaries}
+
+The AI execution chain comprises structured generation, schema validation, semantic validation, prompt-constraint checking, projection to an executable scenario, dry-run, and controlled Docker execution. Official OpenAI returned HTTP 429 \texttt{insufficient\_quota}; a separate Qwen-compatible provider completed validation. The provider distinction must be preserved in any extracted result or presentation.
+
+The Dashboard supports bounded small-topology interaction. Its documented run \texttt{3cada000bb4d} used 20 Mbps, zero delay/loss, three pings, and three seconds of iperf3. Documentation reports 3/3 replies, 0.101/0.118/0.143-ms RTT, 19.4 Mbps, successful downloads, and cleanup. Raw UI-path, 69-test, security, secret-scan, and fresh-clone validation logs were not retained, so these checks are not presented as independently auditable evidence.
+
+\subsection{Reproduction boundary}
+
+The repository includes scenarios, scripts, evidence summaries, and a reproducibility guide. Re-running the formal matrices is neither necessary nor part of this dissertation preparation workflow. A future independent replication should record host/kernel/Docker versions, image digests, complete stdout/stderr, resource utilization, and fresh-clone validation, then compare its new results without overwriting the sealed evidence used here.

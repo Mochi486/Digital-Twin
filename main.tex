@@ -1,0 +1,46 @@
+\documentclass[10pt]{article} % For LaTeX2e
+\usepackage{tmlr}
+% If accepted, instead use the following line for the camera-ready submission:
+%\usepackage[accepted]{tmlr}
+% To de-anonymize and remove mentions to TMLR (for example for posting to
+% preprint servers), instead use the following:
+%\usepackage[preprint]{tmlr}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{url}
+\hypersetup{hidelinks}
+
+\title{Design and Evaluation of a Reproducible Docker-Based Network Digital Twin for Controlled Network Experimentation}
+
+% Author information intentionally remains empty for anonymous drafting.
+\author{}
+
+\def\month{MM}  % Insert correct month for camera-ready version
+\def\year{YYYY} % Insert correct year for camera-ready version
+\def\openreview{\url{https://openreview.net/forum?id=XXXX}} % Insert correct link for camera-ready version
+
+\begin{document}
+
+\maketitle
+
+\input{sections/00_abstract.tex}
+\input{sections/01_introduction.tex}
+\input{sections/02_related_work.tex}
+\input{sections/03_methodology.tex}
+\input{sections/04_experimental_methodology.tex}
+\input{sections/05_results.tex}
+\input{sections/06_discussion.tex}
+\input{sections/07_conclusion.tex}
+\phantomsection\label{body:end}
+
+\bibliography{main}
+\bibliographystyle{tmlr}
+
+\appendix
+\input{sections/08_appendix.tex}
+
+\end{document}

@@ -1,0 +1,18 @@
+\begin{table}[t]
+\caption{Extended validation summary and evidence boundaries.}
+\label{tab:extended-validation}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.12\linewidth}p{0.20\linewidth}p{0.25\linewidth}p{0.28\linewidth}}
+\hline
+Component & Retained evidence & Result & Required interpretation \\
+\hline
+Dual-router & Five real-Docker runs & 19.220 Mbps mean, SD 0.045, 95\% CI $\pm0.056$ & Separate 20-Mbps multi-router benchmark; not part of the direct cohort. \\
+Germany50 & Full topology, route summaries, nine selected-path measurements & 50 nodes, 88 links; 4,224-route plan passed dry-run; shortest/median/longest carried real traffic & Dry-run plan is not route installation or all-pairs real traffic. \\
+AI & Sanitized official-provider result; compatible-provider scenario and run & Official OpenAI: HTTP 429 insufficient quota. Qwen-compatible: validated success & Provider outcomes are separate; Qwen success is not official OpenAI success. \\
+RL & Per-episode CSV and policy summary & 80 valid real-Docker episodes; heuristic reward 17.116 vs Q-learning 4.143 & The threshold heuristic materially outperformed the evaluated Q-learning setup. \\
+Dashboard & Validation document and implementation & Documented direct smoke: 0.118-ms mean RTT and 19.4 Mbps & Raw UI, 69-test, security, secret-scan, and fresh-clone logs were not retained. \\
+\hline
+\end{tabular}
+\end{table}

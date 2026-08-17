@@ -1,0 +1,32 @@
+\section{Background and Related Work}
+\label{sec:related-work}
+
+\subsection{Network digital twins}
+
+The NDT concept combines a representation of a real network with data, models, mappings, and interfaces that support analysis and control. The IRTF architecture draft organizes these elements into a reference architecture and use cases, but remains a work in progress rather than a formal standard \citep{zhou2026ndt}. ITU-T Recommendation Y.3090 specifies requirements and a three-layer, three-domain, double-closed-loop architecture \citep{itut2022y3090}. These sources provide an architectural vocabulary; neither establishes the empirical fidelity of a particular container implementation.
+
+Almasan et al. position the NDT as a real-time, data-driven model and demonstrate its use for QoS-aware routing optimization \citep{almasan2022ndt}. Hui et al. examine NDT performance modelling through the competing requirements of fidelity, efficiency, and flexibility \citep{hui2023digitaltwin}. Their model-centric perspective is complementary to this dissertation. Here, the twin is not presented as a learned surrogate of an operational network; it is an executable, controlled environment whose claims depend on measured container traffic and retained evidence.
+
+\subsection{Container-based network emulation and reproducibility}
+
+Mininet demonstrated that operating-system virtualization can place hosts, switches, links, and real application code on one machine, enabling rapid SDN prototyping \citep{lantz2010network}. Handigol et al. subsequently used high-fidelity container-based emulation to reproduce published network experiments, showing the importance of runnable specifications, isolation, and complete experimental artifacts \citep{handigol2012reproducible}. MeDICINE extended this line toward containerized, production-oriented network functions in multi-PoP environments and interfaces to external orchestration systems \citep{peuster2016medicine}. Docker itself packages processes and dependencies using kernel namespaces and control groups, improving deployment consistency without eliminating shared-kernel interference \citep{merkel2014docker}.
+
+This literature establishes both the opportunity and the caution for the present work. Containers can run real stacks and tools, but reproducibility is not guaranteed by packaging alone. Host scheduling, kernel state, image versions, traffic-control placement, and missing artifacts can all alter what can later be claimed. The framework therefore treats scenario validation, route and qdisc checks, structured outputs, failure retention, and scoped cleanup as part of the research method rather than incidental implementation details.
+
+\subsection{Controlled impairment and topology scaling}
+
+Linux \texttt{netem} supports delay, loss, corruption, duplication, reordering, and rate-related effects. Its documentation also warns that timer granularity, TCP small queues, and queue placement can influence observations \citep{iproute2netem}. Consequently, a configured one-way delay or loss probability is not itself a measured end-to-end result. This dissertation reports ping RTT and end-to-end ping loss as separate constructs and uses iperf3 throughput to assess bandwidth enforcement.
+
+Realistic topology data provide a different scaling dimension. The Internet Topology Zoo curates operator-supplied network graphs and metadata, enabling structural studies that are more realistic than synthetic graph families \citep{knight2011topologyzoo}. Germany50 supplies 50 nodes and 88 links for this evaluation. A topology graph alone, however, does not demonstrate route installation or traffic coverage. The present work therefore distinguishes topology instantiation, complete route-plan dry-run validation, and real traffic on selected representative paths.
+
+\subsection{AI-assisted networking}
+
+Large language models (LLMs) are being investigated for configuration, diagnosis, and network management. Lira et al. propose LLM-NetCFG, in which natural-language intents are translated into configurations and then verified before device application \citep{lira2025llmnetcfg}. Liu et al. synthesize LLM-for-networking work into a broader workflow and identify reliability, domain knowledge, security, and evaluation challenges \citep{liu2025llmnetworking}. These concerns motivate a guarded design: generated content is treated as untrusted data, subjected to schema and semantic validation, projected into an allowlisted scenario, and only then permitted to reach controlled execution. Successful use of an OpenAI-compatible provider does not establish success of the official OpenAI service.
+
+\subsection{Reinforcement learning for network control}
+
+RL offers a way to learn repeated decisions from observed state and reward. DeepRM demonstrated that resource-management decisions can be formulated as a learning problem and compared with heuristic schedulers \citep{mao2016deeprm}. In an NDT context, G\"uemes-Palau et al. use evolutionary strategies to accelerate DRL training for routing optimization \citep{guemes2022accelerating}, while Cheng et al. propose digital-twin-assisted RL to improve exploration safety, convergence, and resource-management performance \citep{cheng2025dtrl}. These studies justify evaluating a learnable controller, but they do not imply that RL should outperform a transparent heuristic in every low-dimensional environment.
+
+\subsection{Gap synthesis}
+
+The related work provides mature components but no automatic guarantee that their integration will be reproducible or empirically persuasive. Architecture documents do not validate container fidelity; emulators do not by themselves supply a claim/evidence discipline; topology datasets do not prove route or traffic coverage; LLM generation requires validation and provider-specific reporting; and RL must be compared against credible baselines. This dissertation therefore evaluates a common pipeline across impairment, topology, AI, and control tasks, and treats negative results and missing raw evidence as part of the contribution rather than hiding them.

@@ -1,0 +1,22 @@
+\begin{table}[t]
+\caption{Experimental matrix. Runs count retained attempts; valid runs are the observations included in the reported result.}
+\label{tab:experimental-matrix}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{p{0.18\linewidth}p{0.44\linewidth}p{0.12\linewidth}p{0.16\linewidth}}
+\hline
+Experiment & Configuration & Runs / valid & Primary metric \\
+\hline
+Bandwidth & Direct: 20, 50, 100 Mbps & 1/1; 5/5; 6/5 & Throughput (Mbps) \\
+Latency & 0, 10, 30, 50 ms configured one-way delay & 5/5 each & Ping RTT (ms) \\
+Packet loss & 0, 1, 3, 5\% configured one-way loss; 100 pings/run & 5/5 each & End-to-end loss (\%) \\
+Dual-router & Client--router--router--server; 20 Mbps; zero delay/loss & 5/5 & Throughput (Mbps) \\
+Germany50 paths & Extracted shortest, median, longest paths; 20 Mbps, 10 ms/link & 3/3 each & RTT and throughput \\
+Germany50 full & 50 nodes, 88 links; selected routes and full-plan dry-run & 9/9 + dry-run & Scope and reachability \\
+AI generation & Official OpenAI attempt; separate Qwen-compatible path & 1/0; 1/1 & Validation/API outcome \\
+RL control & Q-learning, threshold heuristic, fixed A, fixed B & 20/20 each & Reward; RTT/loss/rate \\
+Dashboard & Documented direct UI-path smoke & 1 documented & RTT and throughput \\
+\hline
+\end{tabular}
+\end{table}

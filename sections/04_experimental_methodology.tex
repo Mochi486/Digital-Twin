@@ -1,0 +1,28 @@
+\section{Experimental Methodology}
+\label{sec:experimental-methodology}
+
+\subsection{Environment, metrics, and statistics}
+
+The retained experiments ran in the project's Docker/WSL environment using project container images, Python runners, Linux traffic control, ping, and iperf3. Exact host hardware utilization was not retained consistently, so hardware-level performance generalization is avoided. Every reported result is tied to a run directory or repository summary in the evidence inventory.
+
+The primary metrics are TCP throughput in Mbps, ping RTT in milliseconds, end-to-end ping packet loss in percent, and controller reward. For complete per-run cohorts, the audit uses the sample standard deviation and a two-sided Student's $t$ 95\% confidence interval,
+\[
+  \bar{x} \pm t_{0.975,n-1}\frac{s}{\sqrt{n}}.
+\]
+Values already present in repository summaries are labelled repository-reported (RR); statistics recomputed without changing the evidence repository are labelled audit-computed (AC). No missing measurements are imputed.
+
+\input{tables/table_1_experimental_matrix.tex}
+
+\subsection{Controlled impairment experiments}
+
+The bandwidth evidence has deliberately unequal provenance. The direct 20-Mbps result is one retained historical client--router--server measurement using server-side TBF. It is reported as $n=1$. The 50- and 100-Mbps results are later supplementary replications of the direct two-node, server-side TBF, five-second reverse-TCP iperf3 method. The 50-Mbps cohort contains five valid runs. The 100-Mbps cohort contains five valid measurements from six attempts; the failed attempt and explicit retry remain in the evidence.
+
+Latency used a 20-Mbps routed topology at configured one-way delays of 0, 10, 30, and 50 ms. Each condition has five valid runs and three ping packets per run. The dependent variable is measured RTT, not one-way latency. Packet-loss experiments configured one-way loss of 0, 1, 3, and 5\%, with five runs and 100 ping packets per run. Sent and received counts determine measured end-to-end loss. The dual-router benchmark used client--router1--router2--server, zero configured delay/loss, and five runs; it is analyzed separately from direct bandwidth evidence.
+
+\subsection{Topology, AI, control, and interface experiments}
+
+Three Germany50-derived paths were fixed before execution: Aachen--Koeln (one backbone hop), Erfurt--Wuerzburg--Augsburg--Muenchen--Passau (four), and Oldenburg--Bremen--Hannover--Braunschweig--Kassel--Erfurt--Wuerzburg--Augsburg--Muenchen--Passau (nine). Extracted-path experiments used 20 Mbps, 10-ms one-way delay, and 0\% loss on each link, with three runs per path. A separate full-topology evaluation instantiated all 50 nodes and 88 links. Selected routing installed 20 routes for three endpoint pairs and produced nine real traffic measurements. Full routing generated and dry-run validated 4,224 entries but did not install or exercise them as all-pairs traffic.
+
+AI validation distinguishes the official OpenAI attempt from a separate OpenAI-compatible Qwen path. The official request produced HTTP 429 \texttt{insufficient\_quota}. The Qwen-compatible path produced a six-node scenario that passed schema, semantic, prompt-constraint, projection, dry-run, and controlled real-Docker validation.
+
+The RL comparison contains 80 valid real-Docker episodes: 20 each for Q-learning, threshold heuristic, fixed A, and fixed B. All policies experienced the same ordered two-phase schedule. The recorded Q-learning configuration used seed 20260722, learning rate $\alpha=0.35$, discount $\gamma=0.85$, and $\epsilon=0.18$. Two failed trials were retained as failed/retried checkpoints and are not counted among the 80 valid rows. The Dashboard result is a documented single direct UI-path smoke, not a repeated experiment; absence of its raw validation logs determines its documented-only status.

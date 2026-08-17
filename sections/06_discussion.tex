@@ -1,0 +1,38 @@
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{RQ1: controllability and repeatability}
+
+The results show that the framework translates configured conditions into distinct and repeatable measured regimes, but not that measured values equal their configuration. Bandwidth remained below the TBF setting, with larger deviations and variability at 50 and 100 Mbps than in the single 20-Mbps record. This is consistent with throughput being an end-to-end TCP outcome rather than a direct reading of the configured token rate. Protocol overhead, TCP dynamics, container scheduling, virtual interfaces, and host load can all contribute. The single historical 20-Mbps record cannot establish repeatability and is therefore supporting evidence only.
+
+Latency provides the clearest repeated trend. Within each configured condition, RTT dispersion was small, and mean RTT increased monotonically with configured one-way delay. Nevertheless, the measured RTT includes the complete end-to-end path and both directions, while the configuration is applied one way to particular interfaces. Treating the two quantities as identical would be a construct error. The packet-loss matrix similarly distinguishes configured one-way probability from end-to-end ping loss. Measured means exceeded the configured percentages at non-zero settings and confidence intervals were broad with only five runs, so the appropriate conclusion is controlled differentiation rather than exact calibration.
+
+Together, these results answer RQ1 positively but conditionally: the NDT enforces stable, distinguishable impairment regimes and retains sufficient per-run evidence for repeated analysis, while accuracy depends on metric semantics and host-level effects. A strength of the workflow is that this difference is visible rather than hidden behind configuration values.
+
+\subsection{RQ2: topology extension and routing}
+
+The dual-router benchmark demonstrates that explicit forwarding and static routing preserve a near-20-Mbps flow across two routers. Germany50 then separates three forms of scaling evidence. First, extracted paths show that the same scenario, impairment, routing, and measurement pipeline operates over one, four, and nine backbone hops. RTT rose and throughput fell with path length in these controlled scenarios. Second, the complete 50-node/88-link topology was instantiated. Third, the complete 4,224-route plan was generated and validated in dry-run mode.
+
+These are meaningful extensions, but none implies all-pairs evaluation. Real full-topology traffic was limited to three endpoint pairs using 20 selected on-demand routes. The dry-run checks structure and command planning, not runtime route installation, convergence, resource cost, or traffic correctness for every pair. RQ2 is therefore answered within an explicit boundary: the framework scales its topology representation and validates routing logic, and it carries measurable real traffic on representative paths, but exhaustive large-topology traffic coverage remains unevaluated.
+
+\subsection{RQ3: AI and learning-based extensibility}
+
+The AI result supports the integration mechanism more strongly than any provider-level performance claim. A compatible-provider response passed schema, semantic, prompt, projection, dry-run, and controlled-execution checks, demonstrating that generated scenarios can enter the same guarded pipeline. The official OpenAI request failed because of quota, so provider availability was not established. Separating these outcomes is important for reproducibility: API compatibility is not provider identity, and a successful downstream validator cannot turn a failed upstream call into success.
+
+The RL supplement provides a stronger real-execution test because all 80 valid episodes contain measured Docker traffic. It also produces a negative learning result. The threshold heuristic changed paths at the known phase boundary and maintained high reward with low variance. The evaluated Q-learning policy selected path A throughout; when conditions changed, its rewards became negative and variable. In this low-dimensional, ordered, rule-defined environment, the heuristic encoded the relevant decision boundary directly, whereas 20 episodes, fixed exploration, and the recorded hyperparameters did not produce adaptation. This does not show that RL is generally inferior. It shows that a learnable control loop can function while still losing to a credible simple baseline, which is a more useful conclusion than asserting automation success from implementation alone.
+
+The Dashboard provides access to the small-topology path but is not central evidence for RQ3. Its documented smoke is consistent with the pipeline, yet missing raw validation and regression/security logs prevent a stronger claim. It should be presented as a supporting interface, not as a Germany50 manager or RL training environment.
+
+\subsection{Threats to validity and limitations}
+
+\paragraph{Internal validity.} Experiments share a host, Docker engine, kernel, and virtual networking stack. Uncontrolled host load and scheduling can influence throughput and timing. The retained runners, route/qdisc checks, and repeated cohorts reduce but do not remove this risk. The 100-Mbps cohort contains a preserved failed attempt and retry; inclusion rules use five valid measurements and do not delete the failure.
+
+\paragraph{Construct validity.} Configured one-way delay and loss are not the same constructs as measured RTT and end-to-end ping loss. TCP throughput is affected by more than the configured TBF rate. Reward is specific to the retained RL formulation and should not be generalized to all network objectives.
+
+\paragraph{Statistical conclusion validity.} Most impairment cohorts contain five runs, and Germany50 extracted paths contain three. Student's $t$ intervals communicate this uncertainty but are themselves imprecise at small $n$. The latency cohorts are tightly clustered; packet-loss and 100-Mbps results are more variable. The 20-Mbps, Qwen, and Dashboard observations are single records and do not support interval estimates.
+
+\paragraph{External validity.} Results apply to the evaluated Docker/WSL environment, topologies, traffic tools, and impairment ranges. They do not establish equivalence with hardware routers, production workloads, other kernels, or wide-area networks. Germany50 represents structural scale but only three real traffic paths. The Q-learning result applies to one state/action/reward design and one hyperparameter setting.
+
+\paragraph{Reproducibility and evidence preservation.} Scenarios, raw metrics, summaries, scripts, plots, failures, and cleanup records provide substantial provenance. Some statistics in this draft are AC derivatives and remain separate from repository evidence. Dashboard raw validation/regression/security logs and dedicated fresh-clone evidence were not retained. These limitations reduce the strength of interface and environment-portability claims but do not invalidate the core impairment, topology, AI-boundary, or RL comparisons.
+
+Overall, the main research question is answered affirmatively within scope. The framework provides a coherent and auditable experimental workflow across controlled conditions and extensions, but its effectiveness is bounded by container-host fidelity, representative rather than exhaustive topology traffic, provider dependence, and the performance of the selected control algorithm.
