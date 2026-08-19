@@ -19,6 +19,9 @@ def request(**overrides):
 class DashboardValidationTests(unittest.TestCase):
     def test_allowlisted_templates(self):
         self.assertEqual(set(dashboard.TEMPLATES), {"direct", "routed", "two-router"})
+        self.assertTrue(dashboard.template_summary("direct")["real_run_allowed"])
+        self.assertFalse(dashboard.template_summary("routed")["real_run_allowed"])
+        self.assertFalse(dashboard.template_summary("two-router")["real_run_allowed"])
 
     def test_direct_role_aliases_resolve_to_repository_nodes(self):
         _, config, selected = dashboard.validate_request(request(scenario_id="direct", source="client", destination="server"))
@@ -45,8 +48,9 @@ class DashboardValidationTests(unittest.TestCase):
                 with self.assertRaises(ValueError): dashboard.validate_request(request(**{key: value}))
 
     def test_real_confirmation_required(self):
-        with self.assertRaises(ValueError): dashboard.validate_request(request(dry_run=False))
-        _, config, _ = dashboard.validate_request(request(dry_run=False, confirmation="RUN"))
+        with self.assertRaisesRegex(ValueError, "confirmation RUN"):
+            dashboard.validate_request(request(scenario_id="direct", source="client", destination="server", dry_run=False))
+        _, config, _ = dashboard.validate_request(request(scenario_id="direct", source="client", destination="server", dry_run=False, confirmation="RUN"))
         self.assertFalse(config["dry_run"])
 
     def test_malformed_types_and_command_strings_rejected(self):
@@ -59,15 +63,25 @@ class DashboardValidationTests(unittest.TestCase):
         self.assertEqual(selected, ["client1", "router1", "router2", "server1"])
         self.assertIsNone(dashboard.path_between({"nodes": [{"id": "a"}, {"id": "b"}], "links": []}, "a", "b"))
 
-    def test_derived_real_scenario_is_scoped(self):
-        scenario, config, _ = dashboard.validate_request(request(dry_run=False, confirmation="RUN"))
-        derived = dashboard.derived_topology(scenario, config, "abcdef12")
-        self.assertTrue(all(node["id"].startswith("dabcdef12-") for node in derived["nodes"]))
-        self.assertTrue(all(item["name"].startswith("dabcdef12-") for item in derived["subnets"]))
+    def test_dry_run_supports_every_allowlisted_template(self):
+        endpoints = {
+            "direct": ("client", "server"),
+            "routed": ("client1", "server1"),
+            "two-router": ("client1", "server1"),
+        }
+        for scenario_id, (source, destination) in endpoints.items():
+            with self.subTest(scenario_id=scenario_id):
+                _, config, selected = dashboard.validate_request(
+                    request(scenario_id=scenario_id, source=source, destination=destination)
+                )
+                self.assertTrue(config["dry_run"])
+                self.assertGreaterEqual(len(selected), 2)
 
-    def test_real_run_is_limited_to_trusted_generic_simulator(self):
-        scenario, config, _ = dashboard.validate_request(request(scenario_id="routed", dry_run=False, confirmation="RUN"))
-        with self.assertRaises(ValueError): dashboard.derived_topology(scenario, config, "abcdef12")
+    def test_routed_and_two_router_real_runs_are_rejected(self):
+        for scenario_id in ("routed", "two-router"):
+            with self.subTest(scenario_id=scenario_id):
+                with self.assertRaisesRegex(ValueError, "limited to the direct template"):
+                    dashboard.validate_request(request(scenario_id=scenario_id, dry_run=False, confirmation="RUN"))
 
     def test_artifacts_are_current_run_only(self):
         old_root = dashboard.RUN_ROOT

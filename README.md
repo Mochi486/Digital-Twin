@@ -40,9 +40,10 @@ learnable closed-loop implementation but does not support RL superiority.
 The retained final matrix contains 20/20 delay and 20/20 packet-loss raw
 measurements. Audit-derived delay RTT means are 0.105, 27.008, 80.303, and
 133.686 ms for configured 0, 10, 30, and 50 ms one-way delay. Measured loss
-was reported for configured 0, 1, 3, and 5% one-way loss. The retained raw
-bandwidth evidence supports 20 Mbps; original raw 50 Mbps and 100 Mbps files
-were not found and must not be reconstructed or cited as retained evidence.
+was reported for configured 0, 1, 3, and 5% one-way loss. Retained direct
+real-Docker evidence now includes five valid 50 Mbps runs and five valid
+100 Mbps runs; see the
+[bandwidth evidence supplement](docs/final/bandwidth-50-100-evidence-supplement.md).
 
 ## AI-assisted topology generation
 
@@ -67,31 +68,41 @@ See [the RL supplement](docs/final/rl-real-docker-supplement.md).
 
 ## Interactive Dashboard
 
-`dashboard/static_server.py` remains the read-only fallback for sealed
-results. `dashboard/interactive_server.py` adds a local-only small-topology
-experiment console: it supports allowlisted direct, routed, and two-router
-templates, dry runs, and an explicitly confirmed direct Docker path.
-Germany50 and formal RL results remain read-only. New runs are written only to
+`dashboard/interactive_server.py` is the final reviewer-facing Dashboard. It is
+a supporting interface for browsing and bounded checks, not the frontend used
+to run every formal experiment. It supports dry-run for allowlisted direct,
+routed, and two-router templates; real Docker execution is restricted to an
+explicitly confirmed direct run. Germany50 and formal RL results remain
+read-only. New runs are written only to
 `runs/dashboard-interactive/<timestamp>-<run-id>/`.
 The local SVG distinguishes the selected source with a solid green outline and
 the selected destination with a dashed red outline.
 
-## Installation
+## Reviewer requirements
+
+- WSL 2 with a Linux distribution and Bash.
+- Docker available from WSL, with the Docker daemon running.
+- Python 3 with the `venv` module (Python 3.11 is the validated version).
+
+## Fresh-clone reviewer quick start
 
 ```bash
-cd /mnt/d/home/fanys23/project_70
-python3 -m venv .venv-wsl311
-. .venv-wsl311/bin/activate
-python -m pip install -r requirements.txt
-docker build -f Dockerfile.iperf -t my-iperf-tc .
+git clone https://github.com/Mochi486/Digital-Twin.git
+cd Digital-Twin
+bash scripts/reviewer_setup.sh
+bash scripts/reviewer_dashboard.sh
 ```
+
+The setup script creates `.venv-wsl311`, installs `requirements.txt`, builds
+the allowlisted `my-iperf-tc` image, and runs the non-formal unit-test suite. It
+does not execute delay, loss, Germany50, RL, or other formal experiment
+matrices. Open `http://localhost:8765/` from the host browser after the start
+script reports that the Dashboard is listening. Stop it with `Ctrl+C`.
 
 ## CLI quick start
 
 ```bash
 .venv-wsl311/bin/python -m unittest discover -s tests -v
-.venv-wsl311/bin/python scripts/run_demo.py two-router
-.venv-wsl311/bin/python scripts/run_demo.py ai-mock
 ```
 
 Do not rerun formal matrices, Germany50 selected-path evidence, or the RL
@@ -100,7 +111,7 @@ supplement to reproduce this README.
 ## Dashboard quick start
 
 ```bash
-python3 dashboard/interactive_server.py --port 8765
+.venv-wsl311/bin/python dashboard/interactive_server.py --port 8765
 ```
 
 Open `http://localhost:8765/` from a Windows browser. Start with Dry-run. A
@@ -111,7 +122,9 @@ and typing `RUN`. See the [interactive Dashboard guide](docs/final/interactive-d
 
 - `data/` — immutable base scenarios and topology sources.
 - `scripts/` — simulators, validation, orchestration, and analysis helpers.
-- `dashboard/` — read-only fallback and zero-dependency interactive server.
+- `dashboard/` — final interactive reviewer server plus legacy/optional UI
+  implementations retained for reference. `interactive_server.py` is the
+  reviewer entry point; `static_server.py` and Streamlit `app.py` are not.
 - `runs/final-evaluation/`, `runs/germany50-selected-paths-final/` — sealed
   formal results.
 - `runs/dashboard-interactive/` — new local Dashboard artifacts.
@@ -128,7 +141,9 @@ may be dry-run validated; it must not be represented as all-pairs testing.
 Docker execution requires a WSL Docker Engine. Dashboard real execution is
 intentionally limited to the small direct template, one job at a time, and
 local loopback. It accepts no credentials, commands, images, or file paths.
-Raw 50/100 Mbps evidence remains missing. Official OpenAI remains HTTP 429.
+Official OpenAI remains HTTP 429. The legacy Streamlit UI is retained for
+reference and has its own optional `dashboard/requirements.txt`; it is not
+installed or launched by the reviewer workflow.
 
 ## Dissertation status
 

@@ -57,5 +57,6 @@ runs/current/ai_scenario_report.json
 runs/current/ai_scenario_dry_run.json
 runs/current/ai_scenario.svg
 runs/demo-*/
+runs/dashboard-interactive/
 runs/openai-compatible-live-validation-*/
 runs/openai-live-regressions-*/

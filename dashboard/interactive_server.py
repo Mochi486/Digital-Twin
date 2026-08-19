@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Local-only, zero-dependency controller for small Docker topology experiments.
+"""Local-only, zero-dependency controller for bounded reviewer experiments.
 
-It deliberately accepts a tiny JSON schema rather than commands, paths, images,
-or generated topology data.  Real runs use the existing generic topology
-simulator and a per-run derived scenario with project-scoped resource names.
+It accepts a small JSON schema rather than commands, paths, images, or generated
+topology data.  Dry-run supports all allowlisted templates; real Docker
+execution is restricted to the direct client/server template.
 """
 from __future__ import annotations
 
@@ -86,6 +86,7 @@ def template_summary(template_id: str) -> dict:
                 "iperf_duration_seconds": scenario.get("traffic", {}).get("duration_s", 5)}
     return {"id": template_id, "display_name": TEMPLATES[template_id][0], "nodes": nodes,
             "links": scenario.get("links", []), "endpoint_capable_nodes": endpoints,
+            "real_run_allowed": template_id == "direct",
             "default_conditions": defaults}
 
 
@@ -126,34 +127,15 @@ def validate_request(payload: dict) -> tuple[dict, dict, list[str]]:
     dry_run = payload.get("dry_run", True)
     if not isinstance(dry_run, bool):
         raise ValueError("dry_run must be boolean")
+    if not dry_run and template_id != "direct":
+        raise ValueError(
+            "Real Docker execution is limited to the direct template; "
+            "routed and two-router templates support dry-run only"
+        )
     if not dry_run and payload.get("confirmation") != "RUN":
         raise ValueError("Real Docker runs require confirmation RUN")
     return scenario, {"scenario_id": template_id, "source": source, "destination": destination,
                       "test": test, "dry_run": dry_run, **config}, selected_path
-
-
-def derived_topology(scenario: dict, config: dict, prefix: str) -> dict:
-    """Normalize the verified two-router template into uniquely named resources."""
-    if config["scenario_id"] != "two-router":
-        raise ValueError("Real Docker execution is currently limited to the two-router template")
-    copy = json.loads(json.dumps(scenario))
-    renames = {n["id"]: f"d{prefix}-{n['id']}" for n in copy["nodes"]}
-    subnets = {s["name"]: f"d{prefix}-{s['name']}" for s in copy["subnets"]}
-    for node in copy["nodes"]:
-        node["id"] = renames[node["id"]]
-        for interface in node["interfaces"]: interface["subnet"] = subnets[interface["subnet"]]
-    for subnet in copy["subnets"]: subnet["name"] = subnets[subnet["name"]]
-    for link in copy["links"]:
-        link["source"], link["target"] = renames[link["source"]], renames[link["target"]]
-        link["subnet"] = subnets[link["subnet"]]
-        link["bandwidth_mbps"] = config["bandwidth_mbps"]
-        link["delay_ms"] = config["delay_ms"]
-        link["packet_loss_percent"] = config["loss_percent"]
-    for route in copy["routes"]: route["node"] = renames[route["node"]]
-    copy["traffic"].update({"source": renames[config["source"]], "destination": renames[config["destination"]],
-                             "ping_count": config["ping_count"], "duration_s": config["iperf_duration_seconds"]})
-    copy["topology_name"] = f"dashboard-{prefix}"
-    return copy
 
 
 def docker(cmd: list[str], check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -240,20 +222,9 @@ def execute(item: dict) -> None:
             item["cleanup_status"] = "NOT_REQUIRED"; write_artifacts(item, result, "Dry-run validation passed.\n")
         else:
             item["status"] = "RUNNING"
-            if config["scenario_id"] == "direct":
-                metrics, output = run_direct_docker(config, directory, item["run_id"][:8])
-            else:
-                scoped = derived_topology(scenario, config, item["run_id"][:8])
-                scenario_path, metrics_path, plot_path = directory / "scenario.json", directory / "simulator-metrics.json", directory / "topology.svg"
-                scenario_path.write_text(json.dumps(scoped, indent=2) + "\n", encoding="utf-8")
-                cmd = [sys.executable, str(ROOT / "scripts" / "simulator_topology.py"), "--scenario", str(scenario_path), "--output", str(metrics_path), "--plot", str(plot_path)]
-                process = subprocess.Popen(cmd, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, shell=False)
-                item["process"] = process
-                try: output, _ = process.communicate(timeout=90)
-                except subprocess.TimeoutExpired: process.terminate(); output, _ = process.communicate(timeout=10); raise RuntimeError("Dashboard job timed out")
-                if item["cancel_requested"]: raise RuntimeError("Cancelled by user")
-                if process.returncode != 0: raise RuntimeError(f"Trusted simulator failed ({process.returncode})")
-                metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+            if config["scenario_id"] != "direct":
+                raise RuntimeError("Internal safety gate rejected a non-direct real run")
+            metrics, output = run_direct_docker(config, directory, item["run_id"][:8])
             item["status"] = "COLLECTING"; item["cleanup_status"] = "PASS"
             result = {"run_id": item["run_id"], "status": "SUCCEEDED", "dry_run": False, "scenario": config["scenario_id"],
                       "source": config["source"], "destination": config["destination"], "selected_path": item["selected_path"],
