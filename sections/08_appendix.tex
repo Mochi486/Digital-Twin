@@ -15,21 +15,76 @@ Table~\ref{tab:appendix-inventory} expands the main experimental matrix with evi
 Experiment & Raw or primary evidence & Summary / reproduction \\
 \hline
 Historical BW 20 & \path{runs/current/metrics.json} & \path{scripts/simulator_routed.py} \\
-BW 50/100 & \path{runs/bandwidth-evidence-supplement/replication-attempt-*} & \path{summary.json}, \path{per-run-results.csv}, \path{scripts/run_bandwidth_evidence_supplement.py} \\
+BW 50/100 & \path{runs/bandwidth-evidence-supplement/replication-attempt-*} & \path{runs/bandwidth-evidence-supplement/summary.json}, \path{runs/bandwidth-evidence-supplement/per-run-results.csv}, \path{scripts/run_bandwidth_evidence_supplement.py} \\
 Latency & \path{runs/delay_batch_20260713-135915/delay_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_delay_batch.py} \\
 Packet loss & \path{runs/packet_loss_batch_20260713-153303/loss_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_packet_loss_batch.py} \\
 Dual-router & \path{runs/two_router_batch_20260713-160810/baseline_run_*/metrics.json} & \path{scripts/run_two_router_batch.py} \\
-Germany50 paths & \path{runs/germany50-selected-paths-final/*-run-*/metrics.json} & \path{summary.json}, \path{summary.csv}, \path{scripts/run_germany50_selected_path_tests.py} \\
-Germany50 full & \path{runs/final-evaluation/germany50-full-fixed/selected-attempt-1/} & \path{route-plan-dry-run/summary.json}, \path{scripts/run_germany50_full_evaluation.py} \\
+Germany50 paths & \path{runs/germany50-selected-paths-final/*-run-*/metrics.json} & \path{runs/germany50-selected-paths-final/summary.json}, \path{runs/germany50-selected-paths-final/summary.csv}, \path{scripts/run_germany50_selected_path_tests.py} \\
+Germany50 full & \path{runs/final-evaluation/germany50-full-fixed/selected-attempt-1/} & \path{runs/final-evaluation/germany50-full-fixed/route-plan-dry-run/summary.json}, \path{scripts/run_germany50_full_evaluation.py} \\
 Official OpenAI & Sanitized source reference only & \path{runs/final-evaluation/ai-openai-429-evidence.json} \\
 Qwen-compatible & \path{runs/openai-compatible-live-validation-}\newline\path{20260714-064525/} & \path{runs/final-evaluation/ai-qwen-live-summary.json} \\
-RL & \path{runs/final-evaluation/rl-docker-supplement/per-episode-results.csv} & \path{summary.json}, \path{policy-summary.csv}, \path{scripts/run_rl_docker_supplement.py} \\
+RL & \path{runs/final-evaluation/rl-docker-supplement/per-episode-results.csv} & \path{runs/final-evaluation/rl-docker-supplement/summary.json}, \path{runs/final-evaluation/rl-docker-supplement/policy-summary.csv}, \path{scripts/run_rl_docker_supplement.py} \\
 Dashboard & Raw validation logs not retained & \path{docs/final/interactive-dashboard-validation.md} \\
 \hline
 \end{tabular}
 \end{table}
 
 The dissertation-side consolidated inventory is \texttt{notes/experiment\_inventory.md}. Its machine-readable counterpart is \texttt{derived/audit\_computed\_statistics/experiment\_summary.csv}. RR values reproduce repository summaries; AC values were computed from retained per-run data without changing the evidence repository.
+
+\input{tables/table_1_experimental_matrix.tex}
+
+\subsection{Closest-work capability comparison}
+
+\begin{table}[h]
+\caption{Critical comparison with the closest emulation and reproducibility work.}
+\label{tab:closest-work}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{p{0.14\linewidth}p{0.25\linewidth}p{0.25\linewidth}p{0.28\linewidth}}
+\hline
+Work & Topology, containers, impairment & Reproducibility and scale & Difference from this RQ \\
+\hline
+Mininet/\newline Handigol & Namespace topologies, real stacks, link control & Runnable experiments and retained artifacts & Strong precedent; not this Docker cross-extension evaluation \\
+CORE & Real-time wired/wireless and distributed emulation; physical links & More than 100 virtual nodes reported & Broad emulator; not Docker-specific evidence/automation integration \\
+Containernet/\newline MeDICINE & Docker hosts/functions, link control, multi-PoP & Dynamic orchestration and service prototyping & Broader container orchestration; different evaluation objective \\
+Kathar\'a & Container network devices and complex scenarios & Comparative performance/scalability evidence & Broader emulation capability; not the evaluated evidence pipeline \\
+pos & Orchestration, measurement, and evaluation & Automated artifact bundles and repeatable workflow & Closest reproducibility toolchain; not this NDT-specific study \\
+This work & Bounded Docker scenarios; route/qdisc checks & Germany50 structure, selected paths, per-run artifacts & Quantifies one validated pipeline only in the tested scope \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Implementation specification}
+\label{sec:implementation-specification}
+
+This compact JSON is valid under the generic project schema:
+
+\begin{verbatim}
+{"topology_name":"client-router-server",
+ "addressing":{"base_cidr":"10.64.0.0/16","subnet_prefixlen":29},
+ "nodes":[{"id":"client","type":"client"},
+          {"id":"router","type":"router"},
+          {"id":"server","type":"server"}],
+ "links":[{"source":"client","target":"router",
+           "bandwidth_mbps":20,"delay_ms":0,"packet_loss_percent":0},
+          {"source":"router","target":"server",
+           "bandwidth_mbps":20,"delay_ms":10,"packet_loss_percent":0}],
+ "traffic":{"source":"client","destination":"server","protocol":"tcp",
+            "duration_s":5,"ping_count":3,"reverse":true},
+ "route_generation_mode":"traffic_endpoint_subnets"}
+\end{verbatim}
+
+\paragraph{Validation.} The generic path requires documented top-level fields; known link and traffic endpoints; rejection of duplicate undirected links and disconnected topologies; duplicate interface-address and route-conflict checks; non-negative delay; loss within 0--100\%; and positive bandwidth. The guarded AI schema is narrower: 2--10 nodes, lower-case identifiers beginning with a letter (maximum 32 characters), exactly one client and one server, TCP only, delay 0--250 ms, loss 0--20\%, bandwidth 1--1000 Mbps, duration 1--30 s, and ping count 1--10. It also rejects command/IP-shaped strings, checks prompt constraints and connectivity, and projects only allowlisted fields.
+
+\paragraph{Addressing and routing.} Generic execution uses \texttt{10.64.0.0/16} and assigns successive /29 point-to-point subnets. The bridge reserves the first usable address; link endpoints receive the next two. Breadth-first search with sorted neighbours generates deterministic shortest paths. Static routes target either all unattached subnets or traffic-endpoint subnets; equal-length candidates use lexicographic path order. Runtime verification executes \texttt{ip route show <destination>} and checks \texttt{<destination> via <next-hop>}. Germany50 selected mode covers retained endpoint paths; full mode is a generated dry-run plan.
+
+\paragraph{Traffic control and measurement.} Bandwidth-only links execute:
+\begin{verbatim}
+tc qdisc replace dev <iface> root tbf rate <X>mbit \
+  burst 32kbit latency 400ms
+\end{verbatim}
+For bandwidth combined with delay and/or loss, \texttt{build\_combined\_qdisc\_commands} instead emits one root \texttt{netem} command containing applicable \texttt{delay <D>ms}, \texttt{loss <L>\%}, and \texttt{rate <X>mbit} terms. Impairment-only links use root \texttt{netem}. Measurements use \texttt{ping -c <N> <destination>} and \texttt{iperf3 -c <destination> -R -t <seconds>}. The runner parses output, writes run-scoped artifacts, verifies routes/qdiscs where supported, and removes only project-owned run resources.
 
 \subsection{Configuration and measurement details}
 
@@ -40,7 +95,7 @@ Latency used configured one-way delays of 0/10/30/50 ms with five runs and three
 \subsection{Germany50 selected paths}
 
 \begin{table}[h]
-\caption{Germany50 extracted-path configurations and audit statistics.}
+\caption{Descriptive Germany50 path-case comparison. Hop count and cumulative configured per-link delay co-vary, so the table does not estimate an isolated hop-count effect.}
 \label{tab:appendix-germany50}
 \centering
 \footnotesize
@@ -58,11 +113,17 @@ Longest & Oldenburg--Bremen--Hannover--Braunschweig--Kassel--Erfurt--Wuerzburg--
 Each extracted link used 20 Mbps, 10-ms configured one-way delay, and 0\% configured loss. These are path-extracted experiments, not full-topology deployments. The separate full-topology selected-mode run installed 20 routes for the three endpoint pairs. The 4,224-entry plan was dry-run validated only.
 
 \subsection{RL policy settings and complete policy summary}
+\label{sec:rl-formulation}
 
-The Q-learning run recorded seed 20260722, $\alpha=0.35$, $\gamma=0.85$, and $\epsilon=0.18$. Each policy has 20 valid episodes under the same ordered two-phase conditions. Failed/retried checkpoints remain in the evidence and are excluded from valid-row statistics.
+Actions are paths A and B. State comprises RTT (low below 45 ms, otherwise high), loss (none below 1\%, otherwise loss), throughput (high at or above 16 Mbps, otherwise low), and current path. Reward is:
+\begin{verbatim}
+R = throughput_mbps - 0.05 * rtt_ms
+    - 0.50 * packet_loss_percent
+\end{verbatim}
+In Phase 1, A has (5 ms, 0\%, 20 Mbps) and B has (30 ms, 4\%, 12 Mbps); Phase 2 swaps these conditions. The schedule is ordered, not randomized. Q-learning uses $\alpha=0.35$, $\gamma=0.85$, $\epsilon=0.18$, and seed 20260722. Each policy has 20 valid sequential episodes. Failed/retried checkpoints remain in evidence and are excluded from valid-row statistics.
 
 \begin{table}[h]
-\caption{Repository-reported real-Docker policy summary.}
+\caption{Descriptive repository-reported real-Docker policy summary from one seed and an ordered two-phase schedule. Episodes are sequential observations, not independent randomized policy replications.}
 \label{tab:appendix-rl}
 \centering
 \footnotesize
@@ -78,7 +139,7 @@ Fixed B & 20 & 0.257 & 19.665 & 91.027 & 10.000 & 9.808 \\
 \end{tabular}
 \end{table}
 
-The reward CI half-widths were 6.594, 0.142, 9.259, and 8.619 in the row order above. The result supports a functioning measured control loop and heuristic superiority in this setup; it does not establish universal RL inferiority.
+The RR reward confidence-interval (CI) half-widths were 6.594, 0.142, 9.259, and 8.619 in row order. They preserve the repository summarizer's $1.96s/\sqrt{n}$ convention as a descriptive summary. A single seed and ordered episodes do not supply independent randomized replications or an inferential policy comparison.
 
 \subsection{AI and Dashboard boundaries}
 
@@ -87,5 +148,14 @@ The AI execution chain comprises structured generation, schema validation, seman
 The Dashboard supports bounded small-topology interaction. Its documented run \texttt{3cada000bb4d} used 20 Mbps, zero delay/loss, three pings, and three seconds of iperf3. Documentation reports 3/3 replies, 0.101/0.118/0.143-ms RTT, 19.4 Mbps, successful downloads, and cleanup. Raw UI-path, 69-test, security, secret-scan, and fresh-clone validation logs were not retained, so these checks are not presented as independently auditable evidence.
 
 \subsection{Reproduction boundary}
+\label{sec:reviewer-reproduction}
 
-The repository includes scenarios, scripts, evidence summaries, and a reproducibility guide. Re-running the formal matrices is neither necessary nor part of this dissertation preparation workflow. A future independent replication should record host/kernel/Docker versions, image digests, complete stdout/stderr, resource utilization, and fresh-clone validation, then compare its new results without overwriting the sealed evidence used here.
+The reviewer-ready publication is GitHub main commit \texttt{5f0d4962c0340aa44dce04d4d1001eb2b7746d1b}. In a fresh WSL clone with Docker and Python available, the shortest supported path is:
+
+\begin{verbatim}
+bash scripts/reviewer_setup.sh
+bash scripts/reviewer_dashboard.sh
+# open http://127.0.0.1:8765
+\end{verbatim}
+
+The setup script creates \path{.venv-wsl311}, installs the declared requirements, builds \path{my-iperf-tc}, and runs the 69 unit tests. The start script launches \path{dashboard/interactive_server.py --port 8765}. Reviewers may inspect retained evidence and use all three small topologies in dry-run mode; real Dashboard execution is intentionally direct-only. These publication checks occurred after evidence sealing and are not additional formal observations. Re-running the formal matrices is neither necessary nor part of dissertation preparation. A future independent replication should retain host/kernel/Docker versions, image digests, stdout/stderr, and resource utilization, then compare new results without overwriting the evidence used here.

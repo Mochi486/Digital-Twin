@@ -1,0 +1,44 @@
+{
+  "status": "READ-ONLY DISSERTATION-SIDE ANALYSIS",
+  "evidence_repository_modified": false,
+  "analysis_seed": 20260821,
+  "permutations": 200000,
+  "method": "Monte Carlo permutation Kruskal-Wallis test using midranks and tie correction",
+  "p_value_estimator": "(exceedances + 1) / (permutations + 1)",
+  "effect_size": "epsilon_squared = (H - k + 1) / (N - k)",
+  "delay_rtt_ms": {
+    "source": "runs/delay_batch_20260713-135915/delay_*_run_*/metrics.json",
+    "groups_by_configured_one_way_delay_ms": {
+      "0": [0.09, 0.111, 0.08, 0.123, 0.121],
+      "10": [26.943, 27.024, 27.089, 26.969, 27.017],
+      "30": [80.28, 80.393, 80.324, 80.249, 80.268],
+      "50": [133.709, 133.723, 133.706, 133.656, 133.637]
+    },
+    "H": 17.8571428571,
+    "exceedances": 0,
+    "monte_carlo_p": 0.000004999975,
+    "epsilon_squared": 0.9285714286,
+    "scope": "Overall association only; no pairwise inference."
+  },
+  "packet_loss_percent": {
+    "source": "runs/packet_loss_batch_20260713-153303/loss_*_run_*/metrics.json",
+    "groups_by_configured_one_way_loss_percent": {
+      "0": [0, 0, 0, 0, 0],
+      "1": [2, 1, 2, 7, 3],
+      "3": [8, 8, 2, 9, 3],
+      "5": [12, 14, 9, 10, 5]
+    },
+    "theoretical_round_trip_loss_percent": {
+      "0": 0.0,
+      "1": 1.99,
+      "3": 5.91,
+      "5": 9.75
+    },
+    "reference_formula": "100 * (1 - (1 - p/100)^2)",
+    "H": 15.6112049117,
+    "exceedances": 0,
+    "monte_carlo_p": 0.000004999975,
+    "epsilon_squared": 0.7882003274,
+    "scope": "Overall association only; no pairwise inference. The theoretical value is model-based, not an experimental baseline."
+  }
+}

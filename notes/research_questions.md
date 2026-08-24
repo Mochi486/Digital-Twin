@@ -2,13 +2,13 @@
 
 ## Working Title
 
-**Design and Evaluation of a Reproducible Docker-Based Network Digital Twin for Controlled Network Experimentation**
+**An Artifact-Supported Docker Network Digital Twin**
 
 ## Main Research Question
 
 **Identifier:** RQ0
 
-**Question:** How effectively can a Docker-based network digital twin enforce and measure controlled network conditions while remaining reproducible and extensible across increasingly complex topologies and automated control workflows?
+**Question:** How effectively can a Docker-based network digital twin enforce and measure controlled network conditions while retaining an artifact-supported, extensible workflow across increasingly complex topologies and automated control workflows?
 
 **Evidence mapping:**
 
@@ -22,7 +22,7 @@
 - The 20-Mbps historical result is a single retained record and is not treated as a repeated-run cohort.
 - Germany50's 4,224-entry route plan was dry-run validated; real traffic covered three representative paths, not all pairs.
 - Official OpenAI returned HTTP 429; the successful result used a separate OpenAI-compatible Qwen path.
-- The threshold heuristic outperformed the evaluated Q-learning configuration; no RL superiority claim is supported.
+- The threshold heuristic achieved a higher mean reward than the evaluated Q-learning configuration; no universal RL superiority or inferiority claim is supported.
 - Dashboard validation is `DOCUMENTED_ONLY` because raw UI-path validation logs are not retained.
 
 **Planned sections:** Introduction; System Design and Methodology; Experimental Methodology; Results; Discussion.
@@ -90,7 +90,7 @@
 
 - Qwen-compatible success is not official OpenAI success.
 - Official OpenAI evidence records an unsuccessful HTTP 429 outcome.
-- The threshold heuristic outperformed the evaluated Q-learning configuration.
+- The threshold heuristic achieved a higher mean reward than the evaluated Q-learning configuration.
 - The evidence supports a functioning learnable control loop, not optimality or RL superiority.
 - The Dashboard is not a Germany50 management interface, RL training interface, or arbitrary Docker command runner.
 
@@ -100,7 +100,7 @@
 
 ## Core Claim
 
-Within the evaluated configurations, the proposed Docker-based network digital twin provides a reproducible workflow for controlled network impairment experiments, extends to larger network topologies with validated routing and representative real traffic, and supports validated AI-assisted scenario generation and real-Docker closed-loop control. The evaluation also identifies clear limitations in large-topology traffic coverage and learning-based control performance.
+Within the evaluated configurations, the proposed Docker-based network digital twin provides a reproducibility-oriented, artifact-supported workflow for controlled network impairment experiments, extends to larger network topologies with validated routing and representative real traffic, and supports validated AI-assisted scenario generation and real-Docker closed-loop control. The evaluation also identifies clear limitations in large-topology traffic coverage and learning-based control performance.
 
 **Evidence mapping:** RQ1 impairment evidence; RQ2 topology and routing evidence; RQ3 AI and real-Docker control evidence; evidence provenance and limitations in `notes/experiment_inventory.md`.
 
@@ -114,7 +114,7 @@ Within the evaluated configurations, the proposed Docker-based network digital t
 
 **Evidence mapping:** Direct, routed, dual-router, Germany50, AI-validation, RL-control, raw metrics, summaries, scenario configurations, and reproduction-script entries in `notes/experiment_inventory.md`.
 
-**Boundary:** Reproducibility is supported by retained artifacts and repeated cohorts; the missing dedicated fresh-clone report must not be represented as retained evidence.
+**Boundary:** Retained artifacts and repeated cohorts support later inspection and rerunning, but the missing dedicated fresh-clone report prevents a completed independent-replication claim.
 
 **Status:** SUPPORTED_WITH_DOCUMENTED_REPRODUCIBILITY_LIMIT
 
@@ -148,7 +148,7 @@ This gap is deliberately scoped by the retained evidence:
 
 - Germany50 contributes full-topology instantiation, dry-run validation of the complete route plan, and real traffic on three representative paths; it does not establish all-pairs real-traffic coverage.
 - The official OpenAI attempt returned HTTP 429, while successful generation used a separate OpenAI-compatible Qwen path; the latter is not evidence of official OpenAI success.
-- The evaluated threshold heuristic outperformed the tested Q-learning configuration; the contribution is an evidence-backed closed-loop comparison, not a claim of RL superiority or optimality.
+- The evaluated threshold heuristic achieved a higher mean reward than the tested Q-learning configuration; the contribution is an evidence-backed closed-loop comparison, not a claim of RL superiority, inferiority, or optimality.
 - Dashboard evidence concerns a small-topology interactive interface and is documented-only where raw validation logs are absent; it is not a Germany50 management or RL-training dashboard.
 
 Accordingly, the dissertation does not claim to be the first Docker network emulator, the first NDT, the first AI networking system, or the first digital-twin-plus-RL system. Its contribution is the design and quantitative evaluation of their scoped integration, together with explicit evidence provenance and limitations.

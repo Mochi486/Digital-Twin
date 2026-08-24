@@ -1,22 +1,38 @@
-\begin{table}[t]
-\caption{Experimental matrix. Runs count retained attempts; valid runs are the observations included in the reported result.}
-\label{tab:experimental-matrix}
+\begin{table}[h]
+\caption{RQ1 analysis matrix. A configured token rate is a reference target, not an experimental baseline.}
+\label{tab:experimental-matrix-rq1}
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{p{0.18\linewidth}p{0.44\linewidth}p{0.12\linewidth}p{0.16\linewidth}}
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{p{0.12\linewidth}p{0.21\linewidth}p{0.20\linewidth}p{0.16\linewidth}p{0.22\linewidth}}
 \hline
-Experiment & Configuration & Runs / valid & Primary metric \\
+Case & Control/reference and variable & Outcome & Valid/excluded & Analysis/evidence \\
 \hline
-Bandwidth & Direct: 20, 50, 100 Mbps & 1/1; 5/5; 6/5 & Throughput (Mbps) \\
-Latency & 0, 10, 30, 50 ms configured one-way delay & 5/5 each & Ping RTT (ms) \\
-Packet loss & 0, 1, 3, 5\% configured one-way loss; 100 pings/run & 5/5 each & End-to-end loss (\%) \\
-Dual-router & Client--router--router--server; 20 Mbps; zero delay/loss & 5/5 & Throughput (Mbps) \\
-Germany50 paths & Extracted shortest, median, longest paths; 20 Mbps, 10 ms/link & 3/3 each & RTT and throughput \\
-Germany50 full & 50 nodes, 88 links; selected routes and full-plan dry-run & 9/9 + dry-run & Scope and reachability \\
-AI generation & Official OpenAI attempt; separate Qwen-compatible path & 1/0; 1/1 & Validation/API outcome \\
-RL control & Q-learning, threshold heuristic, fixed A, fixed B & 20/20 each & Reward; RTT/loss/rate \\
-Dashboard & Documented direct UI-path smoke & 1 documented & RTT and throughput \\
+BW20 & No separate baseline; fixed 20-Mbps TBF & TCP rate & 1/0 & Descriptive; historical BW20 \\
+BW50 & No separate baseline; configured token rate is target & TCP rate & 5/5 permission failures & RR mean, SD, CI, range; BW50/100 \\
+BW100 & No separate baseline; configured token rate is target & TCP rate & 5/1 failed measurement & RR mean, SD, CI, range; BW50/100 \\
+Delay & 0-ms control; 0/10/30/50-ms one-way delay & RTT & 5 each/0 & Overall permutation test, epsilon-squared, AC intervals; latency \\
+Loss & 0\% control; 0/1/3/5\% one-way loss; model round-trip reference & End-to-end loss & 5 each/0 & Overall permutation test, epsilon-squared, AC intervals/counts; loss \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[h]
+\caption{RQ2/RQ3 and interface analysis matrix. These cases remain descriptive.}
+\label{tab:experimental-matrix-rq23}
+\centering
+\footnotesize
+\setlength{\tabcolsep}{1pt}
+\begin{tabular}{p{0.12\linewidth}p{0.23\linewidth}p{0.20\linewidth}p{0.16\linewidth}p{0.20\linewidth}}
+\hline
+Case & Control/reference and variable & Outcome & Valid/excluded & Analysis/evidence \\
+\hline
+Dual router & Zero impairment; fixed topology & TCP rate & 5/0 & RR/AC descriptive; dual-router \\
+Germany paths & Representative path case; hops and cumulative delay co-vary & RTT; TCP rate & 3 each/0 & Confounded case comparison; Germany50 paths \\
+Germany full & Selected execution vs full-plan dry-run & Route/traffic counts & 9 traffic + 1 dry-run/0 & Counts/pass-fail; Germany50 full \\
+AI & Provider/validation path; no performance baseline & Validation and one-run metrics & 1 + 1/0 & Categorical/descriptive; official/Qwen \\
+Control & Fixed A/B and heuristic comparators; policy & Reward and network metrics & 80/2 retries & Single-seed ordered episodes; RR descriptive summary; RL \\
+Dashboard & No baseline; one direct scenario & HTTP, files, metrics & 1 documented/0 & Documented-only descriptive record \\
 \hline
 \end{tabular}
 \end{table}

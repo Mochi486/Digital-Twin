@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "evidence_repository": "E:\\projects_70",
+  "evidence_repository": "F:\\projects_70",
   "audit_mode": "READ_ONLY_SOURCE_WITH_DERIVED_OUTPUTS",
   "statistical_method": {
     "standard_deviation": "sample standard deviation for AUDIT_COMPUTED values",
@@ -20,22 +20,22 @@
   },
   "audit_computed": {
     "latency_rtt_ms": {
-      "0": {"n": 5, "mean": 0.105, "std": 0.019144, "ci95_half_width": 0.023767, "min": 0.080, "max": 0.123},
-      "10": {"n": 5, "mean": 27.0084, "std": 0.056221, "ci95_half_width": 0.069796, "min": 26.943, "max": 27.089},
-      "30": {"n": 5, "mean": 80.3028, "std": 0.057469, "ci95_half_width": 0.071346, "min": 80.249, "max": 80.393},
-      "50": {"n": 5, "mean": 133.6862, "std": 0.037413, "ci95_half_width": 0.046446, "min": 133.637, "max": 133.723}
+      "0": {"n": 5, "mean": 0.105, "std": 0.019144, "ci95_half_width": 0.023771, "min": 0.080, "max": 0.123},
+      "10": {"n": 5, "mean": 27.0084, "std": 0.056221, "ci95_half_width": 0.069808, "min": 26.943, "max": 27.089},
+      "30": {"n": 5, "mean": 80.3028, "std": 0.057469, "ci95_half_width": 0.071357, "min": 80.249, "max": 80.393},
+      "50": {"n": 5, "mean": 133.6862, "std": 0.037413, "ci95_half_width": 0.046454, "min": 133.637, "max": 133.723}
     },
     "packet_loss_measured_percent": {
       "0": {"n": 5, "mean": 0.0, "std": 0.0, "ci95_half_width": 0.0, "min": 0.0, "max": 0.0, "sent": 500, "received": 500},
-      "1": {"n": 5, "mean": 3.0, "std": 2.345208, "ci95_half_width": 2.911493, "min": 1.0, "max": 7.0, "sent": 500, "received": 485},
-      "3": {"n": 5, "mean": 6.0, "std": 3.240370, "ci95_half_width": 4.022806, "min": 2.0, "max": 9.0, "sent": 500, "received": 470},
-      "5": {"n": 5, "mean": 10.0, "std": 3.391165, "ci95_half_width": 4.210012, "min": 5.0, "max": 14.0, "sent": 500, "received": 450}
+      "1": {"n": 5, "mean": 3.0, "std": 2.345208, "ci95_half_width": 2.911960, "min": 1.0, "max": 7.0, "sent": 500, "received": 485},
+      "3": {"n": 5, "mean": 6.0, "std": 3.240370, "ci95_half_width": 4.023451, "min": 2.0, "max": 9.0, "sent": 500, "received": 470},
+      "5": {"n": 5, "mean": 10.0, "std": 3.391165, "ci95_half_width": 4.210687, "min": 5.0, "max": 14.0, "sent": 500, "received": 450}
     },
-    "dual_router_throughput_mbps": {"n": 5, "mean": 19.22, "std": 0.044721, "ci95_half_width": 0.055520, "min": 19.2, "max": 19.3},
+    "dual_router_throughput_mbps": {"n": 5, "mean": 19.22, "std": 0.044721, "ci95_half_width": 0.055529, "min": 19.2, "max": 19.3},
     "germany50_extracted_rtt_ms": {
-      "shortest": {"n": 3, "mean": 41.196333, "std": 0.258537, "ci95_half_width": 0.642293, "min": 40.999, "max": 41.489},
-      "median": {"n": 3, "mean": 104.623, "std": 0.844586, "ci95_half_width": 2.098237, "min": 103.928, "max": 105.563},
-      "longest": {"n": 3, "mean": 214.424667, "std": 0.440709, "ci95_half_width": 1.094870, "min": 213.992, "max": 214.873}
+      "shortest": {"n": 3, "mean": 41.196333, "std": 0.258537, "ci95_half_width": 0.642241, "min": 40.999, "max": 41.489},
+      "median": {"n": 3, "mean": 104.623, "std": 0.844586, "ci95_half_width": 2.098067, "min": 103.928, "max": 105.563},
+      "longest": {"n": 3, "mean": 214.424667, "std": 0.440709, "ci95_half_width": 1.094782, "min": 213.992, "max": 214.873}
     },
     "rl_reward_min_max": {
       "heuristic": {"n": 20, "min": 16.615, "max": 17.471},
@@ -47,7 +47,7 @@
     "packet_loss": "configured loss is one-way; measured ping loss is end-to-end round-trip",
     "germany50": "4,224-route plan is dry-run validation; real full-topology traffic covers three representative paths",
     "ai": "official OpenAI returned HTTP 429 insufficient_quota; Qwen-compatible validation succeeded separately",
-    "rl": "threshold heuristic outperformed the tested Q-learning configuration",
+    "rl": "threshold heuristic achieved a higher mean reward than the tested Q-learning configuration",
     "dashboard": "DOCUMENTED_ONLY because raw UI-path validation logs are not retained"
   }
 }

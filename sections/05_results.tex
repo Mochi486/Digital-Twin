@@ -1,32 +1,33 @@
 \section{Results}
 \label{sec:results}
+\suppressfloats[t]
 
 \subsection{Controlled impairments}
 
-Figure~\ref{fig:impairments} and Table~\ref{tab:quantitative-results} report the main impairment results. The direct historical 20-Mbps record measured 19.2 Mbps, a $-4.00\%$ deviation, but supplies no SD or confidence interval. The supplementary 50-Mbps cohort measured 41.500 Mbps (SD 3.362, 95\% CI $\pm4.175$, range 36.9--45.8), a $-17.00\%$ deviation. At 100 Mbps the five valid measurements averaged 78.780 Mbps (SD 11.684, 95\% CI $\pm14.508$, range 58.4--87.3), a $-21.22\%$ deviation. These 50/100-Mbps statistics are repository-reported from the retained supplementary cohort. The dual-router 20-Mbps benchmark is excluded from this direct-topology panel.
+Figure~\ref{fig:impairments} and Table~\ref{tab:quantitative-results} report the main impairment results. The figure is a dissertation-side composite regenerated from retained evidence; the project-generated delay and loss audit SVGs were checked but omit the replicated bandwidth cohorts and interval information. The direct historical 20-Mbps record measured 19.2 Mbps, a $-4.00\%$ deviation, but supplies no interval. The supplementary 50-Mbps cohort measured 41.500 Mbps (standard deviation (SD) 3.362, 95\% confidence interval (CI) $\pm4.175$, range 36.9--45.8), a $-17.00\%$ deviation. At 100 Mbps the five valid measurements averaged 78.780 Mbps (SD 11.684, 95\% CI $\pm14.508$, range 58.4--87.3), a $-21.22\%$ deviation. These 50/100-Mbps statistics are repository-reported from the retained supplementary cohort. The dual-router 20-Mbps benchmark is excluded from this direct-topology panel.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/bandwidth/main_impairment_results.pdf}
-\caption{Main impairment results. Bandwidth distinguishes the single historical 20-Mbps record from replicated 50/100-Mbps cohorts. Latency plots configured one-way delay against measured ping RTT. Packet loss plots configured one-way loss against measured end-to-end ping loss. Error bars are shown only for repeated cohorts and represent 95\% confidence intervals.}
+\includegraphics[width=\linewidth]{figures/bandwidth/main_impairment_results.png}
+\caption{Main impairment results. Bandwidth distinguishes the single historical 20-Mbps record ($n=1$) from replicated 50/100-Mbps cohorts ($n=5$ each). Latency uses five runs per configured one-way delay; packet loss uses five runs and 100 packets per run. Markers show cohort means and error bars appear only for repeated cohorts: bandwidth uses RR 95\% intervals, whereas latency and loss use two-sided Student's $t$ AC 95\% intervals.}
 \label{fig:impairments}
 \end{figure}
 
 \input{tables/table_2_quantitative_results.tex}
 
-Mean RTT increased from 0.105 ms at 0-ms configured one-way delay to 27.008, 80.303, and 133.686 ms at 10, 30, and 50 ms. The corresponding AC sample SDs were 0.019, 0.056, 0.057, and 0.037 ms, with CI half-widths 0.024, 0.070, 0.071, and 0.046 ms. The means are RR; SD, CI, minimum, and maximum values in Table~\ref{tab:quantitative-results} are AC. These observations are RTTs and are not reported as measured one-way latency.
+Mean RTT increased from 0.105 ms at 0-ms configured one-way delay to 27.008, 80.303, and 133.686 ms at 10, 30, and 50 ms. The corresponding AC sample standard deviations (SDs) were 0.019, 0.056, 0.057, and 0.037 ms. The overall permutation Kruskal--Wallis test gave $H=17.857$, permutation $p<10^{-4}$, and $\epsilon^2=0.929$. This is an overall association, not pairwise evidence. These observations are RTTs, not measured one-way latency.
 
-Configured one-way loss of 0, 1, 3, and 5\% produced RR mean end-to-end ping loss of 0, 3, 6, and 10\%. Across five runs per condition, the AC SDs were 0, 2.345, 3.240, and 3.391 percentage points; confidence intervals widened accordingly. Aggregate packet counts were 500/500, 485/500, 470/500, and 450/500 received/sent. Because impairment configuration and ping observation cover different directions and constructs, no direct relative-error statistic is assigned.
+Configured one-way loss of 0, 1, 3, and 5\% produced mean end-to-end ping loss of 0, 3, 6, and 10\%. The model-based round-trip references $100[1-(1-p/100)^2]$ are 0, 1.99, 5.91, and 9.75\%; they are not an experimental baseline. Across five runs per condition, the observed SDs were 0, 2.345, 3.240, and 3.391 percentage points. The overall permutation test gave $H=15.611$, permutation $p<10^{-4}$, and $\epsilon^2=0.788$. No corrected pairwise test was performed. Aggregate received/sent counts were 500/500, 485/500, 470/500, and 450/500.
 
 The separate dual-router benchmark completed five valid runs with a mean throughput of 19.220 Mbps, SD 0.045, 95\% CI $\pm0.056$, and range 19.2--19.3 Mbps. The mean is RR; dispersion and range are AC.
 
 \subsection{Topology scaling and Germany50}
 
-Figure~\ref{fig:topology-scaling} separates simple execution, the dual-router benchmark, and full Germany50 scope. In the controlled extracted-path experiments, the one-hop shortest path produced mean RTT 41.196 ms (AC SD 0.259, CI $\pm0.642$) and mean throughput 18.8 Mbps. The four-hop median path produced 104.623 ms (SD 0.845, CI $\pm2.098$) and 17.8 Mbps. The nine-hop longest path produced 214.425 ms (SD 0.441, CI $\pm1.095$) and 15.7 Mbps. Relative to 20 Mbps, the reported throughput deviations were $-6.0\%$, $-11.0\%$, and $-21.5\%$.
+Figure~\ref{fig:topology-scaling} separates simple execution, the dual-router benchmark, and full Germany50 scope. The one-, four-, and nine-hop cases produced mean RTTs of 41.196, 104.623, and 214.425 ms and throughputs of 18.8, 17.8, and 15.7 Mbps. Appendix Table~\ref{tab:appendix-germany50} gives path detail and dispersion. Hop count and cumulative configured per-link delay co-vary, so these descriptive cases do not isolate a topology-only effect.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\linewidth]{figures/germany50/topology_scaling_germany50.pdf}
+\includegraphics[width=\linewidth]{figures/germany50/topology_scaling_germany50.png}
 \caption{Topology scaling from direct and dual-router configurations to the real 50-node/88-link Germany50 graph. Highlighted paths are the shortest, median, and longest representative paths used for real traffic. The 4,224-entry full route plan was validated in dry-run mode only; the figure does not represent all-pairs traffic.}
 \label{fig:topology-scaling}
 \end{figure}
@@ -35,17 +36,22 @@ The full topology preflight recorded 50 nodes, 88 networks, and a theoretical 4,
 
 \subsection{AI, closed-loop control, and Dashboard}
 
-Table~\ref{tab:extended-validation} summarizes the extensions. The official OpenAI attempt returned HTTP 429 with \texttt{insufficient\_quota}; it generated no successful official scenario. The separate Qwen-compatible request produced a validated scenario and a single controlled real-Docker result of 82.194-ms RTT, 18.3-Mbps throughput, and 0\% measured loss. No SD or CI is available for this single validation.
+Table~\ref{tab:extended-validation} summarizes the extensions. The official OpenAI attempt returned Hypertext Transfer Protocol (HTTP) 429 with \texttt{insufficient\_quota}; it generated no successful official scenario. The separate Qwen-compatible request produced a validated scenario and a single controlled real-Docker result of 82.194-ms RTT, 18.3-Mbps throughput, and 0\% measured loss. No SD or CI is available for this single validation.
 
 \input{tables/table_3_extended_validation.tex}
 
-Across the balanced RL supplement, the threshold heuristic achieved RR mean reward 17.116 (SD 0.325, 95\% CI $\pm0.142$), mean RTT 30.189 ms, 0\% mean loss, and 18.625-Mbps mean throughput. Q-learning achieved mean reward 4.143 (SD 15.045, CI $\pm6.594$), mean RTT 89.225 ms, 2.5\% loss, and 9.855-Mbps throughput. AC reward ranges were 16.615--17.471 for the heuristic and $-36.975$--17.472 for Q-learning. Q-learning selected path A in all 20 episodes and made no switch; the heuristic selected A for ten episodes, B for ten, and switched once at the phase boundary.
+Across the balanced RL supplement, the threshold heuristic achieved RR mean reward 17.116 (RR SD 0.325 and RR 95\% interval half-width $\pm0.142$), mean RTT 30.189 ms, 0\% mean loss, and 18.625-Mbps mean throughput. Q-learning achieved RR mean reward 4.143 (RR SD 15.045 and RR interval half-width $\pm6.594$), mean RTT 89.225 ms, 2.5\% loss, and 9.855-Mbps throughput. These RR intervals preserve the repository summarizer's $1.96s/\sqrt{n}$ convention and are descriptive. Q-learning selected path A in all 20 recorded episodes and showed no path switch after the phase boundary; the heuristic selected A for ten episodes, B for ten, and switched once. These are sequential single-seed observations, not independent randomized replications. Appendix Table~\ref{tab:appendix-rl} gives the full policy summary.
 
-\begin{figure}[t]
+\begin{center}
+\begin{minipage}{\linewidth}
 \centering
-\includegraphics[width=\linewidth]{figures/rl/rl_heuristic_vs_qlearning.pdf}
-\caption{Reward comparison for the 20 valid real-Docker episodes of each displayed policy. The complete retained supplement contains 80 valid episodes across Q-learning, threshold heuristic, fixed A, and fixed B. Both the distribution and episode sequence show that the threshold heuristic materially outperformed Q-learning under the evaluated setup.}
+\includegraphics[width=0.70\linewidth]{figures/rl/rl_heuristic_vs_qlearning.png}
+\refstepcounter{figure}
 \label{fig:rl}
-\end{figure}
+\makeatletter
+\@makecaption{\fnum@figure}{Reward comparison for the 20 valid real-Docker episodes of each displayed policy. The complete retained supplement contains 80 valid episodes across Q-learning, threshold heuristic, fixed A, and fixed B. The threshold heuristic achieved a higher mean reward than Q-learning under the evaluated setup.}
+\makeatother
+\end{minipage}
+\end{center}
 
 The Dashboard validation document records direct run \texttt{3cada000bb4d}: three of three ping replies, RTT min/mean/max 0.101/0.118/0.143 ms, 19.4-Mbps throughput, HTTP 200 for JSON/CSV/log/ZIP downloads, and cleanup pass. The raw UI-run, 69-test, security, secret-scan, and fresh-clone logs are not retained, so this result remains documented-only.

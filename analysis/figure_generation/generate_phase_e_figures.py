@@ -19,7 +19,7 @@ from matplotlib.lines import Line2D
 
 
 DISSERTATION_ROOT = Path(__file__).resolve().parents[2]
-EVIDENCE_ROOT = Path(r"E:\projects_70")
+EVIDENCE_ROOT = Path(r"D:\projects_70")
 INVENTORY_CSV = (
     DISSERTATION_ROOT
     / "derived"
@@ -116,12 +116,12 @@ def arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float],
 
 
 def figure_architecture() -> None:
-    fig, ax = plt.subplots(figsize=(7.1, 3.65))
+    fig, ax = plt.subplots(figsize=(7.2, 3.05))
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    xs = [0.015, 0.17, 0.325, 0.48, 0.635, 0.79]
+    xs = [0.02, 0.18, 0.34, 0.50, 0.66, 0.82]
     labels = [
         ("Scenario /\nconfig", "validated JSON\nscenario"),
         ("Validation", "schema / semantic\n/ security"),
@@ -130,45 +130,43 @@ def figure_architecture() -> None:
         ("Impairment", "tc/netem / TBF\nbandwidth / delay\n/ loss"),
         ("Measurement", "ping / iperf3\ncontrolled\ntraffic"),
     ]
-    width, height, y = 0.135, 0.23, 0.49
+    width, height, y = 0.14, 0.23, 0.38
     for x, (title, detail) in zip(xs, labels):
-        draw_box(ax, (x, y), width, height, title, detail, detail_size=5.3)
+        draw_box(ax, (x, y), width, height, title, detail, title_size=6.8, detail_size=5.7)
     for left, right in zip(xs, xs[1:]):
         arrow(ax, (left + width, y + height / 2), (right, y + height / 2))
 
-    evidence_x = 0.79
+    evidence_x = 0.78
     draw_box(
-        ax, (evidence_x, 0.12), width, 0.23,
-        "Structured evidence", "JSON + CSV + logs\nstatistics + plots",
-        face="0.88", title_size=6.2, detail_size=5.8,
+        ax, (evidence_x, 0.07), 0.18, 0.19,
+        "Retained evidence", "JSON + CSV + logs\nstatistics + plots",
+        face="0.88", title_size=6.4, detail_size=5.6,
     )
-    arrow(ax, (evidence_x + width / 2, y), (evidence_x + width / 2, 0.35))
+    arrow(ax, (0.89, y), (0.87, 0.26))
 
     extensions = [
-        (0.11, "AI assistance", "validated scenario\ngeneration"),
-        (0.42, "RL control", "closed-loop policy\nselection"),
-        (0.71, "Dashboard", "bounded interactive\nsmall-topology UI"),
+        (0.08, "AI assistance", "validated scenario\ngeneration"),
+        (0.40, "RL control", "closed-loop policy\nselection"),
+        (0.72, "Dashboard", "bounded interactive\nsmall-topology UI"),
     ]
     for x, title, detail in extensions:
         draw_box(
-            ax, (x, 0.82), 0.18, 0.14, title, detail,
-            face="1.0", linestyle="--", title_size=7.2, detail_size=6.2,
+            ax, (x, 0.78), 0.20, 0.15, title, detail,
+            face="1.0", linestyle="--", title_size=6.8, detail_size=5.9,
         )
-    arrow(ax, (0.20, 0.82), (0.20, y + height), linestyle="--")
-    arrow(ax, (0.51, 0.82), (0.51, y + height), linestyle="--")
-    arrow(ax, (0.80, 0.82), (0.80, y + height), linestyle="--")
+    arrow(ax, (0.18, 0.78), (0.25, y + height), linestyle="--")
+    arrow(ax, (0.50, 0.78), (0.57, y + height), linestyle="--")
+    arrow(ax, (0.82, 0.78), (0.89, y + height), linestyle="--")
 
-    ax.text(0.015, 0.41, "Core execution and evidence pipeline", fontsize=7.2, color="0.35")
-    ax.text(0.015, 0.925, "Supporting extensions", fontsize=7.2, color="0.35")
-    ax.text(
-        0.015, 0.03,
-        "Arrows show validated control flow; evidence artifacts are retained after bounded cleanup.",
-        fontsize=7.0, color="0.25"
-    )
+    ax.text(0.50, 0.69, "Validated execution and evidence pipeline", ha="center",
+            va="center", fontsize=7.4, color="0.35")
     save_figure(fig, DISSERTATION_ROOT / "figures" / "architecture", "overall_system_architecture")
 
 
 def figure_impairments(inventory: dict[str, dict[str, str]]) -> None:
+    # Dissertation-side composite regenerated from retained evidence. The
+    # project audit SVGs for delay and loss were inspected, but they omit the
+    # replicated bandwidth cohorts and uncertainty/provenance shown here.
     fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.65))
 
     ax = axes[0]
@@ -185,9 +183,8 @@ def figure_impairments(inventory: dict[str, dict[str, str]]) -> None:
         bw_cfg[1:], bw_mean[1:],
         yerr=[numeric(bw_rows[1]["95% CI"]), numeric(bw_rows[2]["95% CI"])],
         fmt="o", color="0.15", markerfacecolor="white", markeredgewidth=1.0,
-        capsize=3, linewidth=1.0, zorder=3, label="Repeated mean + 95% CI",
+        capsize=3, linewidth=1.0, zorder=3, label="Repeated cohorts",
     )
-    ax.annotate("n=1 retained record", (20, bw_mean[0]), xytext=(8, 12), textcoords="offset points", fontsize=6.5)
     ax.set(xlabel="Configured bandwidth (Mbps)", ylabel="Measured throughput (Mbps)", title="(a) Bandwidth")
     ax.set_xlim(0, 108)
     ax.set_ylim(0, 108)
@@ -211,7 +208,6 @@ def figure_impairments(inventory: dict[str, dict[str, str]]) -> None:
     )
     ax.set_xticks(lat_cfg)
     styled_axis(ax)
-    ax.text(0.03, 0.96, "n=5 per condition; mean + 95% CI", transform=ax.transAxes, va="top", fontsize=6.3)
 
     ax = axes[2]
     loss_cfg = [0, 1, 3, 5]
@@ -229,7 +225,6 @@ def figure_impairments(inventory: dict[str, dict[str, str]]) -> None:
     )
     ax.set_xticks(loss_cfg)
     styled_axis(ax)
-    ax.text(0.03, 0.96, "n=5; 100 packets/run; mean + 95% CI", transform=ax.transAxes, va="top", fontsize=6.3)
 
     fig.subplots_adjust(wspace=0.40, bottom=0.22)
     save_figure(fig, DISSERTATION_ROOT / "figures" / "bandwidth", "main_impairment_results")
@@ -252,8 +247,8 @@ def figure_topology_scaling() -> None:
         ],
     }
 
-    fig = plt.figure(figsize=(7.2, 3.25))
-    grid = fig.add_gridspec(1, 3, width_ratios=[0.82, 1.08, 3.3], wspace=0.18)
+    fig = plt.figure(figsize=(7.2, 3.05))
+    grid = fig.add_gridspec(1, 3, width_ratios=[0.72, 0.98, 3.75], wspace=0.12)
     ax_direct = fig.add_subplot(grid[0, 0])
     ax_dual = fig.add_subplot(grid[0, 1])
     ax_map = fig.add_subplot(grid[0, 2])
@@ -280,12 +275,12 @@ def figure_topology_scaling() -> None:
     for source, target in links:
         x1, y1 = positions[source]
         x2, y2 = positions[target]
-        ax_map.plot([x1, x2], [y1, y2], color="0.82", linewidth=0.55, zorder=1)
+        ax_map.plot([x1, x2], [y1, y2], color="0.72", linewidth=0.65, zorder=1)
     for label, nodes in selected.items():
         styles = {
-            "shortest (1 hop)": ("0.05", "-", 2.0),
-            "median (4 hops)": ("0.25", "--", 1.8),
-            "longest (9 hops)": ("0.45", ":", 2.1),
+            "shortest (1 hop)": ("#0072B2", "-", 2.8),
+            "median (4 hops)": ("#D55E00", "--", 2.5),
+            "longest (9 hops)": ("#009E73", ":", 2.8),
         }
         color, linestyle, linewidth = styles[label]
         edges = path_edges(nodes)
@@ -297,33 +292,43 @@ def figure_topology_scaling() -> None:
         endpoint_xy = [positions[nodes[0]], positions[nodes[-1]]]
         ax_map.scatter(
             [point[0] for point in endpoint_xy], [point[1] for point in endpoint_xy],
-            s=20, marker="s", facecolors="white", edgecolors=color, linewidths=1.0, zorder=4,
+            s=30, marker="s", facecolors="white", edgecolors=color, linewidths=1.3, zorder=4,
         )
     ax_map.scatter(
         [value[0] for value in positions.values()], [value[1] for value in positions.values()],
-        s=7, facecolors="white", edgecolors="0.25", linewidths=0.45, zorder=2,
+        s=10, facecolors="white", edgecolors="0.18", linewidths=0.55, zorder=2,
     )
+    label_offsets = {
+        "aachen": (-11, 9, "right"),
+        "koeln": (8, 12, "left"),
+        "oldenburg": (-10, 11, "right"),
+        "erfurt": (8, 9, "left"),
+        "passau": (8, 9, "left"),
+    }
     for node in {item for nodes in selected.values() for item in (nodes[0], nodes[-1])}:
         x, y = positions[node]
-        ax_map.annotate(node.title(), (x, y), xytext=(2, 2), textcoords="offset points", fontsize=5.7)
+        dx, dy, alignment = label_offsets[node]
+        ax_map.annotate(
+            node.title(), (x, y), xytext=(dx, dy), textcoords="offset points",
+            ha=alignment, fontsize=6.2,
+            bbox=dict(boxstyle="round,pad=0.13", facecolor="white",
+                      edgecolor="none", alpha=0.90),
+        )
     ax_map.set_aspect("equal", adjustable="datalim")
     ax_map.axis("off")
     ax_map.set_title("Germany50: 50 nodes, 88 links", pad=3)
     legend = [
-        Line2D([0], [0], color="0.05", linestyle="-", linewidth=2.0, label="shortest (1 hop)"),
-        Line2D([0], [0], color="0.25", linestyle="--", linewidth=1.8, label="median (4 hops)"),
-        Line2D([0], [0], color="0.45", linestyle=":", linewidth=2.1, label="longest (9 hops)"),
+        Line2D([0], [0], color="#0072B2", linestyle="-", linewidth=2.8, label="shortest (1 hop)"),
+        Line2D([0], [0], color="#D55E00", linestyle="--", linewidth=2.5, label="median (4 hops)"),
+        Line2D([0], [0], color="#009E73", linestyle=":", linewidth=2.8, label="longest (9 hops)"),
     ]
-    ax_map.legend(handles=legend, loc="lower left", frameon=False, ncol=1)
+    fig.legend(handles=legend, loc="lower center", frameon=False, ncol=3,
+               bbox_to_anchor=(0.72, 0.015), fontsize=6.3,
+               handlelength=2.8, columnspacing=1.2)
 
-    fig.text(0.16, 0.08, "validated execution", ha="center", fontsize=6.6)
-    fig.text(0.36, 0.08, "5-run 20-Mbps benchmark", ha="center", fontsize=6.6)
-    fig.text(
-        0.73, 0.03,
-        "4,224 route entries: dry-run route-plan validation only  |  Real Docker traffic: three representative paths, not all pairs",
-        ha="center", fontsize=6.4,
-        bbox={"boxstyle": "round,pad=0.25", "facecolor": "0.96", "edgecolor": "0.5", "linewidth": 0.7},
-    )
+    fig.text(0.12, 0.055, "validated execution", ha="center", fontsize=6.8)
+    fig.text(0.29, 0.055, "5-run 20-Mbps benchmark", ha="center", fontsize=6.8)
+    fig.subplots_adjust(bottom=0.17)
     save_figure(fig, DISSERTATION_ROOT / "figures" / "germany50", "topology_scaling_germany50")
 
 
@@ -367,8 +372,10 @@ def figure_rl() -> None:
             linewidth=0.9, linestyle=linestyle, color=color, label=label,
         )
     ax_episode.axvline(10.5, color="0.55", linewidth=0.8, linestyle=":")
-    ax_episode.text(5.5, ax_episode.get_ylim()[0] + 1.2, "phase 1", ha="center", fontsize=6.5)
-    ax_episode.text(15.5, ax_episode.get_ylim()[0] + 1.2, "phase 2", ha="center", fontsize=6.5)
+    phase_label = dict(ha="center", va="center", fontsize=6.5,
+                       bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.2))
+    ax_episode.text(5.5, 10.0, "phase 1", **phase_label)
+    ax_episode.text(15.5, 10.0, "phase 2", **phase_label)
     ax_episode.axhline(0, color="0.65", linewidth=0.7)
     ax_episode.set(xlabel="Episode", ylabel="Episode reward", title="Real-Docker episode sequence")
     ax_episode.set_xticks([1, 5, 10, 15, 20])
