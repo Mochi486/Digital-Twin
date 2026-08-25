@@ -25,6 +25,8 @@ It is decomposed into three questions:
 \item[RQ3:] Can guarded AI-assisted generation and closed-loop control reuse the pipeline, and what limits appear under explicit checks and comparators?
 \end{description}
 
+Within RQ3, RL is only a bounded closed-loop path-selection use case. It tests whether the digital twin's RTT, loss, and throughput measurements can feed back to a controller while reusing the same execution-and-evidence pipeline; RL is not a core contribution or a claim of superiority over the heuristic.
+
 \subsection{Contributions}
 
 The first contribution is a validated Docker pipeline joining scenario checks, topology construction, routing, impairment, measurement, cleanup, and evidence retention. The second is a bounded quantitative evaluation across bandwidth, one-way delay, packet loss, multi-router execution, and Germany50 structural scale. The third evaluates guarded scenario generation and a real-Docker control loop against transparent policies. Traceability is an audit property of the method---the link among inputs, commands, measurements, and retained artifacts---rather than a separately scored performance outcome. Germany50 real traffic covers three representative paths, the complete route plan is dry-run evidence, provider outcomes remain separate, and the Dashboard is only a supporting interface.

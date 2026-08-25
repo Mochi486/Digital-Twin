@@ -27,7 +27,7 @@
 
 \subsection{RQ3: AI and learning-based extensibility}
 
-\paragraph{Answer.} Guarded generation and measured closed-loop control can reuse the workflow, but provider availability and controller performance limit the result. RQ3 supports extensibility, not autonomous superiority.
+\paragraph{Answer.} Guarded generation and measured closed-loop control can reuse the workflow, but provider availability and controller performance limit the result. RL serves only as a bounded closed-loop path-selection use case: it tests whether measured RTT, loss, and throughput can feed a controller through the shared execution-and-evidence pipeline. It is not a core contribution or a claim of superiority over the heuristic.
 
 \paragraph{Evidence.} The Qwen-compatible scenario passed validation and one controlled execution; the official OpenAI request returned HTTP 429. All 80 selected RL episodes contain Docker measurements. The threshold heuristic switched at the phase boundary and had a higher descriptive mean reward. Q-learning selected path A in all 20 recorded episodes and showed no path switch after the boundary.
 
