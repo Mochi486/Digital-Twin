@@ -75,7 +75,7 @@ This compact JSON is valid under the generic project schema:
  "route_generation_mode":"traffic_endpoint_subnets"}
 \end{verbatim}
 
-\paragraph{Validation.} The generic path requires documented top-level fields; known link and traffic endpoints; rejection of duplicate undirected links and disconnected topologies; duplicate interface-address and route-conflict checks; non-negative delay; loss within 0--100\%; and positive bandwidth. The guarded AI schema is narrower: 2--10 nodes, lower-case identifiers beginning with a letter (maximum 32 characters), exactly one client and one server, TCP only, delay 0--250 ms, loss 0--20\%, bandwidth 1--1000 Mbps, duration 1--30 s, and ping count 1--10. It also rejects command/IP-shaped strings, checks prompt constraints and connectivity, and projects only allowlisted fields.
+\paragraph{Validation.} The generic path requires documented top-level fields; known link and traffic endpoints; rejection of duplicate undirected links and disconnected topologies; duplicate interface-address and route-conflict checks; non-negative delay; loss within 0--100\%; and positive bandwidth. The guarded AI schema is narrower: 2--10 nodes, lower-case identifiers beginning with a letter (maximum 32 characters), exactly one client and one server, TCP only, delay 0--250 ms, loss 0--20\%, bandwidth 1--1000 Mbps, duration 1--30 s, and ping count 1--10. It also rejects command/Internet Protocol (IP)-shaped strings, checks prompt constraints and connectivity, and projects only allowlisted fields.
 
 \paragraph{Addressing and routing.} Generic execution uses \texttt{10.64.0.0/16} and assigns successive /29 point-to-point subnets. The bridge reserves the first usable address; link endpoints receive the next two. Breadth-first search with sorted neighbours generates deterministic shortest paths. Static routes target either all unattached subnets or traffic-endpoint subnets; equal-length candidates use lexicographic path order. Runtime verification executes \texttt{ip route show <destination>} and checks \texttt{<destination> via <next-hop>}. Germany50 selected mode covers retained endpoint paths; full mode is a generated dry-run plan.
 
@@ -115,15 +115,15 @@ Each extracted link used 20 Mbps, 10-ms configured one-way delay, and 0\% config
 \subsection{RL policy settings and complete policy summary}
 \label{sec:rl-formulation}
 
-Actions are paths A and B. State comprises RTT (low below 45 ms, otherwise high), loss (none below 1\%, otherwise loss), throughput (high at or above 16 Mbps, otherwise low), and current path. Reward is:
+Actions are paths A and B. Each agent invocation starts from initialized synthetic path-A metrics; thereafter only Q-learning uses state comprising the prior measured RTT (low below 45 ms, otherwise high), loss (none below 1\%, otherwise loss), throughput (high at or above 16 Mbps, otherwise low), and current path, then updates its Q-table from measured reward. The heuristic selects the path minimizing configured delay plus four times configured loss in the known phase; fixed A/B always select their named paths. Reward is:
 \begin{verbatim}
 R = throughput_mbps - 0.05 * rtt_ms
     - 0.50 * packet_loss_percent
 \end{verbatim}
-In Phase 1, A has (5 ms, 0\%, 20 Mbps) and B has (30 ms, 4\%, 12 Mbps); Phase 2 swaps these conditions. The schedule is ordered, not randomized. Q-learning uses $\alpha=0.35$, $\gamma=0.85$, $\epsilon=0.18$, and seed 20260722. Each policy has 20 valid sequential episodes. Failed/retried checkpoints remain in evidence and are excluded from valid-row statistics.
+In Phase 1, A has (5 ms, 0\%, 20 Mbps) and B has (30 ms, 4\%, 12 Mbps); Phase 2 swaps these conditions. The schedule is ordered, not randomized. Q-learning uses $\alpha=0.35$, $\gamma=0.85$, $\epsilon=0.18$, and seed 20260722. Its completed rows 1--4 were migrated; rows 5--20 used a newly initialized \texttt{QLearningAgent}, with no restoration or replay of the earlier Q-table. Each policy has 20 valid descriptive Docker measurement rows, but the Q-learning rows are not one uninterrupted learning trajectory. Failed/retried checkpoints remain in evidence and are excluded from valid-row statistics.
 
 \begin{table}[h]
-\caption{Descriptive repository-reported real-Docker policy summary from one seed and an ordered two-phase schedule. Episodes are sequential observations, not independent randomized policy replications.}
+\caption{Descriptive repository-reported real-Docker policy summary from one seed and an ordered two-phase schedule. Rows are not independent randomized policy replications; Q-learning rows span a migration and agent reinitialization.}
 \label{tab:appendix-rl}
 \centering
 \footnotesize
@@ -159,3 +159,7 @@ bash scripts/reviewer_dashboard.sh
 \end{verbatim}
 
 The setup script creates \path{.venv-wsl311}, installs the declared requirements, builds \path{my-iperf-tc}, and runs the 69 unit tests. The start script launches \path{dashboard/interactive_server.py --port 8765}. Reviewers may inspect retained evidence and use all three small topologies in dry-run mode; real Dashboard execution is intentionally direct-only. These publication checks occurred after evidence sealing and are not additional formal observations. Re-running the formal matrices is neither necessary nor part of dissertation preparation. A future independent replication should retain host/kernel/Docker versions, image digests, stdout/stderr, and resource utilization, then compare new results without overwriting the evidence used here.
+
+\subsection{Generative AI acknowledgement}
+
+ChatGPT and Codex were used for coding assistance, debugging, language editing, structural feedback, and consistency checking. The author verified the experimental results, retained evidence, citations, and final interpretation and remains responsible for the submitted work.

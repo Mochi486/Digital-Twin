@@ -25,7 +25,7 @@
 
 \paragraph{Limitation.} Only three Germany50 endpoint pairs carried real traffic, and path factors are confounded. The study therefore makes no all-pairs, wide-area, or operational-scale claim.
 
-\subsection{RQ3: AI and learning-based extensibility}
+\subsection{RQ3: AI and RL-based closed-loop extensibility}
 
 \paragraph{Answer.} Guarded generation and measured closed-loop control can reuse the workflow, but provider availability and controller performance limit the result. RL serves only as a bounded closed-loop path-selection use case: it tests whether measured RTT, loss, and throughput can feed a controller through the shared execution-and-evidence pipeline. It is not a core contribution or a claim of superiority over the heuristic.
 
@@ -35,7 +35,7 @@
 
 \paragraph{Relation to literature.} The validation boundary responds to reliability and security concerns in LLM-assisted networking \citep{lira2025llmnetcfg,liu2025llmnetworking}. Digital-twin-assisted RL can improve learning in other designs \citep{guemes2022accelerating,cheng2025dtrl}, but those results do not guarantee superiority in this low-dimensional ordered task.
 
-\paragraph{Limitation.} One compatible-provider record is not official OpenAI success. One seed, 20 ordered sequential episodes, fixed hyperparameters, and a fixed formulation cannot show whether another duration or formulation would switch paths; episodes are not independent randomized replications. The Dashboard is only a supporting interface.
+\paragraph{Limitation.} One compatible-provider record is not official OpenAI success. Q-learning rows 1--4 were migrated observations, while rows 5--20 used a reinitialized agent without restoration or replay of the earlier Q-table. The 20 valid measurement rows therefore do not form an uninterrupted learning trajectory. One seed, fixed hyperparameters, and this ordered formulation cannot show whether another duration or formulation would switch paths; rows are not independent randomized replications. The Dashboard is only a supporting interface.
 
 \subsection{Threats to validity and limitations}
 
