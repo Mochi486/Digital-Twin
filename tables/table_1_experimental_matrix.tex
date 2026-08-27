@@ -8,9 +8,9 @@
 \hline
 Case & Control/reference and variable & Outcome & Valid/excluded & Analysis/evidence \\
 \hline
-BW20 & No separate baseline; fixed 20-Mbps TBF & TCP rate & 1/0 & Descriptive; historical BW20 \\
-BW50 & No separate baseline; configured token rate is target & TCP rate & 5/5 permission failures & RR mean, SD, CI, range; BW50/100 \\
-BW100 & No separate baseline; configured token rate is target & TCP rate & 5/1 failed measurement & RR mean, SD, CI, range; BW50/100 \\
+BW20 & No separate baseline; configured token rate is target & TCP rate & 5/0 & RR mean, SD, CI, range; balanced bandwidth \\
+BW50 & No separate baseline; configured token rate is target & TCP rate & 5/0 & RR mean, SD, CI, range; balanced bandwidth \\
+BW100 & No separate baseline; configured token rate is target & TCP rate & 5/0 & RR mean, SD, CI, range; balanced bandwidth \\
 Delay & 0-ms control; 0/10/30/50-ms one-way delay & RTT & 5 each/0 & Overall permutation test, epsilon-squared, AC intervals; latency \\
 Loss & 0\% control; 0/1/3/5\% one-way loss; model round-trip reference & End-to-end loss & 5 each/0 & Overall permutation test, epsilon-squared, AC intervals/counts; loss \\
 \hline
@@ -31,7 +31,7 @@ Dual router & Zero impairment; fixed topology & TCP rate & 5/0 & RR/AC descripti
 Germany paths & Representative path case; hops and cumulative delay co-vary & RTT; TCP rate & 3 each/0 & Confounded case comparison; Germany50 paths \\
 Germany full & Selected execution vs full-plan dry-run & Route/traffic counts & 9 traffic + 1 dry-run/0 & Counts/pass-fail; Germany50 full \\
 AI & Provider/validation path; no performance baseline & Validation and one-run metrics & 1 + 1/0 & Categorical/descriptive; official/Qwen \\
-Control & Fixed A/B and heuristic comparators; policy & Reward and network metrics & 80/2 retries & Single-seed ordered episodes; RR descriptive summary; RL \\
+Control & Fixed A/B and heuristic comparators; policy & Reward and network metrics & 80/2 retries & Single-seed ordered measurement rows; RR descriptive summary; RL \\
 Dashboard & No baseline; one direct scenario & HTTP, files, metrics & 1 documented/0 & Documented-only descriptive record \\
 \hline
 \end{tabular}

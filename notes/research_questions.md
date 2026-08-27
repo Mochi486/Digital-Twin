@@ -45,7 +45,7 @@
 
 - Configured one-way delay and measured RTT are different quantities.
 - Configured one-way loss and measured end-to-end ping loss are different quantities.
-- The single historical 20-Mbps record must not be presented as equivalent to a repeated cohort.
+- The earlier bandwidth cohorts must remain separate from the balanced fixed-block cohort and must not be pooled.
 - Direct-topology bandwidth cohorts and the dual-router benchmark must remain separate.
 
 **Planned sections:** Experimental Methodology; Results; Discussion.

@@ -5,13 +5,13 @@
 
 \paragraph{Answer.} The workflow enforced configured conditions that were associated with measured bandwidth, RTT, and loss changes, without making configured and measured quantities equivalent.
 
-\paragraph{Evidence.} Delay and loss each showed an overall association in permutation tests, with $\epsilon^2=0.929$ and 0.788 respectively. Loss means were 0, 3, 6, and 10\% against model references of 0, 1.99, 5.91, and 9.75\%, but $n=5$ gives wide uncertainty and no pairwise inference. Replicated 50/100-Mbps throughput remained below configured token rates; BW20 has one observation.
+\paragraph{Evidence.} Delay and loss each showed an overall association in permutation tests, with $\epsilon^2=0.929$ and 0.788 respectively. Loss means were 0, 3, 6, and 10\% against model references of 0, 1.99, 5.91, and 9.75\%, but $n=5$ gives wide uncertainty and no pairwise inference. In the balanced cohort, mean throughput was 19.20, 47.80, and 94.76 Mbps at configured 20, 50, and 100 Mbps, with five valid runs per rate.
 
 \paragraph{Interpretation.} TBF sets a token rate, whereas iperf3 observes end-to-end TCP throughput. Likewise, qdisc delay and loss are one-way interface settings, whereas ping reports a bidirectional path. Protocol behaviour, queue placement, scheduling, and shared-host load explain why enforcement and observation must remain separate constructs.
 
 \paragraph{Relation to literature.} This result follows the \texttt{netem} warning that timers, queues, and protocol behaviour affect observations \citep{iproute2netem}. It also gives an empirical instance of the fidelity--efficiency trade-off identified for NDT models \citep{hui2023digitaltwin}: a lightweight twin exposes controlled trends without establishing physical-network fidelity.
 
-\paragraph{Limitation.} Most cohorts contain five runs, packet-loss intervals are wide, and the 100-Mbps result is variable. The evidence supports the tested ranges on one Docker/WSL host only.
+\paragraph{Limitation.} Most cohorts contain five runs, and packet-loss intervals are wide. Bandwidth ran in fixed 20/50/100-Mbps blocks within one session, so rate co-varies with execution order and time. The evidence supports the tested ranges on one Docker/WSL host only.
 
 \subsection{RQ2: topology extension and routing}
 
@@ -39,14 +39,14 @@
 
 \subsection{Threats to validity and limitations}
 
-\paragraph{Internal validity.} Experiments share a host, Docker engine, kernel, and virtual networking stack. Uncontrolled host load and scheduling can influence throughput and timing. The retained runners, route/qdisc checks, and repeated cohorts reduce but do not remove this risk. The 100-Mbps cohort contains a preserved failed attempt and retry; inclusion rules use five valid measurements and do not delete the failure.
+\paragraph{Internal validity.} Experiments share a host, Docker engine, kernel, and virtual networking stack. Uncontrolled host load and scheduling can influence throughput and timing. The retained runners, route/qdisc checks, and repeated cohorts reduce but do not remove this risk. The balanced bandwidth cohort completed all 15 planned runs without retry, but its fixed block order does not separate rate from session time.
 
 \paragraph{Construct validity.} Configured one-way delay and loss are not the same constructs as measured RTT and end-to-end ping loss. TCP throughput is affected by more than the configured TBF rate. Reward is specific to the retained RL formulation and should not be generalized to all network objectives.
 
-\paragraph{Statistical conclusion validity.} Delay and loss have overall rank-based permutation tests, but $n=5$ per group limits precision and no pairwise inference is claimed. Bandwidth intervals are descriptive; Germany50 is confounded; RL episodes are ordered and dependent; BW20, Qwen, and Dashboard are single records. These designs do not support additional significance claims.
+\paragraph{Statistical conclusion validity.} Delay and loss have overall rank-based permutation tests, but $n=5$ per group limits precision and no pairwise inference is claimed. Bandwidth intervals are descriptive and its blocks are ordered; Germany50 is confounded; RL measurement rows are ordered and dependent; Qwen and Dashboard are single records. These designs do not support additional significance claims.
 
 \paragraph{External validity.} Results apply to the evaluated Docker/WSL environment, topologies, traffic tools, and impairment ranges. Equivalence with hardware routers, production workloads, other kernels, or wide-area networks was not tested. Germany50 represents structural scale but only three real traffic paths. The Q-learning result applies to one state/action/reward design and one hyperparameter setting.
 
 \paragraph{Reproducibility and evidence preservation.} Scenarios, raw metrics, summaries, scripts, plots, failures, and cleanup records provide substantial provenance. Some statistics in this draft are AC derivatives and remain separate from repository evidence. Later reviewer-readiness checks establish a practical fresh-clone path and 69 passing unit tests, but they post-date the formal experiments and do not increase their sample sizes or coverage. Raw historical Dashboard smoke logs remain unavailable.
 
-The main RQ has a qualified positive answer within the tested scope. One validated pipeline enforced and measured controlled conditions, then supported multi-router, Germany50 structural, guarded-generation, and measured-control cases. Its evidence does not establish physical fidelity, exhaustive topology traffic, provider reliability, or learning-policy superiority. Traceability supports auditing through linked inputs, checks, measurements, and artifacts; it is not treated as a measured outcome.
+The main RQ has a qualified positive answer within the tested scope. One validated pipeline enforced and measured controlled conditions, then supported multi-router, Germany50 structural, guarded-generation, and measured-control cases. In practice, it provides a reproducible and auditable testbed for controlled container-network experiments before hardware or operational testing, but it does not establish production behaviour or physical-network fidelity. Its evidence does not establish exhaustive topology traffic, provider reliability, or learning-policy superiority. Traceability supports auditing through linked inputs, checks, measurements, and artifacts; it is not treated as a measured outcome.

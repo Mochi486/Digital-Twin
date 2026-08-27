@@ -4,12 +4,12 @@
 
 \subsection{Controlled impairments}
 
-Figure~\ref{fig:impairments} and Table~\ref{tab:quantitative-results} report the main impairment results. The figure is a dissertation-side composite regenerated from retained evidence; the project-generated delay and loss audit SVGs were checked but omit the replicated bandwidth cohorts and interval information. The direct historical 20-Mbps record measured 19.2 Mbps, a $-4.00\%$ deviation, but supplies no interval. The supplementary 50-Mbps cohort measured 41.500 Mbps (standard deviation (SD) of 3.362, 95\% confidence interval (CI) $\pm4.175$, range 36.9--45.8), a $-17.00\%$ deviation. At 100 Mbps the five valid measurements averaged 78.780 Mbps (SD 11.684, 95\% CI $\pm14.508$, range 58.4--87.3), a $-21.22\%$ deviation. These 50/100-Mbps statistics are repository-reported from the retained supplementary cohort. The dual-router 20-Mbps benchmark is excluded from this direct-topology panel.
+Figure~\ref{fig:impairments} and Table~\ref{tab:quantitative-results} report the main impairment results. The figure is a dissertation-side composite regenerated from retained evidence; the project-generated delay and loss audit SVGs were checked but omit the balanced bandwidth cohort and interval information. At 20 Mbps, the five valid measurements were all 19.2 Mbps (standard deviation (SD) 0, 95\% confidence interval (CI) $\pm0$, range 19.2--19.2), a $-4.00\%$ deviation. The 50-Mbps block averaged 47.800 Mbps (SD 0.100, 95\% CI $\pm0.124$, range 47.7--47.9), a $-4.40\%$ deviation. The 100-Mbps block averaged 94.760 Mbps (SD 0.913, 95\% CI $\pm1.133$, range 93.2--95.5), a $-5.24\%$ deviation. These are repository-reported descriptive statistics from the 15/15 valid fixed-block cohort. Earlier bandwidth cohorts are retained separately and are not pooled; the dual-router benchmark is also excluded from this direct-topology panel.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{figures/bandwidth/main_impairment_results.png}
-\caption{Main impairment results. Bandwidth distinguishes the single historical 20-Mbps record ($n=1$) from replicated 50/100-Mbps cohorts ($n=5$ each). Latency uses five runs per configured one-way delay; packet loss uses five runs and 100 packets per run. Markers show cohort means and error bars appear only for repeated cohorts: bandwidth uses RR 95\% intervals, whereas latency and loss use two-sided Student's $t$ AC 95\% intervals.}
+\caption{Main impairment results. Bandwidth uses the balanced fixed-block cohort with five runs at each configured rate; the blocks ran in 20/50/100-Mbps order. Latency uses five runs per configured one-way delay; packet loss uses five runs and 100 packets per run. Markers show cohort means: bandwidth uses repository-reported 95\% intervals, whereas latency and loss use two-sided Student's $t$ audit-computed 95\% intervals.}
 \label{fig:impairments}
 \end{figure}
 
@@ -49,7 +49,7 @@ All four policies reused the same Docker execution, route-verification, measurem
 \refstepcounter{figure}
 \label{fig:rl}
 \makeatletter
-\@makecaption{\fnum@figure}{Reward comparison for the 20 valid real-Docker episodes of each displayed policy. The complete retained supplement contains 80 valid episodes across Q-learning, threshold heuristic, fixed A, and fixed B. The threshold heuristic achieved a higher mean reward than Q-learning under the evaluated setup.}
+\@makecaption{\fnum@figure}{Reward comparison based on 20 retained real-Docker records per displayed policy. The supplement contains 80 valid measurements across four policies. The Q-learning records do not form an uninterrupted trajectory. The threshold heuristic had a higher mean reward in this setup.}
 \makeatother
 \end{minipage}
 \end{center}

@@ -166,31 +166,30 @@ def figure_architecture() -> None:
 def figure_impairments(inventory: dict[str, dict[str, str]]) -> None:
     # Dissertation-side composite regenerated from retained evidence. The
     # project audit SVGs for delay and loss were inspected, but they omit the
-    # replicated bandwidth cohorts and uncertainty/provenance shown here.
+    # balanced bandwidth cohort and uncertainty/provenance shown here.
     fig, axes = plt.subplots(1, 3, figsize=(7.2, 2.65))
 
     ax = axes[0]
     bw_cfg = [20, 50, 100]
     bw_rows = [
-        inventory["Bandwidth 20 Mbps historical baseline"],
+        inventory["Bandwidth 20 Mbps"],
         inventory["Bandwidth 50 Mbps"],
         inventory["Bandwidth 100 Mbps"],
     ]
     bw_mean = [numeric(row["Mean"]) for row in bw_rows]
     ax.plot([0, 105], [0, 105], linestyle="--", linewidth=0.8, color="0.55", label="Configured = measured")
-    ax.scatter([20], [bw_mean[0]], marker="x", s=48, linewidth=1.4, color="0.05", zorder=4)
     ax.errorbar(
-        bw_cfg[1:], bw_mean[1:],
-        yerr=[numeric(bw_rows[1]["95% CI"]), numeric(bw_rows[2]["95% CI"])],
+        bw_cfg, bw_mean,
+        yerr=[numeric(row["95% CI"]) for row in bw_rows],
         fmt="o", color="0.15", markerfacecolor="white", markeredgewidth=1.0,
-        capsize=3, linewidth=1.0, zorder=3, label="Repeated cohorts",
+        capsize=3, linewidth=1.0, zorder=3, label="Balanced ($n=5$/rate)",
     )
     ax.set(xlabel="Configured bandwidth (Mbps)", ylabel="Measured throughput (Mbps)", title="(a) Bandwidth")
     ax.set_xlim(0, 108)
     ax.set_ylim(0, 108)
     ax.set_xticks(bw_cfg)
     styled_axis(ax)
-    ax.legend(loc="upper left", frameon=False, fontsize=6.2)
+    ax.legend(loc="lower right", frameon=False, fontsize=6.2)
 
     ax = axes[1]
     lat_cfg = [0, 10, 30, 50]
