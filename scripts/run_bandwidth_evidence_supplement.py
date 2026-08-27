@@ -109,7 +109,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--runs", type=int, default=5)
-    parser.add_argument("--bandwidth", type=int, action="append", choices=(50, 100), help="Repeat to run more than one configured bandwidth.")
+    parser.add_argument("--bandwidth", type=int, action="append", choices=(20, 50, 100), help="Repeat to run more than one configured bandwidth.")
     parser.add_argument("--retry", action="store_true", help="Permit a single replacement run after a preserved failure.")
     parser.add_argument("--start-index", type=int, default=1)
     args = parser.parse_args()

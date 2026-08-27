@@ -1,0 +1,29 @@
+{
+  "captured_at": "2026-08-26T02:03:10.091035Z",
+  "commit": "4402f85f298ae491a70aabd39375b8f0e71e6cd4",
+  "docker_version": {
+    "command": [
+      "docker",
+      "version",
+      "--format",
+      "{{.Server.Version}}"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "29.1.3\n"
+  },
+  "image": {
+    "command": [
+      "docker",
+      "image",
+      "inspect",
+      "my-iperf-tc",
+      "--format",
+      "{{.Id}} {{.Created}}"
+    ],
+    "returncode": 0,
+    "stderr": "",
+    "stdout": "sha256:093ae71c26a28a2c8ef2eca222a7cef4d624ae88638a9a36932223cd270ba982 2026-08-19T10:38:42.683961505+08:00\n"
+  },
+  "python": "3.10.12 (main, Jun 22 2026, 18:55:27) [GCC 11.4.0]"
+}

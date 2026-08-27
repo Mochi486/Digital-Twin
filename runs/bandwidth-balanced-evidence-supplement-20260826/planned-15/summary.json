@@ -1,0 +1,40 @@
+{
+  "completed_at": "2026-08-26T02:04:48.612579Z",
+  "evidence_mode": "SUPPLEMENTARY_REPLICATION",
+  "failed_runs": [],
+  "groups": {
+    "100": {
+      "configured_bandwidth_mbps": 100,
+      "mean_ratio_to_configured": 0.9476,
+      "throughput_ci95_half_width_mbps": 1.1332522492960924,
+      "throughput_max_mbps": 95.5,
+      "throughput_mean_mbps": 94.76,
+      "throughput_min_mbps": 93.2,
+      "throughput_standard_deviation_mbps": 0.9126883367283691,
+      "total_runs": 5,
+      "valid_runs": 5
+    },
+    "20": {
+      "configured_bandwidth_mbps": 20,
+      "mean_ratio_to_configured": 0.96,
+      "throughput_ci95_half_width_mbps": 0.0,
+      "throughput_max_mbps": 19.2,
+      "throughput_mean_mbps": 19.2,
+      "throughput_min_mbps": 19.2,
+      "throughput_standard_deviation_mbps": 0.0,
+      "total_runs": 5,
+      "valid_runs": 5
+    },
+    "50": {
+      "configured_bandwidth_mbps": 50,
+      "mean_ratio_to_configured": 0.956,
+      "throughput_ci95_half_width_mbps": 0.124166399820374,
+      "throughput_max_mbps": 47.9,
+      "throughput_mean_mbps": 47.8,
+      "throughput_min_mbps": 47.7,
+      "throughput_standard_deviation_mbps": 0.09999999999999787,
+      "total_runs": 5,
+      "valid_runs": 5
+    }
+  }
+}
