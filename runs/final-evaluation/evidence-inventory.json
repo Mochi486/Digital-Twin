@@ -50,13 +50,14 @@
     },
     {
       "experiment_or_feature": "bandwidth",
-      "status": "PARTIAL",
-      "raw_evidence_path": "runs/current/metrics.json",
-      "summary_path": "README.md",
+      "status": "PASS",
+      "raw_evidence_path": "runs/bandwidth-balanced-evidence-supplement-20260826/planned-15/",
+      "summary_path": "runs/bandwidth-balanced-evidence-supplement-20260826/planned-15/summary.json",
       "figure_path": "",
-      "documentation_path": "docs/final/pre-dissertation-evidence-audit.md",
-      "consistency_result": "20 Mbps evidence=19.2 Mbps",
-      "missing_items": "No preserved raw 50/100 Mbps measurement files discovered"
+      "documentation_path": "README.md",
+      "consistency_result": "15 planned/15 valid runs; n=5 at 20/50/100 Mbps; throughput means={'20': 19.2, '50': 47.8, '100': 94.76}",
+      "missing_items": "",
+      "historical_context": "The former PARTIAL entry was a pre-supplement snapshot. Older 20-Mbps and 50/100-Mbps cohorts remain retained separately and are not pooled with the dissertation-primary balanced cohort."
     },
     {
       "experiment_or_feature": "AI mock topology generation",

@@ -40,10 +40,17 @@ learnable closed-loop implementation but does not support RL superiority.
 The retained final matrix contains 20/20 delay and 20/20 packet-loss raw
 measurements. Audit-derived delay RTT means are 0.105, 27.008, 80.303, and
 133.686 ms for configured 0, 10, 30, and 50 ms one-way delay. Measured loss
-was reported for configured 0, 1, 3, and 5% one-way loss. Retained direct
-real-Docker evidence now includes five valid 50 Mbps runs and five valid
-100 Mbps runs; see the
-[bandwidth evidence supplement](docs/final/bandwidth-50-100-evidence-supplement.md).
+was reported for configured 0, 1, 3, and 5% one-way loss.
+
+The dissertation-primary bandwidth evidence is the balanced supplementary
+cohort in
+[`runs/bandwidth-balanced-evidence-supplement-20260826/planned-15/`](runs/bandwidth-balanced-evidence-supplement-20260826/planned-15/): 15/15 valid
+planned runs, with five runs each at 20, 50, and 100 Mbps. Mean throughputs are
+19.20, 47.80, and 94.76 Mbps respectively. The former `bandwidth=PARTIAL`
+inventory entry described a pre-supplement historical snapshot and is
+superseded for dissertation use by this retained balanced cohort. The earlier
+20-Mbps record and 50/100-Mbps supplement remain preserved as separate cohorts
+and are not pooled with the balanced cohort.
 
 ## AI-assisted topology generation
 

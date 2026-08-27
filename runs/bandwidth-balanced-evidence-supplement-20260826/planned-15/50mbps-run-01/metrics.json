@@ -1,0 +1,13 @@
+{
+  "cleanup_status": "success",
+  "commit": "4402f85f298ae491a70aabd39375b8f0e71e6cd4",
+  "configured_bandwidth_mbps": 50,
+  "ended_at": "2026-08-26T02:03:50.579332Z",
+  "environment_file": "../environment.json",
+  "error": "",
+  "ratio_to_configured": 0.9540000000000001,
+  "run_id": "50mbps-run-01",
+  "started_at": "2026-08-26T02:03:43.742511Z",
+  "status": "success",
+  "throughput_mbps": 47.7
+}
