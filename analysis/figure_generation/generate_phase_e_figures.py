@@ -14,6 +14,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as path_effects
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 from matplotlib.lines import Line2D
 
@@ -98,10 +99,10 @@ def draw_box(ax: plt.Axes, xy: tuple[float, float], width: float, height: float,
     )
     ax.add_patch(patch)
     ax.text(
-        x + width / 2, y + height * 0.62, title,
+        x + width / 2, y + height * 0.66, title,
         ha="center", va="center", weight="bold", fontsize=title_size,
     )
-    ax.text(x + width / 2, y + height * 0.30, detail, ha="center", va="center", fontsize=detail_size)
+    ax.text(x + width / 2, y + height * 0.27, detail, ha="center", va="center", fontsize=detail_size)
 
 
 def arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float],
@@ -159,7 +160,8 @@ def figure_architecture() -> None:
     arrow(ax, (0.82, 0.78), (0.89, y + height), linestyle="--")
 
     ax.text(0.50, 0.69, "Validated execution and evidence pipeline", ha="center",
-            va="center", fontsize=7.4, color="0.35")
+            va="center", fontsize=7.4, color="0.35", zorder=5,
+            path_effects=[path_effects.withStroke(linewidth=2.2, foreground="white")])
     save_figure(fig, DISSERTATION_ROOT / "figures" / "architecture", "overall_system_architecture")
 
 
@@ -362,12 +364,18 @@ def figure_rl() -> None:
     label_padding = 0.05 * (
         max(max(values) for values in rewards) - min(min(values) for values in rewards)
     )
-    label_y = max(mean + ci for mean, ci in reward_statistics) + label_padding
     for position, (mean, ci) in zip([1, 2], reward_statistics):
         ax_dist.errorbar(position, mean, yerr=ci, fmt="D", color="0.02", capsize=4, markersize=4, zorder=4)
-        ax_dist.text(position, label_y, f"{mean:.2f}", ha="center", fontsize=6.8)
+        ax_dist.annotate(
+            f"mean {mean:.2f}", xy=(position, mean), xytext=(0, 5),
+            textcoords="offset points", ha="center", va="bottom", fontsize=6.8,
+            zorder=5, bbox=dict(facecolor="white", edgecolor="none", alpha=0.90, pad=0.15),
+            arrowprops=dict(arrowstyle="-", color="0.25", linewidth=0.45,
+                            shrinkA=1.5, shrinkB=3.5),
+        )
     y_min, y_max = ax_dist.get_ylim()
-    ax_dist.set_ylim(y_min, max(y_max, label_y + label_padding))
+    highest_interval = max(mean + ci for mean, ci in reward_statistics)
+    ax_dist.set_ylim(y_min, max(y_max, highest_interval + 2.0 * label_padding))
     ax_dist.axhline(0, color="0.55", linewidth=0.7, linestyle="--")
     ax_dist.set_xticks([1, 2], labels, rotation=12, ha="right")
     ax_dist.set_ylabel("Episode reward")
