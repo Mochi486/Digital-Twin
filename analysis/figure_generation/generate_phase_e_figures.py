@@ -352,11 +352,22 @@ def figure_rl() -> None:
     offsets = [-0.08 + 0.008 * (index % 5) for index in range(20)]
     for position, values, marker in zip([1, 2], rewards, ["o", "s"]):
         ax_dist.scatter([position + value for value in offsets], values, s=10, marker=marker, facecolors="white", edgecolors="0.2", linewidths=0.55, zorder=3)
-    for position, policy in zip([1, 2], policies):
-        mean = summary[policy]["metrics"]["reward"]["mean"]
-        ci = summary[policy]["metrics"]["reward"]["ci95"]
+    reward_statistics = [
+        (
+            summary[policy]["metrics"]["reward"]["mean"],
+            summary[policy]["metrics"]["reward"]["ci95"],
+        )
+        for policy in policies
+    ]
+    label_padding = 0.05 * (
+        max(max(values) for values in rewards) - min(min(values) for values in rewards)
+    )
+    label_y = max(mean + ci for mean, ci in reward_statistics) + label_padding
+    for position, (mean, ci) in zip([1, 2], reward_statistics):
         ax_dist.errorbar(position, mean, yerr=ci, fmt="D", color="0.02", capsize=4, markersize=4, zorder=4)
-        ax_dist.text(position, mean + ci + 2.0, f"{mean:.2f}", ha="center", fontsize=6.8)
+        ax_dist.text(position, label_y, f"{mean:.2f}", ha="center", fontsize=6.8)
+    y_min, y_max = ax_dist.get_ylim()
+    ax_dist.set_ylim(y_min, max(y_max, label_y + label_padding))
     ax_dist.axhline(0, color="0.55", linewidth=0.7, linestyle="--")
     ax_dist.set_xticks([1, 2], labels, rotation=12, ha="right")
     ax_dist.set_ylabel("Episode reward")

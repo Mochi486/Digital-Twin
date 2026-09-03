@@ -9,21 +9,21 @@ Table~\ref{tab:appendix-inventory} expands the main experimental matrix with evi
 \caption{Detailed evidence index for the principal experiments.}
 \label{tab:appendix-inventory}
 \centering
-\scriptsize
-\begin{tabular}{p{0.18\linewidth}p{0.36\linewidth}p{0.38\linewidth}}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.18\linewidth}p{0.39\linewidth}p{0.38\linewidth}}
 \hline
 Experiment & Raw or primary evidence & Summary / reproduction \\
 \hline
-Primary BW 20/50/100 & \path{runs/bandwidth-balanced-evidence-}\newline\path{supplement-20260826/planned-15/} & \path{summary.json}, \path{per-run-results.csv}, \path{scripts/run_bandwidth_evidence_supplement.py} \\
+Primary BW 20/50/100 & \path{runs/bandwidth-balanced-evidence-}\newline\path{supplement-20260826/planned-15/} & \path{summary.json}, \path{per-run-results.csv}, \path{scripts/}\newline\path{run_bandwidth_evidence_supplement.py} \\
 Earlier BW cohorts & \path{runs/current/metrics.json}, \path{runs/bandwidth-evidence-supplement/} & Retained independently; not pooled with the primary cohort \\
-Latency & \path{runs/delay_batch_20260713-135915/delay_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_delay_batch.py} \\
-Packet loss & \path{runs/packet_loss_batch_20260713-153303/loss_*_run_*/metrics.json} & \path{runs/final-evaluation/evidence-inventory.json}, \path{scripts/run_packet_loss_batch.py} \\
-Dual-router & \path{runs/two_router_batch_20260713-160810/baseline_run_*/metrics.json} & \path{scripts/run_two_router_batch.py} \\
-Germany50 paths & \path{runs/germany50-selected-paths-final/*-run-*/metrics.json} & \path{runs/germany50-selected-paths-final/summary.json}, \path{runs/germany50-selected-paths-final/summary.csv}, \path{scripts/run_germany50_selected_path_tests.py} \\
-Germany50 full & \path{runs/final-evaluation/germany50-full-fixed/selected-attempt-1/} & \path{runs/final-evaluation/germany50-full-fixed/route-plan-dry-run/summary.json}, \path{scripts/run_germany50_full_evaluation.py} \\
+Latency & \path{runs/delay_batch_20260713-135915/}\newline\path{delay_*_run_*/metrics.json} & \path{runs/final-evaluation/}\newline\path{evidence-inventory.json}, \path{scripts/run_delay_batch.py} \\
+Packet loss & \path{runs/packet_loss_batch_20260713-153303/}\newline\path{loss_*_run_*/metrics.json} & \path{runs/final-evaluation/}\newline\path{evidence-inventory.json}, \path{scripts/run_packet_loss_batch.py} \\
+Dual-router & \path{runs/two_router_batch_20260713-160810/}\newline\path{baseline_run_*/metrics.json} & \path{scripts/run_two_router_batch.py} \\
+Germany50 paths & \path{runs/germany50-}\newline\path{selected-paths-final/}\newline\path{*-run-*/metrics.json} & \path{runs/germany50-}\newline\path{selected-paths-final/}\newline\path{summary.json}, \path{runs/germany50-}\newline\path{selected-paths-final/}\newline\path{summary.csv}, \path{scripts/}\newline\path{run_germany50_selected_path_tests.py} \\
+Germany50 full & \path{runs/final-evaluation/}\newline\path{germany50-full-fixed/}\newline\path{selected-attempt-1/} & \path{runs/final-evaluation/}\newline\path{germany50-full-fixed/}\newline\path{route-plan-dry-run/}\newline\path{summary.json}, \path{scripts/}\newline\path{run_germany50_full_evaluation.py} \\
 Official OpenAI & Sanitized source reference only & \path{runs/final-evaluation/ai-openai-429-evidence.json} \\
-Qwen-compatible & \path{runs/openai-compatible-live-validation-}\newline\path{20260714-064525/} & \path{runs/final-evaluation/ai-qwen-live-summary.json} \\
-RL & \path{runs/final-evaluation/rl-docker-supplement/per-episode-results.csv} & \path{runs/final-evaluation/rl-docker-supplement/summary.json}, \path{runs/final-evaluation/rl-docker-supplement/policy-summary.csv}, \path{scripts/run_rl_docker_supplement.py} \\
+Qwen-compatible & \path{runs/openai-compatible-}\newline\path{live-validation-}\newline\path{20260714-064525/} & \path{runs/final-evaluation/}\newline\path{ai-qwen-live-summary.json} \\
+RL & \path{runs/final-evaluation/rl-docker-supplement/}\newline\path{per-episode-results.csv} & \path{runs/final-evaluation/rl-docker-supplement/}\newline\path{summary.json}, \path{runs/final-evaluation/rl-docker-supplement/}\newline\path{policy-summary.csv}, \path{scripts/}\newline\path{run_rl_docker_supplement.py} \\
 Dashboard & Raw validation logs not retained & \path{docs/final/interactive-dashboard-validation.md} \\
 \hline
 \end{tabular}
@@ -41,7 +41,6 @@ The dissertation-side consolidated inventory is \texttt{notes/experiment\_invent
 \caption{Critical comparison with the closest emulation and reproducibility work.}
 \label{tab:closest-work}
 \centering
-\footnotesize
 \setlength{\tabcolsep}{1pt}
 \begin{tabular}{p{0.14\linewidth}p{0.25\linewidth}p{0.25\linewidth}p{0.28\linewidth}}
 \hline
@@ -102,10 +101,10 @@ Latency used configured one-way delays of 0/10/30/50 ms with five runs and three
 \caption{Descriptive Germany50 path-case comparison. Hop count and cumulative configured per-link delay co-vary, so the table does not estimate an isolated hop-count effect.}
 \label{tab:appendix-germany50}
 \centering
-\footnotesize
-\begin{tabular}{p{0.13\linewidth}p{0.41\linewidth}rrrr}
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{p{0.12\linewidth}p{0.39\linewidth}p{0.06\linewidth}p{0.11\linewidth}p{0.10\linewidth}p{0.11\linewidth}}
 \hline
-Class & Backbone nodes & Hops & RTT mean & RTT SD & Rate mean \\
+Class & Backbone nodes & Hops & RTT\newline mean & RTT\newline SD & Rate\newline mean \\
 \hline
 Shortest & Aachen--Koeln & 1 & 41.196 & 0.259 & 18.8 \\
 Median & Erfurt--Wuerzburg--Augsburg--Muenchen--Passau & 4 & 104.623 & 0.845 & 17.8 \\
@@ -130,7 +129,6 @@ In Phase 1, A has (5 ms, 0\%, 20 Mbps) and B has (30 ms, 4\%, 12 Mbps); Phase 2 
 \caption{Descriptive repository-reported real-Docker policy summary from one seed and an ordered two-phase schedule. Rows are not independent randomized policy replications; Q-learning rows span a migration and agent reinitialization.}
 \label{tab:appendix-rl}
 \centering
-\footnotesize
 \begin{tabular}{lrrrrrr}
 \hline
 Policy & $n$ & Reward mean & Reward SD & RTT (ms) & Loss (\%) & Rate (Mbps) \\
@@ -166,4 +164,4 @@ The setup script creates \path{.venv-wsl311}, installs the declared requirements
 
 \subsection{Generative AI acknowledgement}
 
-ChatGPT and Codex were used for coding assistance, debugging, language editing, structural feedback, and consistency checking. The author verified the experimental results, retained evidence, citations, and final interpretation and remains responsible for the submitted work.
+ChatGPT was used for coding assistance, debugging, language editing, and consistency checking. The author verified the experimental results, retained evidence, citations, and final interpretation and remains responsible for the submitted work.
